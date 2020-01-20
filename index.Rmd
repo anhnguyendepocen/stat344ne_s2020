@@ -14,7 +14,7 @@ title: "Introduction to Neural Networks"
 
 **Text Books:** We will use two text books, both of which are on reserve at the library.  There are also links to free ebook versions below:
 
-1. ["Deep Learning with Python"](http://proxy.mtholyoke.edu:2048/login?url=https://www.safaribooksonline.com/library/view/-/9781617294433/?ar) by Fran\c{c}ois Chollet.  This book is a great practical guide to working with neural networks in Keras, but it has limited mathematical depth.  A copy is on reserve at the library and an ebook version is linked to from the course website.
+1. ["Deep Learning with Python"](http://proxy.mtholyoke.edu:2048/login?url=https://www.safaribooksonline.com/library/view/-/9781617294433/?ar) by Fran\c{c}ois Chollet.  This book is a great practical guide to working with neural networks in Keras, but it has limited mathematical depth.
 
 2. ["Deep Learning"](http://www.deeplearningbook.org/) by Ian Goodfellow, Yoshua Bengio, and Aaron Courville.  This book has essentially no information about practical implementation of neural networks, but covers the mathematics in depth.
 
