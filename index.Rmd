@@ -1,0 +1,25 @@
+---
+title: "Introduction to Neural Networks"
+---
+
+**Instructor:** Evan Ray
+
+**Email:** eray@mtholyoke.edu
+
+**Office:** Clapp 404C
+
+**Office Hours:** I have regularly scheduled office hours at times to be determined.  These are times I guarantee I will be in my office and available, but I am also available by appointment at other times; send an email to set up a time to meet.
+
+<!--**Evening Group Work**: We have scheduled rooms for evening group work, with TAs available to help with questions, on **days to be determined**.  These sessions will meet in **room to be determined**.-->
+
+**Text Books:** We will use two text books, both of which are on reserve at the library.  There are also links to free ebook versions below:
+
+1. ["Deep Learning with Python"](http://proxy.mtholyoke.edu:2048/login?url=https://www.safaribooksonline.com/library/view/-/9781617294433/?ar) by Fran\c{c}ois Chollet.  This book is a great practical guide to working with neural networks in Keras, but it has limited mathematical depth.  A copy is on reserve at the library and an ebook version is linked to from the course website.
+
+2. ["Deep Learning"](http://www.deeplearningbook.org/) by Ian Goodfellow, Yoshua Bengio, and Aaron Courville.  This book has essentially no information about practical implementation of neural networks, but covers the mathematics in depth.
+
+**Piazza:** We are registered on Piazza at [https://piazza.com/mtholyoke/spring2020/stat344ne](https://piazza.com/mtholyoke/spring2020/stat344ne).  You can ask and answer questions there, anonymously if you want, and everyone in the class will be able to see and contribute to the answers.
+
+**Syllabus:** Will be posted later.
+
+Please use the navigation menu above to go to the schedule, homework assignments, and materials related to quizzes and exams.

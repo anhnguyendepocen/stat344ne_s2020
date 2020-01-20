@@ -1,0 +1,19 @@
+name: "mhc-stat344ne-s2020-website"
+output_dir: "."
+output:
+  html_document:
+    theme: paper
+navbar:
+  type: default
+  title: "Stat 344ne"
+  right:
+    - text: "Schedule"
+      href: schedule.html
+    - text: "Homework"
+      href: homework.html
+    - text: "Quizzes/Exams"
+      href: exams.html
+    - text: "Project"
+      href: project.html
+    - text: "Resources"
+      href: resources.html
