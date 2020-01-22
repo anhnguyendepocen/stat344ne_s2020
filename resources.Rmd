@@ -4,11 +4,13 @@ title: "Resources"
 
  * Python and general computing
     * [Quick reference/tutorial](https://cs231n.github.io/python-numpy-tutorial/) from CS 231n at Stanford
-    * [What every computer scientist should know about floating-point arithmetic](https://docs.oracle.com/cd/E19957-01/806-3568/ncg_goldberg.html).  I'm not sure that every computer scientist really needs to know this, but everyone doing scientific computing does.  That said, I still haven't decided whether we'll read this.
- * General sources for neural networks and deep learning
+    * [What every computer scientist should know about floating-point arithmetic](https://docs.oracle.com/cd/E19957-01/806-3568/ncg_goldberg.html).  I'm not sure that every computer scientist really needs to know this, but a lot of people doing scientific computing do.  That said, I still haven't decided whether we'll read this.
+ * Neural networks and deep learning
+    * [Andrew Ng](https://www.youtube.com/channel/UCcIXc5mJsHVYTZR1maL5l9w) explains everything very clearly.
+    * [CS 230 at Stanford](http://cs230.stanford.edu/) -- very similar to our course outline.  You may find it helpful to check out videos of their lectures as well as their course notes.
     * [CS 231n at Stanford](http://cs231n.stanford.edu/) -- focuses on image recognition applications, but also covers a lot of the math.  In many respects our course outline is quite similar to this class so you may find it helpful to check out videos of their lectures as well as their course notes.
     * [Reinforcement Learning by Sutton and Barto](http://incompleteideas.net/book/RLbook2018.pdf).  I hope to spend some time on Reinforcement Learning later in the semester, and some of you may use it in your projects.  This book is kindof intense, but might be a helpful resource.
-    * [Andrej Karpathy's Blog](http://karpathy.github.io/).  Lots of insights, less formal than the sources above
+    * [Andrej Karpathy's Blog](http://karpathy.github.io/).  Lots of insights, less formal than the sources above.
  * Resources about Keras
     * [Documentation for Keras](https://keras.io/)
     * [YouTube videos about Keras](https://www.youtube.com/playlist?list=PLZbbT5o_s2xrwRnXk_yCPtnqqo4_u2YGL)

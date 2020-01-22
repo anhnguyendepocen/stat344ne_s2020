@@ -1,0 +1,67 @@
+---
+title: "Motivating Example 2"
+subtitle: "Jan. 22, 2020"
+output:
+  pdf_document:
+    keep_tex: true
+    highlight: zenburn
+header-includes:
+   - \usepackage{soul}
+   - \usepackage{booktabs}
+documentclass: extarticle
+geometry: margin=0.6in
+---
+
+```{r global_options, include=FALSE}
+library(knitr)
+library(reticulate)
+use_python("/Users/eray/anaconda3/bin/python")
+knitr::opts_chunk$set(eval = TRUE, echo=FALSE, engine='python')
+#knitr::knit_engines$set(python = reticulate::eng_python)
+```
+
+## Example
+
+Here's a fake data set with two quantitative features (also known as explanatory variables, independent variables, or inputs) and one categorical response (dependent variable, output):
+
+```{python}
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.colors as colors
+```
+
+```{python, echo = FALSE, }
+# set seed for reproducibility
+np.random.seed(2)
+
+# sample size
+n = 100
+
+# generate (x1, x2) (observations in columns)
+x = 2 * np.random.random((2, n)) - 1
+
+# parameters
+b = -5
+x_mod = np.concatenate((x, x**2), axis = 0)
+w = np.array([[0, 0, 5 * 12/9, 5 * 5]])
+
+# prob of class 1
+p1 = np.exp(b + np.dot(w, x_mod)) / (1 + np.exp(b + np.dot(w, x_mod)))
+y = np.random.binomial(1, p1)[0, :]
+
+# make a plot
+fig, ax = plt.subplots()
+scatter = ax.scatter(x[0, ], x[1, ], c = y, norm = plt.Normalize(-0.2, 1.2), cmap = plt.get_cmap('plasma'))
+plt.show()
+```
+
+#### (a) On the plot, draw your guess at a good decision boundary: you will predict that y = 0 (plotted in blue) on one side of the decision boundary and y = 1 (plotted in orange) on the other side of the decision boundary.
+
+#### (b) What model would you use for these data?
+
+
+
+
+
+
+
