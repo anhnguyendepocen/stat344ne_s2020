@@ -61,18 +61,29 @@ make_week_box("week1", TRUE, "Week 1: Jan 20 -- Jan 24", "
         * Goodfellow et al.:
             * Read the intro to section 5.5 (but don't worry about KL divergence), read section 5.5.1, lightly skim section 6.1, read the first 3 paragraphs of section 6.2.1.1, and skim sections 6.2.2.1, 6.2.2.2, and 6.2.2.3.  We will talk about this over the next day or two.
     * **Videos**
-        * Some of you may find these videos helpful:
-            * [Broadcasting in NumPy](https://www.youtube.com/watch?v=tKcLaGdvabM) -- This is among my least favorite examples, apologies!
-            * [Softmax regression](https://www.youtube.com/watch?v=LLux1SW--oM)
-    * **Homework 0** due 5 pm Wed, Jan 29
+        * I moved the videos that were here to later days.
+    * **Homework 0** due 5 pm Fri, Jan 31
 
 
 #### Fri, Jan 24
  * **In class**, we will work on:
-    * Maximum likelihood and output activations for regression, binary classification, and multi-class classification
+    * Maximum likelihood and output activations for binary classification.  I don't have any lecture notes for this.
+    * Matrix formulation of calculations for logistic regression across multiple observations.  I don't have any lecture notes for this, but it's written up in Lab 01.
+    * Highlights of NumPy: https://github.com/mhc-stat344ne-s2020/Python_NumPy_foundations/blob/master/Python.ipynb
+    * Lab 1: you do some calculations for logistic regression in NumPy.  You should receive an email from GitHub about this.
  * **After class**, please:
     * **Reading**
         * Continue/finish readings listed for Wed, Jan 22.
+        * Take a look at the NumPy document listed above.  You can't run it directly on GitHub, but if you want you could sign into colab.research.google.com and try out some of the code there.  Also cross-reference this with the Numpy section in Chollet.
+    * **Videos**:  Here are some videos of Andrew Ng talking about logistic regression and stuff we did today; you don't need to watch these, but feel free if you want a review:
+        * Logistic regression set up: [youtube](https://www.youtube.com/watch?v=hjrYrynGWGA&list=PLkDaE6sCZn6Ec-XTbcX1uRg2_u4xOEky0&index=8)
+        * Loss function just thrown out there without justification: [youtube](https://www.youtube.com/watch?v=SHEPb1JHw5o&list=PLkDaE6sCZn6Ec-XTbcX1uRg2_u4xOEky0&index=9)
+        * Discussing set up for loss function via maximum likelihood: [youtube](https://www.youtube.com/watch?v=k_S5fnKjO-4&list=PLkDaE6sCZn6Ec-XTbcX1uRg2_u4xOEky0&index=24)
+        * Start at thinking about \"vectorization\", i.e. writing things in terms of matrix operations: [youtube](https://www.youtube.com/watch?v=qsIrQi0fzbY&list=PLkDaE6sCZn6Ec-XTbcX1uRg2_u4xOEky0&index=17)
+        * More on vectorization, but I think this video is more complicated than necessary and you might skip it: [youtube](https://www.youtube.com/watch?v=pYWASRauTzs&list=PLkDaE6sCZn6Ec-XTbcX1uRg2_u4xOEky0&index=18)
+        * Vectorizing logistic regression.  Note that Andrew does this in the variant where your observations are in columns of the X matrix.  I want us to understand that you can also just take the transpose of that and get a just-as-valid way of doing the computations, just sideways.  This is worth understanding because different sources and different software packages will organize things different ways and you want mental flexibility.  We talked about this in class but I don't know of a video that explains things with the other orientation. [youtube](https://www.youtube.com/watch?v=okpqeEUdEkY&list=PLkDaE6sCZn6Ec-XTbcX1uRg2_u4xOEky0&index=19)
+        * [Broadcasting in NumPy](https://www.youtube.com/watch?v=tKcLaGdvabM) -- This is among my least favorite examples, apologies!
+    * **Homework 0** due 5 pm Fri, Jan 31
 ")
 
 #    * **Videos**
@@ -86,12 +97,19 @@ make_week_box("week1", TRUE, "Week 1: Jan 20 -- Jan 24", "
 make_week_box("week2", TRUE, "Week 2: Jan 27 -- Jan 31", "
 #### Mon, Jan 27
  * **In class**, we will work on:
+    * Maximum likelihood and output activations for regression and multi-class classification.
+    * Lab 1 about numpy calculations relevant to logistic regression
  * **After class**, please:
+    * **Videos**
+        * Some of you may find these videos helpful:
+            * [Softmax regression](https://www.youtube.com/watch?v=LLux1SW--oM) is another word for multinomial regression, which is the equivalent to logistic regression for multi-class classification.
+    * **Homework 0** due 5 pm Fri, Jan 31
 
 
 #### Wed, Jan 29
  * **In class**, we will work on:
  * **After class**, please:
+    * **Homework 0** due 5 pm Fri, Jan 31
 
 
 #### Fri, Jan 31
