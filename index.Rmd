@@ -11,7 +11,7 @@ title: "Introduction to Neural Networks"
 **Office Hours:** I have regularly scheduled office hours at the times below.  These are times I guarantee I will be in my office and available, but I am also available by appointment at other times; send an email to set up a time to meet.
 
  * Mondays 4pm-5pm
- * Tuesdays 1:30pm-2:30pm
+ * Tuesdays 2pm-3pm
  * Thursdays 4pm-5pm
  * Fridays 3:30-4:30pm
 
