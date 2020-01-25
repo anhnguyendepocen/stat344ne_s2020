@@ -1,0 +1,87 @@
+---
+title: "HW1 Written Part"
+subtitle: "Due 5pm Wednesday Jan. 29, 2020"
+output:
+  pdf_document:
+    keep_tex: true
+    highlight: zenburn
+header-includes:
+   - \usepackage{soul}
+   - \usepackage{booktabs}
+documentclass: extarticle
+geometry: margin=0.6in
+---
+
+```{r global_options, include=FALSE}
+library(knitr)
+library(reticulate)
+use_python("/Users/eray/anaconda3/bin/python")
+knitr::opts_chunk$set(eval = TRUE, echo=FALSE, engine='python')
+#knitr::knit_engines$set(python = reticulate::eng_python)
+```
+
+## What is your name?
+
+## Problem 1
+
+Here's a fake data set with 1000 observations of two quantitative features $X_1$ and $X_2$ and one categorical response $Y$:
+
+```{python}
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.colors as colors
+```
+
+```{python, echo = FALSE, }
+# set seed for reproducibility
+np.random.seed(13)
+
+# sample size
+n = 1000
+
+# generate (x1, x2) (observations in columns)
+x = 2 * np.random.random((n, 2)) - 1
+
+# parameters
+b = 1/3 * 50 #1/3 * 50
+#x_mod = np.concatenate((x, x[:,1].reshape((n, 1))**2, x[:,1].reshape((n, 1))**3), axis = 1)
+#w = np.array([[1, -2/3, -2/3, 4/3]]) * 50
+x_mod = np.concatenate((x, x[:,0].reshape((n, 1))**2), axis = 1)
+w = np.array([[0, 1, -1.2]]) * 50
+
+# prob of class 1
+p1 = np.exp(b + np.dot(x_mod, w.T)) / (1 + np.exp(b + np.dot(x_mod, w.T)))
+y = np.random.binomial(1, p1)[:, 0]
+
+# make a plot
+fig, ax = plt.subplots()
+scatter = ax.scatter(x[:, 0], x[:, 1], c = y, norm = plt.Normalize(-0.2, 1.2), cmap = plt.get_cmap('plasma'))
+ax.set_xlabel("X1")
+ax.set_ylabel("X2")
+plt.show()
+```
+
+#### (a) On the plot, draw your guess at a good decision boundary: you will predict that y = 0 (plotted in purple) on one side of the decision boundary and y = 1 (plotted in orange) on the other side of the decision boundary.
+
+#### (b) Write down a reasonable equation for the decision boundary in terms of $x_1^{(i)}$, $x_2^{(i)}$, and parameters $b$ and $w$.  You don't need to pick numbers for the parameters $b$ and $w$, you're just looking to get a reasonable functional form.  Your equation can involve as many $w$'s as you need ($w_1$, $w_2$, ...).  It may be conceptually easiest to start with $x_1^{(i)}$ and $x_2^{(i)}$ on different sides of the equals sign, and then rearrange to get an expression that is equal to 0.
+
+\vspace{4cm}
+
+#### (c) Write down a complete specification of a logistic regression model you might use to predict $y^{(i)}$ as a function of $x_1^{(i)}$ and $x_2^{(i)}$.  This should include a probability distribution for $Y^{(i)}$ and any equations needed to calculate the probability that $Y^{(i)} = 1$ in terms of $x_1^{(i)}$ and $x_2^{(i)}$
+
+\vspace{8cm}
+
+#### (d) Suppose the training data set has the three observations in the table below.  Write down the likelihood function.  Your answer should involve only $b$, $w$'s, and numbers from the table.  You don't need to simplify it.
+
+\begin{table}[!h]
+\centering
+\begin{tabular}{cccc}
+\toprule
+$i$ & $x_1^{(i)}$ & $x_2^{(i)}$ & $y^{(i)}$ \\
+\midrule
+1 & -0.5 & 0.25 & 1 \\
+2 & 0 & 0.75 & 1 \\
+3 & 0.75 & -0.5 & 0 \\
+\bottomrule
+\end{tabular}
+\end{table}
