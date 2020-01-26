@@ -2,6 +2,23 @@
 title: "Homework"
 ---
 
+**To access a homework assignment:**
+
+ * Go to https://colab.research.google.com/
+ * Sign in using your MHC email account
+ * Click the "GitHub" tab in the orange bar
+ * A pop-up window will open.  Enter your GitHub user name and password.
+ * If requested, agree to let Google and colab access your GitHub account
+ * Back in colab, select the "Include private repos" check box in the top right corner of the dialog box
+ * In the drop-down menu under "Repository" on the left side, find "mhc-stat344ne-s2020/_____", filling in the blank with the assignment you want to work on.
+ * Below that, a list of any notebook files (ending in .ipynb) in that repository will show up.  Click the picture of a square with an arrow coming out of it to the right of the file you want to open.
+
+**Any time you've done some work you want to save:**
+
+ * Go to the File menu in colab and select "Save a copy in GitHub..."
+ * Change the text under "Commit message" to a brief description of the work you've done.
+ * Click "OK".  It will pop up a new window showing your work on GitHub.  You can safely close that and return to your other tab to continue working.
+
 +------------+--------------------------------------------------------------------------------------+---------------------------------+-------+---------------------------------------------------------------+
 | Assignment | Description                                                                          | Due Date                        | Value | Solutions                                                     |
 +============+======================================================================================+=================================+=======+===============================================================+
