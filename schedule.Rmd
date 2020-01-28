@@ -38,7 +38,7 @@ contents,
 ```
 
 ```{r, echo = FALSE, results='asis'}
-make_week_box("week1", TRUE, "Week 1: Jan 20 -- Jan 24", "
+make_week_box("week1", FALSE, "Week 1: Jan 20 -- Jan 24", "
 
 #### Wed, Jan 22
  * **In class**, we will work on:
@@ -62,7 +62,9 @@ make_week_box("week1", TRUE, "Week 1: Jan 20 -- Jan 24", "
             * Read the intro to section 5.5 (but don't worry about KL divergence), read section 5.5.1, lightly skim section 6.1, read the first 3 paragraphs of section 6.2.1.1, and skim sections 6.2.2.1, 6.2.2.2, and 6.2.2.3.  We will talk about this over the next day or two.
     * **Videos**
         * I moved the videos that were here to later days.
-    * **Homework 0** due 5 pm Fri, Jan 31
+    * **Homework 1**
+        * Written part due 5pm Wed, Jan 29
+        * Coding part due 5 pm Fri, Jan 31
 
 
 #### Fri, Jan 24
@@ -83,7 +85,9 @@ make_week_box("week1", TRUE, "Week 1: Jan 20 -- Jan 24", "
         * More on vectorization, but I think this video is more complicated than necessary and you might skip it: [youtube](https://www.youtube.com/watch?v=pYWASRauTzs&list=PLkDaE6sCZn6Ec-XTbcX1uRg2_u4xOEky0&index=18)
         * Vectorizing logistic regression.  Note that Andrew does this in the variant where your observations are in columns of the X matrix.  I want us to understand that you can also just take the transpose of that and get a just-as-valid way of doing the computations, just sideways.  This is worth understanding because different sources and different software packages will organize things different ways and you want mental flexibility.  We talked about this in class but I don't know of a video that explains things with the other orientation. [youtube](https://www.youtube.com/watch?v=okpqeEUdEkY&list=PLkDaE6sCZn6Ec-XTbcX1uRg2_u4xOEky0&index=19)
         * [Broadcasting in NumPy](https://www.youtube.com/watch?v=tKcLaGdvabM) -- This is among my least favorite examples, apologies!
-    * **Homework 0** due 5 pm Fri, Jan 31
+    * **Homework 1**
+        * Written part due 5pm Wed, Jan 29
+        * Coding part due 5 pm Fri, Jan 31
 ")
 
 #    * **Videos**
@@ -97,24 +101,40 @@ make_week_box("week1", TRUE, "Week 1: Jan 20 -- Jan 24", "
 make_week_box("week2", TRUE, "Week 2: Jan 27 -- Jan 31", "
 #### Mon, Jan 27
  * **In class**, we will work on:
-    * Maximum likelihood and output activations for regression and multi-class classification.
-    * Lab 1 about numpy calculations relevant to logistic regression
+    * Maximum likelihood and output activations for regression.  Lecture notes: [pdf](materials/20200127_regression_set_up/lecture_notes.pdf)
+    * Lab 1 about numpy calculations relevant to logistic regression -- complete and turn in by Friday, Jan 31.
  * **After class**, please:
-    * **Videos**
-        * Some of you may find these videos helpful:
-            * [Softmax regression](https://www.youtube.com/watch?v=LLux1SW--oM) is another word for multinomial regression, which is the equivalent to logistic regression for multi-class classification.
-    * **Homework 0** due 5 pm Fri, Jan 31
+    * **Homework 1**
+        * Written part due 5pm Wed, Jan 29
+        * Coding part due 5 pm Fri, Jan 31
+    * **Lab 1**
+        * Due 5pm Fri, Jan 31
 
 
 #### Wed, Jan 29
  * **In class**, we will work on:
+    * Maximum likelihood and output activations for multi-class classification.
+    * Intro to Keras
  * **After class**, please:
-    * **Homework 0** due 5 pm Fri, Jan 31
+    * **Videos**
+        * Some of you may find these videos helpful:
+            * [Softmax regression](https://www.youtube.com/watch?v=LLux1SW--oM) is another word for multinomial regression, which is the equivalent to logistic regression for multi-class classification.
+    * **Homework 1**
+        * Written part due 5pm **today** Wed, Jan 29
+        * Coding part due 5 pm Fri, Jan 31
+    * **Lab 1**
+        * Due 5pm Fri, Jan 31
 
 
 #### Fri, Jan 31
  * **In class**, we will work on:
+    * **Quiz** on logistic regression
+    * Maybe start on hidden layers and forward propagation?
  * **After class**, please:
+    * **Homework 1**
+        * Coding part due 5 pm **today** Fri, Jan 31
+    * **Lab 1**
+        * Due 5pm Fri, Jan 31
 ")
 ```
 
@@ -122,16 +142,20 @@ make_week_box("week2", TRUE, "Week 2: Jan 27 -- Jan 31", "
 make_week_box("week3", TRUE, "Week 3: Feb 03 -- Feb 07", "
 #### Mon, Feb 03
  * **In class**, we will work on:
+    * Hidden layers and forward propagation if not done last Friday
+    * Otherwise, start on gradient descent
  * **After class**, please:
 
 
 #### Wed, Feb 05
  * **In class**, we will work on:
+    * Backpropagation
  * **After class**, please:
 
 
 #### Fri, Feb 07
  * **In class**, we will work on:
+    * More on backpropagation?
  * **After class**, please:
 ")
 ```
