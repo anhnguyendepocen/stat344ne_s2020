@@ -113,8 +113,10 @@ make_week_box("week2", TRUE, "Week 2: Jan 27 -- Jan 31", "
 
 #### Wed, Jan 29
  * **In class**, we will work on:
-    * Maximum likelihood and output activations for multi-class classification.
-    * Intro to Keras
+    * Overview/details of maximum likelihood for logistic regression.  Demo visualization [here](https://evanlray.shinyapps.io/logistic_likelihood_entropy_interactive_plots/).
+    * Overview/details of maximum likelihood for linear regression.  Demo visualization [here](https://evanlray.shinyapps.io/likelihood_rss_interactive_plots/).
+    * Maximum likelihood and output activations for multi-class classification.  No lecture notes, but see the video linked below.
+    * Summary of models, activation functions, and losses so far: [pdf](materials/20200129_models_and_losses/models_and_losses.pdf)
  * **After class**, please:
     * **Videos**
         * Some of you may find these videos helpful:

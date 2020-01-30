@@ -1,0 +1,310 @@
+---
+title: "Maximum Likelihood and Cost Minimization for Logistic Regression"
+output:
+  flexdashboard::flex_dashboard:
+    vertical_layout: fill
+    theme: lumen
+runtime: shiny
+---
+
+```{r global, include=FALSE}
+library(readr)
+library(dplyr)
+library(tidyr)
+library(purrr)
+library(ggplot2)
+library(gridExtra)
+library(shinythemes)
+library(rgl)
+library(scales)
+library(matrixStats)
+#library(cdcfluutils)
+
+sample_data <- data.frame(
+  x = c(-2, 0, 2, 3),
+  y = c(0, 0, 1, 0)
+)
+
+X <- cbind(
+  c(1, 1, 1),
+  sample_data$x
+)
+y <- matrix(sample_data$y)
+
+logistic_fit <- suppressWarnings(glm(y ~ x, family = "binomial", data = sample_data))
+beta_hat <- coef(logistic_fit)
+
+#X1 <- unexpanded_X <- seq(from = -25, to = 25, length = 101)
+#X2 <- unexpanded_Y <- seq(from = -12.5, to = 12.5, length = 101)
+X1 <- unexpanded_X <- seq(from = -5, to = 5, length = 101)
+X2 <- unexpanded_Y <- seq(from = -5, to = 5, length = 101)
+
+crossent_plot_df <- as.data.frame(expand.grid(X = unexpanded_X, Y = unexpanded_Y))
+
+log_p11 <- (crossent_plot_df$X + crossent_plot_df$Y * X[1, 2])
+log_p10 <- 0
+log_sum_p1 <- rowLogSumExps(cbind(log_p11, log_p10))
+log_p11 <- log_p11 - log_sum_p1
+log_p10 <- log_p10 - log_sum_p1
+
+log_p21 <- (crossent_plot_df$X + crossent_plot_df$Y * X[2, 2])
+log_p20 <- 0
+log_sum_p2 <- rowLogSumExps(cbind(log_p21, log_p20))
+log_p21 <- log_p21 - log_sum_p2
+log_p20 <- log_p20 - log_sum_p2
+
+log_p31 <- (crossent_plot_df$X + crossent_plot_df$Y * X[3, 2])
+log_p30 <- 0
+log_sum_p3 <- rowLogSumExps(cbind(log_p31, log_p30))
+log_p31 <- log_p31 - log_sum_p3
+log_p30 <- log_p30 - log_sum_p3
+
+log_p41 <- (crossent_plot_df$X + crossent_plot_df$Y * X[4, 2])
+log_p40 <- 0
+log_sum_p4 <- rowLogSumExps(cbind(log_p41, log_p40))
+log_p41 <- log_p41 - log_sum_p4
+log_p40 <- log_p40 - log_sum_p4
+
+crossent_plot_df$Z <- -1 * (log_p10 + log_p20 + log_p31 + log_p40)
+
+#  -1 * (y[1, 1] *  + (1 - y[1, 1]) * (- log1p(exp(crossent_plot_df$X + crossent_plot_df$Y * X[1, 2]))) + 
+#  y[2, 1] * (crossent_plot_df$X + crossent_plot_df$Y * X[2, 2] - log1p(exp(crossent_plot_df$X + crossent_plot_df$Y * X[2, 2]))) + (1 - y[2, 1]) * (- log1p(exp(crossent_plot_df$X + crossent_plot_df$Y * X[2, 2]))) +
+#  y[3, 1] * (crossent_plot_df$X + crossent_plot_df$Y * X[3, 2] - log1p(exp(crossent_plot_df$X + crossent_plot_df$Y * X[3, 2]))) + (1 - y[3, 1]) * (- log1p(exp(crossent_plot_df$X + crossent_plot_df$Y * X[3, 2]))))
+
+crossent_z_max <- 300
+crossent_plot_df$Z[crossent_plot_df$Z >= crossent_z_max] <- crossent_z_max
+
+#log_p1 <- 
+
+log_p11 <- (beta_hat[1] + beta_hat[2] * X[1, 2])
+log_p10 <- 0
+log_sum_p1 <- rowLogSumExps(cbind(log_p11, log_p10))
+log_p11 <- log_p11 - log_sum_p1
+log_p10 <- log_p10 - log_sum_p1
+
+log_p21 <- (beta_hat[1] + beta_hat[2] * X[2, 2])
+log_p20 <- 0
+log_sum_p2 <- rowLogSumExps(cbind(log_p21, log_p20))
+log_p21 <- log_p21 - log_sum_p2
+log_p20 <- log_p20 - log_sum_p2
+
+log_p31 <- (beta_hat[1] + beta_hat[2] * X[3, 2])
+log_p30 <- 0
+log_sum_p3 <- rowLogSumExps(cbind(log_p31, log_p30))
+log_p31 <- log_p31 - log_sum_p3
+log_p30 <- log_p30 - log_sum_p3
+
+log_p41 <- (beta_hat[1] + beta_hat[2] * X[4, 2])
+log_p40 <- 0
+log_sum_p4 <- rowLogSumExps(cbind(log_p41, log_p40))
+log_p41 <- log_p41 - log_sum_p4
+log_p40 <- log_p40 - log_sum_p4
+
+min_crossent <- -1 * (log_p10 + log_p20 + log_p31 + log_p40)
+
+color_n <- 1000 # number of colors used
+
+crossent_z_lim <- range(crossent_plot_df$Z)
+crossent_z_range <- crossent_z_lim[2] - crossent_z_lim[1]
+crossent_z_colorlut <- rev(rainbow(1000, start = 0, end = 4/6)) # height color lookup table
+crossent_z_col <- crossent_z_colorlut[ floor(color_n * (crossent_plot_df$Z - crossent_z_lim[1])/crossent_z_range) + 1 ]
+
+lik_plot_df <- crossent_plot_df
+p1 <- exp(beta_hat[1] + beta_hat[2] * X[1, 2]) / (1 + exp(beta_hat[1] + beta_hat[2] * X[1, 2]))
+p2 <- exp(beta_hat[1] + beta_hat[2] * X[2, 2]) / (1 + exp(beta_hat[1] + beta_hat[2] * X[2, 2]))
+p3 <- exp(beta_hat[1] + beta_hat[2] * X[3, 2]) / (1 + exp(beta_hat[1] + beta_hat[2] * X[3, 2]))
+p4 <- exp(beta_hat[1] + beta_hat[2] * X[4, 2]) / (1 + exp(beta_hat[1] + beta_hat[2] * X[4, 2]))
+max_lik <- exp(-1 * min_crossent)
+
+lik_plot_df <- crossent_plot_df
+p1 <- 1 - exp(crossent_plot_df$X + crossent_plot_df$Y * X[1, 2]) / (1 + exp(crossent_plot_df$X + crossent_plot_df$Y * X[1, 2]))
+p2 <- 1 - exp(crossent_plot_df$X + crossent_plot_df$Y * X[2, 2]) / (1 + exp(crossent_plot_df$X + crossent_plot_df$Y * X[2, 2]))
+p3 <- exp(crossent_plot_df$X + crossent_plot_df$Y * X[3, 2]) / (1 + exp(crossent_plot_df$X + crossent_plot_df$Y * X[3, 2]))
+p4 <- 1 - exp(crossent_plot_df$X + crossent_plot_df$Y * X[4, 2]) / (1 + exp(crossent_plot_df$X + crossent_plot_df$Y * X[4, 2]))
+lik_plot_df$Z <- p1 * p2 * p3 * p4
+
+#crossent_plot_df$Z <- crossent_z_max
+#inds <- which(lik_plot_df$Z > 0)
+#crossent_plot_df$Z[inds] <- -1 * log(lik_plot_df$Z[inds])
+
+lik_z_max <- 300
+lik_plot_df$Z[lik_plot_df$Z >= lik_z_max] <- lik_z_max
+
+#max_lik <- exp(-1 * min_crossent)
+
+color_n <- 1000 # number of colors used
+
+lik_z_lim <- range(crossent_plot_df$Z)
+lik_z_range <- lik_z_lim[2] - lik_z_lim[1]
+lik_z_colorlut <- rev(rainbow(1000, start = 0, end = 4/6)) # height color lookup table
+lik_z_col <- crossent_z_colorlut[ floor(color_n * (lik_plot_df$Z - lik_z_lim[1])/lik_z_range) + 1 ]
+```
+
+Inputs {.sidebar data-width=400}
+-------------------------------------
+
+
+### Data and Model
+
+Suppose we have $m = 4$ observations with $p = 1$ explanatory variable:
+
+ * $x^{(1)} = -2$, $y^{(1)} = 0$ (dog)
+ * $x^{(2)} = 0$, $y^{(2)} = 0$ (dog)
+ * $x^{(3)} = 2$, $y^{(3)} = 1$ (cat)
+ * $x^{(4)} = 3$, $y^{(4)} = 0$ (dog)
+
+Two equivalent statements of a logistic regression model:
+
+ * $y^{(i)} \sim \text{Bernoulli}\left(\frac{\exp(\beta_0 + \beta_1 x^{(i)})}{1 + \exp(\beta_0 + \beta_1 x^{(i)})}\right)$
+ * $y^{(i)} \sim \text{Bernoulli}(a^{(i)})$, where $a^{(i)} = \frac{\exp(\beta_0 + \beta_1 x^{(i)})}{1 + \exp(\beta_0 + \beta_1 x^{(i)})}$
+
+### Goal
+
+We pick $b$ and $w$ with the following (equivalent) goals:
+
+ * Minimize the cost, binary cross-entropy
+
+$J(b, w) = - \sum_{i = 1}^m \left[y^{(i)}\log(a^{(i)}) + (1 - y^{(i)}) \log(1 - a^{(i)})\right]$
+
+ * Maximize the likelihood
+
+$\mathcal{L}(b, w) = \prod_{i = 1}^m (a^{(i)})^{y^{(i)}}(1 - a^{(i)})^{(1 - y^{(i)})}$
+
+
+### Intercept and Slope
+
+```{r}
+numericInput("b", label = ("b:"), value = -4)
+
+numericInput("w", label = ("w:"), value = -4)
+```
+
+Column {data-width=500}
+-------------------------------------
+
+### Cross-Entropy and Likelihood, current $b$ and $w$ {data-height=400}
+
+```{r}
+renderPlot({
+  b <- input$b
+  w <- input$w
+  
+  p1 <- 1 - exp(b + w * X[1, 2]) / (1 + exp(b + w * X[1, 2]))
+  p2 <- 1 - exp(b + w * X[2, 2]) / (1 + exp(b + w * X[2, 2]))
+  p3 <- exp(b + w * X[3, 2]) / (1 + exp(b + w * X[3, 2]))
+  p4 <- 1 - exp(b + w * X[4, 2]) / (1 + exp(b + w * X[4, 2]))
+  current_lik <- p1 * p2 * p3 * p4
+  round_digits = 3
+  p1 = round(p1, digits = round_digits)
+  p2 = round(p2, digits = round_digits)
+  p3 = round(p3, digits = round_digits)
+  p4 = round(p4, digits = round_digits)
+  current_lik = round(current_lik, round_digits)
+
+  
+  mse_expr <- substitute(paste("P(Observed y's) = ", p1, " * ", p2, " * ", p3, " * ", p4, " = ", current_lik), list(p1 = p1, p2 = p2, p3 = p3, p4 = p4, current_lik = current_lik))
+  
+  ggplot(data = sample_data, mapping = aes(x = x)) +
+    geom_point(mapping = aes(y = y)) +
+    stat_function(fun = function(x, b, w) { exp(b + w * x) / (1 + exp(b + w * x)) }, args = list(b = b, w = w)) +
+    #geom_segment(data = rdf1, mapping = aes(x = x, y = y, xend = xend, yend = yend), color = "cornflowerblue") +
+    #geom_segment(data = rdf2, mapping = aes(x = x, y = y, xend = xend, yend = yend), color = "cornflowerblue") +
+    #geom_segment(data = rdf3, mapping = aes(x = x, y = y, xend = xend, yend = yend), color = "cornflowerblue") +
+    scale_x_continuous(limits = c(-5, 5), oob = rescale_none) +
+    scale_y_continuous(limits = c(0, 1), oob = rescale_none) +
+    #xlim(c(-5, 5)) +
+    #ylim(c(0, 6)) +
+    theme_bw() +
+    ggtitle(mse_expr)
+})
+```
+
+
+Column {data-width=500}
+-------------------------------------
+
+### Cross-Entropy as a function of b and w {data-height=400}
+
+```{r}
+renderRglwidget({
+    n <- 100
+    b <- input$b
+    w <- input$w
+    try(rgl.close())
+    #rgl.open(useNULL=TRUE)
+    
+    
+    log_p11 <- (b + w * X[1, 2])
+    log_p10 <- 0
+    log_sum_p1 <- rowLogSumExps(cbind(log_p11, log_p10))
+    log_p11 <- log_p11 - log_sum_p1
+    log_p10 <- log_p10 - log_sum_p1
+    
+    log_p21 <- (b + w * X[2, 2])
+    log_p20 <- 0
+    log_sum_p2 <- rowLogSumExps(cbind(log_p21, log_p20))
+    log_p21 <- log_p21 - log_sum_p2
+    log_p20 <- log_p20 - log_sum_p2
+    
+    log_p31 <- (b + w * X[3, 2])
+    log_p30 <- 0
+    log_sum_p3 <- rowLogSumExps(cbind(log_p31, log_p30))
+    log_p31 <- log_p31 - log_sum_p3
+    log_p30 <- log_p30 - log_sum_p3
+    
+    log_p41 <- (b + w * X[4, 2])
+    log_p40 <- 0
+    log_sum_p4 <- rowLogSumExps(cbind(log_p41, log_p40))
+    log_p41 <- log_p41 - log_sum_p4
+    log_p40 <- log_p40 - log_sum_p4
+
+    current_crossent <- -1 * (log_p10 + log_p20 + log_p31 + log_p40)
+
+    #junk <- open3d()
+    junk <- open3d(useNULL=TRUE)
+    z_max <- max(crossent_plot_df$Z)
+    plot3d(X1, X2, xlim=c(min(unexpanded_X), max(unexpanded_X)), ylim=c(min(unexpanded_Y), max(unexpanded_Y)), zlim=c(0, z_max), zlab="Cross-Entropy", xlab = "b", ylab = "w", mouseMode = "zAxis")
+    surface3d(X1, X2, crossent_plot_df$Z, alpha = 0.5, col = crossent_z_col)
+    points3d(matrix(c(beta_hat[1], beta_hat[2], min_crossent), nrow = 1), col = crossent_z_colorlut[1000], size = 8.0)
+    points3d(matrix(c(b, w, current_crossent), nrow = 1), col = "#00000000", size = 8.0)
+    
+    view3d(userMatrix = structure(c(0.476727247238159, -0.212129727005959, 0.853072345256805, 
+    0, 0.879015803337097, 0.106304869055748, -0.464790940284729, 
+    0, 0.00791021343320608, 0.971442461013794, 0.237143740057945, 
+    0, 0, 0, 0, 1), .Dim = c(4L, 4L)))
+    rglwidget()
+  },
+  outputArgs = list(width = "auto", height = "300px"))
+```
+
+### Likelihood as a function of b and w {data-height=400}
+
+```{r, eval = TRUE}
+renderRglwidget({
+    n <- 100
+    b <- input$b
+    w <- input$w
+    try(rgl.close())
+    #rgl.open(useNULL=TRUE)
+    p1 <- 1 - exp(b + w * X[1, 2]) / (1 + exp(b + w * X[1, 2]))
+    p2 <- 1 - exp(b + w * X[2, 2]) / (1 + exp(b + w * X[2, 2]))
+    p3 <- exp(b + w * X[3, 2]) / (1 + exp(b + w * X[3, 2]))
+    p4 <- 1 - exp(b + w * X[4, 2]) / (1 + exp(b + w * X[4, 2]))
+    current_lik <- p1 * p2 * p3 * p4
+
+    junk <- open3d(useNULL=TRUE)
+    z_max <- max(lik_plot_df$Z)
+    
+    plot3d(X1, X2, xlim=c(min(unexpanded_X), max(unexpanded_X)), ylim=c(min(unexpanded_Y), max(unexpanded_Y)), zlim=c(0, z_max), zlab="Likelihood", xlab = "b", ylab = "w", mouseMode = "zAxis")
+    surface3d(X1, X2, lik_plot_df$Z, alpha = 0.5, col = crossent_z_col)
+    points3d(matrix(c(beta_hat[1], beta_hat[2], max_lik), nrow = 1), col = lik_z_colorlut[1000], size = 8.0)
+    points3d(matrix(c(b, w, current_lik), nrow = 1), col = "#00000000", size = 8.0)
+    
+    view3d(userMatrix = structure(c(0.476727247238159, -0.212129727005959, 0.853072345256805, 
+    0, 0.879015803337097, 0.106304869055748, -0.464790940284729, 
+    0, 0.00791021343320608, 0.971442461013794, 0.237143740057945, 
+    0, 0, 0, 0, 1), .Dim = c(4L, 4L)))
+    rglwidget()
+  },
+  outputArgs = list(width = "auto", height = "300px"))
+```

@@ -1,0 +1,370 @@
+---
+title: "Maximum Likelihood and Cost Minimization for Linear Regression"
+output:
+  flexdashboard::flex_dashboard:
+    vertical_layout: fill
+    theme: lumen
+runtime: shiny
+---
+
+```{r global, include=FALSE}
+library(readr)
+library(dplyr)
+library(tidyr)
+library(purrr)
+library(ggplot2)
+library(gridExtra)
+library(shinythemes)
+library(rgl)
+library(scales)
+
+sample_data <- data.frame(
+  x = c(1-3, 3-3, 5-3),
+  y = c(2, 4, 5)
+)
+
+X <- cbind(
+  c(1, 1, 1),
+  sample_data$x
+)
+y <- matrix(sample_data$y)
+
+beta_hat <- solve(t(X) %*% X) %*% t(X) %*% y
+
+
+#X1 <- unexpanded_X <- seq(from = -25, to = 25, length = 101)
+#X2 <- unexpanded_Y <- seq(from = -12.5, to = 12.5, length = 101)
+X1 <- unexpanded_X <- seq(from = -10, to = 15, length = 101)
+X2 <- unexpanded_Y <- seq(from = -5, to = 6, length = 101)
+
+mse_plot_df <- as.data.frame(expand.grid(X = unexpanded_X, Y = unexpanded_Y))
+mse_plot_df$Z <- ((y[1, 1] - (mse_plot_df$X + mse_plot_df$Y * X[1, 2]))^2 + 
+  (y[2, 1] - (mse_plot_df$X + mse_plot_df$Y * X[2, 2]))^2 +
+  (y[3, 1] - (mse_plot_df$X + mse_plot_df$Y * X[3, 2]))^2)/3
+
+mse_z_max <- 300
+mse_plot_df$Z[mse_plot_df$Z >= mse_z_max] <- mse_z_max
+
+min_rss <- (y[1, 1] - (beta_hat[1, 1] + beta_hat[2, 1] * X[1, 2]))^2 + 
+  (y[2, 1] - (beta_hat[1, 1] + beta_hat[2, 1] * X[2, 2]))^2 +
+  (y[3, 1] - (beta_hat[1, 1] + beta_hat[2, 1] * X[3, 2]))^2
+min_mse <- min_rss / 3
+
+color_n <- 1000 # number of colors used
+
+mse_z_lim <- range(mse_plot_df$Z)
+mse_z_range <- mse_z_lim[2] - mse_z_lim[1]
+mse_z_colorlut <- rev(rainbow(1000, start = 0, end = 4/6)) # height color lookup table
+mse_z_col <- mse_z_colorlut[ floor(color_n * (mse_plot_df$Z - mse_z_lim[1])/mse_z_range) + 1 ]
+
+
+
+lik_plot_df <- as.data.frame(expand.grid(X = unexpanded_X, Y = unexpanded_Y))
+lik_plot_df$Z <- dnorm(y[1, 1], mean = (lik_plot_df$X + lik_plot_df$Y * X[1, 2]), sd = 1) *
+  dnorm(y[2, 1] - (lik_plot_df$X + lik_plot_df$Y * X[2, 2]), sd = 1) *
+  dnorm(y[3, 1] - (lik_plot_df$X + lik_plot_df$Y * X[3, 2]), sd = 1)
+
+lik_z_max <- 300
+lik_plot_df$Z[lik_plot_df$Z >= lik_z_max] <- lik_z_max
+
+max_lik <- dnorm(y[1, 1], (beta_hat[1, 1] + beta_hat[2, 1] * X[1, 2]), sd = 1) * 
+  dnorm(y[2, 1], (beta_hat[1, 1] + beta_hat[2, 1] * X[2, 2]), sd = 1) *
+  dnorm(y[3, 1], (beta_hat[1, 1] + beta_hat[2, 1] * X[3, 2]), sd = 1)
+
+color_n <- 1000 # number of colors used
+
+lik_z_lim <- range(mse_plot_df$Z)
+lik_z_range <- lik_z_lim[2] - lik_z_lim[1]
+lik_z_colorlut <- rev(rainbow(1000, start = 0, end = 4/6)) # height color lookup table
+lik_z_col <- mse_z_colorlut[ floor(color_n * (lik_plot_df$Z - lik_z_lim[1])/lik_z_range) + 1 ]
+```
+
+Inputs {.sidebar data-width=300}
+-------------------------------------
+
+
+### Data and Model
+
+Suppose we have $m = 3$ observations with $p = 1$ explanatory variable:
+
+ * $x^{(1)} = -2$, $y^{(1)} = 2$
+ * $x^{(2)} = 0$, $y^{(2)} = 4$
+ * $x^{(3)} = 2$, $y^{(3)} = 5$
+
+Three equivalent statements of a simple linear regression model:
+
+ * $y^{(i)} = \beta_0 + \beta_1 x^{(i)} + \varepsilon^{(i)}$, where $\varepsilon^{(i)} \sim \text{Normal}(, \sigma^2)$
+ * $y^{(i)} \sim \text{Normal}(\beta_0 + \beta_1 x^{(i)}, \sigma^2)$
+ * $y^{(i)} \sim \text{Normal}(a^{(i)}, \sigma^2)$, where $a^{(i)} = \beta_0 + \beta_1 x^{(i)}$
+
+### Goal
+
+We pick $b$ and $w$ with the following (equivalent) goals:
+
+ * Minimize the cost, Mean Squared Error
+
+$J(b, w) = \frac{1}{m} \sum_{i = 1}^m (y^{(i)} - a^{(i)})^2$
+
+ * Maximize the likelihood
+
+$\mathcal{L}(b, w) = \prod_{i = 1}^m \frac{1}{\sqrt{2 \pi \sigma^2}}\exp\left\{\frac{-1}{2 \sigma^2}(y^{(i)} - a^{(i)})^2\right\}$
+
+
+### Intercept and Slope
+
+```{r}
+numericInput("b", label = ("b:"), value = 5)
+
+numericInput("w", label = ("w:"), value = -2)
+```
+
+Column {data-width=500}
+-------------------------------------
+
+### Mean Squared Error, current $b$ and $w$ {data-height=400}
+
+```{r}
+renderPlot({
+  b <- input$b
+  w <- input$w
+  
+  rdf1 <- data.frame(
+    x = sample_data$x[1],
+    y = sample_data$y[1],
+    xend = sample_data$x[1],
+    yend = b + w * sample_data$x[1])
+  rdf2 <- data.frame(
+    x = sample_data$x[2],
+    y = sample_data$y[2],
+    xend = sample_data$x[2],
+    yend = b + w * sample_data$x[2])
+  rdf3 <- data.frame(
+    x = sample_data$x[3],
+    y = sample_data$y[3],
+    xend = sample_data$x[3],
+    yend = b + w * sample_data$x[3])
+  
+  resid1 = rdf1$y - rdf1$yend
+  resid2 = rdf2$y - rdf2$yend
+  resid3 = rdf3$y - rdf3$yend
+  mse_res = (1/3) * (resid1^2 + resid2^2 + resid3^2)
+  
+  mse_expr <- substitute(paste("MSE = ", frac(1, 3), "(", resid1^2, " + ", resid2^2, " + ", resid3^2, ") = ", mse_res), list(resid1 = resid1, resid2 = resid2, resid3 = resid3, mse_res = mse_res))
+  
+  ggplot() +
+    geom_point(data = sample_data, mapping = aes(x = x, y = y)) +
+    geom_abline(intercept = b, slope = w) +
+    geom_segment(data = rdf1, mapping = aes(x = x, y = y, xend = xend, yend = yend), color = "cornflowerblue") +
+    geom_segment(data = rdf2, mapping = aes(x = x, y = y, xend = xend, yend = yend), color = "cornflowerblue") +
+    geom_segment(data = rdf3, mapping = aes(x = x, y = y, xend = xend, yend = yend), color = "cornflowerblue") +
+    scale_x_continuous(limits = c(-5, 5), oob = rescale_none) +
+    scale_y_continuous(limits = c(0, 6), oob = rescale_none) +
+    #xlim(c(-5, 5)) +
+    #ylim(c(0, 6)) +
+    theme_bw() +
+    ggtitle(mse_expr)
+})
+```
+
+### Likelihood, current $b$ and $w$ {data-height=400}
+
+```{r}
+renderRglwidget({
+    n <- 100
+    b <- input$b
+    w <- input$w
+    try(rgl.close())
+    junk <- open3d(useNULL=TRUE)
+    z_max <- 0.4
+    #plot3d(X1, X2, xlim=c(min(unexpanded_X), max(unexpanded_X)), ylim=c(min(unexpanded_Y), max(unexpanded_Y)), zlim=c(0, z_max), zlab="MSE", xlab = "b", ylab = "w", mouseMode = "zAxis")
+    #surface3d(X1, X2, mse_plot_df$Z, alpha = 0.5, col = mse_z_col)
+    #points3d(matrix(c(beta_hat[1, 1], beta_hat[2, 1], min_rss), nrow = 1), col = mse_z_colorlut[1000], size = 8.0)
+    #points3d(matrix(c(b, w, current_mse), nrow = 1), col = "#00000000", size = 8.0)
+    #plot3d()
+    plot3d(sample_data$x, sample_data$y, rep(0, 3), xlim=c(-5, 5), ylim=c(0, 6), zlim=c(0, z_max), zlab="f(y | a)", xlab = "x", ylab = "y", mouseMode = "zAxis")
+#        points3d(as.matrix(sample_data %>% mutate(z = 0)), col = "#00000000", size = 8.0)
+
+    line_to_plot <- data.frame(
+      x = seq(from = -5, to = 5, length = 101),
+      y = b + w * seq(from = -5, to = 5, length = 101),
+      z = rep(0, 101)
+    ) %>%
+      filter(y >= 0, y <= 6)
+    
+    if(nrow(line_to_plot) > 0) {
+      lines3d(
+        line_to_plot$x,
+        line_to_plot$y,
+        line_to_plot$z,
+        col = "#00000000"
+      )
+    }
+    
+    ind <- 1L
+    normal_to_plot1 <- data.frame(
+      x = rep(sample_data$x[ind], length = 101),
+      y = seq(from = 0, to = 6, length = 101),
+      z = dnorm(seq(from = 0, to = 6, length = 101), mean = b + w * sample_data$x[ind], sd = 1)
+    )
+    lines3d(
+      normal_to_plot1$x,
+      normal_to_plot1$y,
+      normal_to_plot1$z,
+      col = "#00000000"#lik_z_colorlut[300]
+    )
+    lines3d(
+      rep(sample_data$x[ind], 101),
+      rep(sample_data$y[ind], 101),
+      seq(from = 0, to = dnorm(sample_data$y[ind], mean = b + w * sample_data$x[ind], sd = 1), length = 101),
+      col = lik_z_colorlut[300]
+    )
+    if(b + w * sample_data$x[ind] >= 0 && b + w * sample_data$x[ind] <= 6) {
+      lines3d(
+        rep(sample_data$x[ind], 101),
+        rep(b + w * sample_data$x[ind], 101),
+        seq(from = 0, to = dnorm(b + w * sample_data$x[ind], mean = b + w * sample_data$x[ind], sd = 1), length = 101)
+      )
+    }
+    dnorm1 = dnorm(sample_data$y[ind], mean = b + w * sample_data$x[ind], sd = 1)
+
+    ind <- 2L
+    normal_to_plot1 <- data.frame(
+      x = rep(sample_data$x[ind], length = 101),
+      y = seq(from = 0, to = 6, length = 101),
+      z = dnorm(seq(from = 0, to = 6, length = 101), mean = b + w * sample_data$x[ind], sd = 1)
+    )
+    lines3d(
+      normal_to_plot1$x,
+      normal_to_plot1$y,
+      normal_to_plot1$z,
+      col = "#00000000"#lik_z_colorlut[300]
+    )
+    lines3d(
+      rep(sample_data$x[ind], 101),
+      rep(sample_data$y[ind], 101),
+      seq(from = 0, to = dnorm(sample_data$y[ind], mean = b + w * sample_data$x[ind], sd = 1), length = 101),
+      col = lik_z_colorlut[300]
+    )
+    if(b + w * sample_data$x[ind] >= 0 && b + w * sample_data$x[ind] <= 6) {
+      lines3d(
+        rep(sample_data$x[ind], 101),
+        rep(b + w * sample_data$x[ind], 101),
+        seq(from = 0, to = dnorm(b + w * sample_data$x[ind], mean = b + w * sample_data$x[ind], sd = 1), length = 101)
+      )
+    }
+    dnorm2 = dnorm(sample_data$y[ind], mean = b + w * sample_data$x[ind], sd = 1)
+
+    ind <- 3L
+    normal_to_plot1 <- data.frame(
+      x = rep(sample_data$x[ind], length = 101),
+      y = seq(from = 0, to = 6, length = 101),
+      z = dnorm(seq(from = 0, to = 6, length = 101), mean = b + w * sample_data$x[ind], sd = 1)
+    )
+    lines3d(
+      normal_to_plot1$x,
+      normal_to_plot1$y,
+      normal_to_plot1$z,
+      col = "#00000000"#lik_z_colorlut[300]
+    )
+    lines3d(
+      rep(sample_data$x[ind], 101),
+      rep(sample_data$y[ind], 101),
+      seq(from = 0, to = dnorm(sample_data$y[ind], mean = b + w * sample_data$x[ind], sd = 1), length = 101),
+      col = lik_z_colorlut[300]
+    )
+    if(b + w * sample_data$x[ind] >= 0 && b + w * sample_data$x[ind] <= 6) {
+      lines3d(
+        rep(sample_data$x[ind], 101),
+        rep(b + w * sample_data$x[ind], 101),
+        seq(from = 0, to = dnorm(b + w * sample_data$x[ind], mean = b + w * sample_data$x[ind], sd = 1), length = 101)
+      )
+    }
+    dnorm3 = dnorm(sample_data$y[ind], mean = b + w * sample_data$x[ind], sd = 1)
+    
+    round_digits = 3
+    dnorm1 = round(dnorm1, digits = round_digits)
+    dnorm2 = round(dnorm2, digits = round_digits)
+    dnorm3 = round(dnorm3, digits = round_digits)
+    dnorm_prod = round(dnorm1 * dnorm2 * dnorm3, round_digits)
+
+    bgplot3d({
+      plot.new()
+      title(main = substitute(paste(italic(L)(b, w), " = ", dnorm1, "*", dnorm2, "*", dnorm3, " = ", dnorm_prod)), line = 3)
+      #mtext(side = 1, 'This is a subtitle', line = 4)
+      # use here any other way you fancy to write your title
+    })
+    
+    view3d(userMatrix = structure(c(0.476727247238159, -0.212129727005959, 0.853072345256805, 
+    0, 0.879015803337097, 0.106304869055748, -0.464790940284729, 
+    0, 0.00791021343320608, 0.971442461013794, 0.237143740057945, 
+    0, 0, 0, 0, 1), .Dim = c(4L, 4L)))
+    rglwidget()
+  },
+  outputArgs = list(width = "auto", height = "auto"))#, height = "300px"))
+```
+
+
+Column {data-width=500}
+-------------------------------------
+
+### MSE as a function of b and w {data-height=400}
+
+```{r}
+renderRglwidget({
+    n <- 100
+    b <- input$b
+    w <- input$w
+    try(rgl.close())
+    #rgl.open(useNULL=TRUE)
+    
+    current_rss <- (y[1, 1] - (b + w * X[1, 2]))^2 + 
+      (y[2, 1] - (b + w * X[2, 2]))^2 +
+      (y[3, 1] - (b + w * X[3, 2]))^2
+    current_mse <- current_rss / 3
+    
+    #junk <- open3d()
+    junk <- open3d(useNULL=TRUE)
+    z_max <- max(mse_plot_df$Z)
+    plot3d(X1, X2, xlim=c(min(unexpanded_X), max(unexpanded_X)), ylim=c(min(unexpanded_Y), max(unexpanded_Y)), zlim=c(0, z_max), zlab="MSE", xlab = "b", ylab = "w", mouseMode = "zAxis")
+    surface3d(X1, X2, mse_plot_df$Z, alpha = 0.5, col = mse_z_col)
+    points3d(matrix(c(beta_hat[1, 1], beta_hat[2, 1], min_rss), nrow = 1), col = mse_z_colorlut[1000], size = 8.0)
+    points3d(matrix(c(b, w, current_mse), nrow = 1), col = "#00000000", size = 8.0)
+    
+    view3d(userMatrix = structure(c(0.476727247238159, -0.212129727005959, 0.853072345256805, 
+    0, 0.879015803337097, 0.106304869055748, -0.464790940284729, 
+    0, 0.00791021343320608, 0.971442461013794, 0.237143740057945, 
+    0, 0, 0, 0, 1), .Dim = c(4L, 4L)))
+    rglwidget()
+  },
+  outputArgs = list(width = "auto", height = "300px"))
+```
+
+### Likelihood as a function of b and w {data-height=400}
+
+```{r}
+renderRglwidget({
+    n <- 100
+    b <- input$b
+    w <- input$w
+    try(rgl.close())
+    #rgl.open(useNULL=TRUE)
+    current_lik <- dnorm(y[1, 1], (b + w * X[1, 2]), sd = 1) * 
+      dnorm(y[2, 1], (b + w * X[2, 2]), sd = 1) *
+      dnorm(y[3, 1], (b + w * X[3, 2]), sd = 1)
+    
+    junk <- open3d(useNULL=TRUE)
+    z_max <- max(lik_plot_df$Z)
+    
+    plot3d(X1, X2, xlim=c(min(unexpanded_X), max(unexpanded_X)), ylim=c(min(unexpanded_Y), max(unexpanded_Y)), zlim=c(0, z_max), zlab="Likelihood", xlab = "b", ylab = "w", mouseMode = "zAxis")
+    surface3d(X1, X2, lik_plot_df$Z, alpha = 0.5, col = mse_z_col)
+    points3d(matrix(c(beta_hat[1, 1], beta_hat[2, 1], max_lik), nrow = 1), col = lik_z_colorlut[1000], size = 8.0)
+    points3d(matrix(c(b, w, current_lik), nrow = 1), col = "#00000000", size = 8.0)
+    
+    view3d(userMatrix = structure(c(0.476727247238159, -0.212129727005959, 0.853072345256805, 
+    0, 0.879015803337097, 0.106304869055748, -0.464790940284729, 
+    0, 0.00791021343320608, 0.971442461013794, 0.237143740057945, 
+    0, 0, 0, 0, 1), .Dim = c(4L, 4L)))
+    rglwidget()
+  },
+  outputArgs = list(width = "auto", height = "300px"))
+```
