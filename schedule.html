@@ -454,7 +454,22 @@ $(document).ready(function () {
 <li><strong>In class</strong>, we will work on:
 <ul>
 <li><strong>Quiz</strong> on logistic regression</li>
-<li>Maybe start on hidden layers and forward propagation?</li>
+<li>Highlights from last class (see also first page of lecture notes below) <img src="materials/20200131_multinomial_logistic/blackboard.jpg" /></li>
+<li>More concrete example of calculations for multinomial logistic regression
+<ul>
+<li>Lecture notes: <a href="materials/20200131_multinomial_logistic/lecture_notes.pdf">pdf</a></li>
+<li>We also wrote out that for <span class="math inline">\(m\)</span> observations, <span class="math display">\[\begin{align*}
+z &amp;= \begin{bmatrix} z^{(1)} &amp; \cdots &amp; z^{(m)} \end{bmatrix} = \begin{bmatrix} z^{(1)}_1 &amp; \cdots &amp; z^{(m)}_1 \\ z^{(1)}_2 &amp; \cdots &amp; z^{(m)}_2 \\ \vdots &amp; \ddots &amp; \vdots \\ z^{(1)}_K &amp; \cdots &amp; z^{(m)}_K \end{bmatrix} \\
+&amp;= \begin{bmatrix} b_1 + w_1^T x^{(1)} &amp; \cdots &amp; b_1 + w_1^T x^{(m)} \\ b_2 + w_2^T x^{(1)} &amp; \cdots &amp; b_2 + w_2^T x^{(m)} \\ \vdots &amp; \ddots &amp; \vdots \\ b_K + w_K^T x^{(1)} &amp; \cdots &amp; b_K + w_K^T x^{(m)}  \end{bmatrix} \\
+&amp;= \begin{bmatrix} b_1 \\ b_2 \\ \vdots \\ b_K \end{bmatrix} + \begin{bmatrix} w_1^T \\ w_2^T \\ \vdots \\ w_K^T \end{bmatrix} \begin{bmatrix} x^{(1)} &amp; x^{(2)} &amp; \cdots &amp; x^{(m)} \end{bmatrix}
+\end{align*}\]</span> where the last equals sign uses Python broadcasting to pull out the vector <span class="math inline">\(b\)</span>.</li>
+<li>Hand out doing the calculations: <a href="materials/20200131_multinomial_logistic/20200131_multnomial_logistic.pdf">pdf</a></li>
+</ul></li>
+<li>General Python stuff (also posted on resources page)
+<ul>
+<li>Plotting with matplotlib <a href="resources/matplotlib.pdf">pdf</a></li>
+<li>Basic use of Keras <a href="resources/keras.pdf">pdf</a></li>
+</ul></li>
 </ul></li>
 <li><strong>After class</strong>, please:
 <ul>
@@ -465,6 +480,19 @@ $(document).ready(function () {
 <li><strong>Lab 1</strong>
 <ul>
 <li>Due 5pm Fri, Jan 31</li>
+</ul></li>
+<li><strong>Homework 2</strong>
+<ul>
+<li>Coding part due 5pm Fri, Feb 7</li>
+</ul></li>
+<li><strong>Videos</strong>
+<ul>
+<li>Some of you may find this sequence of three videos introducing Keras helpful (note that I will follow the code in Chollet, which differs slightly from code used in these videos):
+<ul>
+<li>Video 1: <a href="https://www.youtube.com/watch?v=UkzhouEk6uY&amp;list=PLZbbT5o_s2xrwRnXk_yCPtnqqo4_u2YGL&amp;index=3">data set up</a></li>
+<li>Video 2: <a href="https://www.youtube.com/watch?v=Boo6SmgmHuM&amp;list=PLZbbT5o_s2xrwRnXk_yCPtnqqo4_u2YGL&amp;index=4">defining the network</a></li>
+<li>Video 3: <a href="https://www.youtube.com/watch?v=EHbay6hDZGA&amp;list=PLZbbT5o_s2xrwRnXk_yCPtnqqo4_u2YGL&amp;index=5">training models</a></li>
+</ul></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -483,8 +511,7 @@ $(document).ready(function () {
 <ul>
 <li><strong>In class</strong>, we will work on:
 <ul>
-<li>Hidden layers and forward propagation if not done last Friday</li>
-<li>Otherwise, start on gradient descent</li>
+<li>Hidden layers and forward propagation</li>
 </ul></li>
 <li><strong>After class</strong>, please:</li>
 </ul>
@@ -492,7 +519,7 @@ $(document).ready(function () {
 <ul>
 <li><strong>In class</strong>, we will work on:
 <ul>
-<li>Backpropagation</li>
+<li>Gradient Descent, start on backpropagation</li>
 </ul></li>
 <li><strong>After class</strong>, please:</li>
 </ul>
@@ -500,7 +527,7 @@ $(document).ready(function () {
 <ul>
 <li><strong>In class</strong>, we will work on:
 <ul>
-<li>More on backpropagation?</li>
+<li>Backpropagation</li>
 </ul></li>
 <li><strong>After class</strong>, please:</li>
 </ul>

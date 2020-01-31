@@ -190,19 +190,25 @@ renderPlot({
   w <- input$w
   
   p1 <- 1 - exp(b + w * X[1, 2]) / (1 + exp(b + w * X[1, 2]))
+  p1orig <- exp(b + w * X[1, 2]) / (1 + exp(b + w * X[1, 2]))
   p2 <- 1 - exp(b + w * X[2, 2]) / (1 + exp(b + w * X[2, 2]))
+  p2orig <- exp(b + w * X[2, 2]) / (1 + exp(b + w * X[2, 2]))
   p3 <- exp(b + w * X[3, 2]) / (1 + exp(b + w * X[3, 2]))
   p4 <- 1 - exp(b + w * X[4, 2]) / (1 + exp(b + w * X[4, 2]))
+  p4orig <- exp(b + w * X[4, 2]) / (1 + exp(b + w * X[4, 2]))
   current_lik <- p1 * p2 * p3 * p4
   round_digits = 3
   p1 = round(p1, digits = round_digits)
   p2 = round(p2, digits = round_digits)
   p3 = round(p3, digits = round_digits)
   p4 = round(p4, digits = round_digits)
+  p1orig = round(p1orig, digits = round_digits)
+  p2orig = round(p2orig, digits = round_digits)
+  p4orig = round(p4orig, digits = round_digits)
   current_lik = round(current_lik, round_digits)
 
   
-  mse_expr <- substitute(paste("P(Observed y's) = ", p1, " * ", p2, " * ", p3, " * ", p4, " = ", current_lik), list(p1 = p1, p2 = p2, p3 = p3, p4 = p4, current_lik = current_lik))
+  mse_expr <- substitute(paste("P(Observed y's) = (1 - ", p1orig, ")(1 - ", p2orig, ")(", p3, ")(1 - ", p4orig, ") = ", p1, " * ", p2, " * ", p3, " * ", p4, " = ", current_lik), list(p1orig = p1orig, p2orig = p2orig, p4orig = p4orig, p1 = p1, p2 = p2, p3 = p3, p4 = p4, current_lik = current_lik))
   
   ggplot(data = sample_data, mapping = aes(x = x)) +
     geom_point(mapping = aes(y = y)) +

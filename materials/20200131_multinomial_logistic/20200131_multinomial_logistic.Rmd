@@ -1,0 +1,107 @@
+---
+title: "Multinomial Logistic Example"
+subtitle: "Jan. 31, 2020"
+output:
+  pdf_document:
+    keep_tex: true
+    highlight: zenburn
+header-includes:
+   - \usepackage{soul}
+   - \usepackage{booktabs}
+documentclass: extarticle
+geometry: margin=0.6in
+---
+
+```{r global_options, include=FALSE}
+library(knitr)
+library(reticulate)
+use_python("/Users/eray/anaconda3/bin/python")
+knitr::opts_chunk$set(eval = TRUE, echo=TRUE, engine='python')
+#knitr::knit_engines$set(python = reticulate::eng_python)
+```
+
+## Example
+
+Suppose we're fitting a model to classify an animal as either dog, cat, or bird based on its weight:
+
+$y^{(i)} = \begin{cases}
+1 \text{ if animial $i$ is a dog} \\
+2 \text{ if animial $i$ is a cat} \\
+3 \text{ if animial $i$ is a bird} \\
+\end{cases}$
+
+$x^{(i)} = \text{weight of animal $i$ in pounds}$
+
+Suppose we have fit a model and obtained the following estimates:
+
+ * $b_1 = -4$, $w_{11} = 2.3$
+ * $b_2 = 0$, $w_{21} = 2$
+ * $b_3 = 10$, $w_{31} = -5$
+
+Let's make a plot of the estimated probability of each class, as a function of the animal's weight $x$.
+
+I have secretly defined (because I'm going to ask you to implement this function in your next homework) a function called `softmax` with the following docstring:
+```
+'''
+Calculate softmax(z) where z is a K by M matrix
+
+Arguments:
+ - z, a K by M matrix: row j and column m of z contains b_j + w_j^T x^(i),
+   the linear input to softmax for class j and observation number m
+
+Return:
+ - a K by M matrix where column m is calculated as softmax of column m of z
+'''
+```
+
+#### Import libraries:
+
+```{python}
+import numpy as np
+import matplotlib.pyplot as plt
+```
+
+```{python, echo = FALSE}
+def softmax(z):
+  t = np.exp(z)
+  t_sum = np.sum(t, axis = 0)
+  return(t / t_sum)
+```
+
+#### Define a grid of 101 values of x between 0 and 20 at which to compute class probabilities
+
+```{python}
+x = np.linspace(0, 20, 101).reshape((1, 101))
+print("x: " + str(x))
+```
+
+\newpage
+
+#### Parameter values
+
+```{python}
+b = np.array([[-4], [0], [10]])
+print("b: " + str(b))
+w_T = np.array([[2.3], [2], [-5]])
+print("w_T: " + str(w_T))
+```
+
+#### Compute z and a (both are 3 by 101)
+
+```{python}
+z = b + np.dot(w_T, x)
+print("z shape: " + str(z.shape))
+
+a = softmax(z)
+print("a shape: " + str(a.shape))
+```
+
+#### Make a plot
+
+```{python, fig.height = 3}
+plt.plot(x[0, :], a[0, :], c = "blue", label = "Probability of Dog")
+plt.plot(x[0, :], a[1, :], c = "orange", label = "Probability of Cat")
+plt.plot(x[0, :], a[2, :], c = "purple", label = "Probability of Bird")
+plt.legend(loc = "upper right")
+plt.show()
+```

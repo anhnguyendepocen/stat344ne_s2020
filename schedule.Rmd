@@ -89,12 +89,6 @@ make_week_box("week1", FALSE, "Week 1: Jan 20 -- Jan 24", "
         * Written part due 5pm Wed, Jan 29
         * Coding part due 5 pm Fri, Jan 31
 ")
-
-#    * **Videos**
-#        * Some of you may find this sequence of three videos introducing Keras helpful (note that I will follow the code in Chollet, which differs slightly from code used in these videos):
-#            * Video 1: [data set up](https://www.youtube.com/watch?v=UkzhouEk6uY&list=PLZbbT5o_s2xrwRnXk_yCPtnqqo4_u2YGL&index=3)
-#            * Video 2: [defining the network](https://www.youtube.com/watch?v=Boo6SmgmHuM&list=PLZbbT5o_s2xrwRnXk_yCPtnqqo4_u2YGL&index=4)
-#            * Video 3: [training models](https://www.youtube.com/watch?v=EHbay6hDZGA&list=PLZbbT5o_s2xrwRnXk_yCPtnqqo4_u2YGL&index=5)
 ```
 
 ```{r, echo = FALSE, results='asis'}
@@ -131,33 +125,50 @@ make_week_box("week2", TRUE, "Week 2: Jan 27 -- Jan 31", "
 #### Fri, Jan 31
  * **In class**, we will work on:
     * **Quiz** on logistic regression
-    * Maybe start on hidden layers and forward propagation?
+    * Highlights from last class (see also first page of lecture notes below) ![](materials/20200131_multinomial_logistic/blackboard.jpg)
+    * More concrete example of calculations for multinomial logistic regression
+        * Lecture notes: [pdf](materials/20200131_multinomial_logistic/lecture_notes.pdf)
+        * We also wrote out that for $m$ observations,
+        \\begin{align*}
+z &= \\begin{bmatrix} z^{(1)} & \\cdots & z^{(m)} \\end{bmatrix} = \\begin{bmatrix} z^{(1)}_1 & \\cdots & z^{(m)}_1 \\\\ z^{(1)}_2 & \\cdots & z^{(m)}_2 \\\\ \\vdots & \\ddots & \\vdots \\\\ z^{(1)}_K & \\cdots & z^{(m)}_K \\end{bmatrix} \\\\
+&= \\begin{bmatrix} b_1 + w_1^T x^{(1)} & \\cdots & b_1 + w_1^T x^{(m)} \\\\ b_2 + w_2^T x^{(1)} & \\cdots & b_2 + w_2^T x^{(m)} \\\\ \\vdots & \\ddots & \\vdots \\\\ b_K + w_K^T x^{(1)} & \\cdots & b_K + w_K^T x^{(m)}  \\end{bmatrix} \\\\
+&= \\begin{bmatrix} b_1 \\\\ b_2 \\\\ \\vdots \\\\ b_K \\end{bmatrix} + \\begin{bmatrix} w_1^T \\\\ w_2^T \\\\ \\vdots \\\\ w_K^T \\end{bmatrix} \\begin{bmatrix} x^{(1)} & x^{(2)} & \\cdots & x^{(m)} \\end{bmatrix}
+\\end{align*} where the last equals sign uses Python broadcasting to pull out the vector $b$.
+        * Hand out doing the calculations: [pdf](materials/20200131_multinomial_logistic/20200131_multnomial_logistic.pdf)
+    * General Python stuff (also posted on resources page)
+        * Plotting with matplotlib [pdf](resources/matplotlib.pdf)
+        * Basic use of Keras [pdf](resources/keras.pdf)
  * **After class**, please:
     * **Homework 1**
         * Coding part due 5 pm **today** Fri, Jan 31
     * **Lab 1**
         * Due 5pm Fri, Jan 31
-")
+    * **Homework 2**
+        * Coding part due 5pm Fri, Feb 7
+    * **Videos**
+        * Some of you may find this sequence of three videos introducing Keras helpful (note that I will follow the code in Chollet, which differs slightly from code used in these videos):
+            * Video 1: [data set up](https://www.youtube.com/watch?v=UkzhouEk6uY&list=PLZbbT5o_s2xrwRnXk_yCPtnqqo4_u2YGL&index=3)
+            * Video 2: [defining the network](https://www.youtube.com/watch?v=Boo6SmgmHuM&list=PLZbbT5o_s2xrwRnXk_yCPtnqqo4_u2YGL&index=4)
+            * Video 3: [training models](https://www.youtube.com/watch?v=EHbay6hDZGA&list=PLZbbT5o_s2xrwRnXk_yCPtnqqo4_u2YGL&index=5)")
 ```
 
 ```{r, echo = FALSE, results='asis'}
 make_week_box("week3", TRUE, "Week 3: Feb 03 -- Feb 07", "
 #### Mon, Feb 03
  * **In class**, we will work on:
-    * Hidden layers and forward propagation if not done last Friday
-    * Otherwise, start on gradient descent
+    * Hidden layers and forward propagation
  * **After class**, please:
 
 
 #### Wed, Feb 05
  * **In class**, we will work on:
-    * Backpropagation
+    * Gradient Descent, start on backpropagation
  * **After class**, please:
 
 
 #### Fri, Feb 07
  * **In class**, we will work on:
-    * More on backpropagation?
+    * Backpropagation
  * **After class**, please:
 ")
 ```

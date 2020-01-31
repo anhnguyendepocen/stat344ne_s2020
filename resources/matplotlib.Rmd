@@ -1,0 +1,87 @@
+---
+title: "matplotlib"
+output:
+  pdf_document:
+    keep_tex: true
+    highlight: zenburn
+header-includes:
+   - \usepackage{soul}
+   - \usepackage{booktabs}
+documentclass: extarticle
+geometry: margin=0.6in
+---
+
+```{r global_options, include=FALSE}
+library(knitr)
+library(reticulate)
+use_python("/Users/eray/anaconda3/bin/python")
+knitr::opts_chunk$set(eval = TRUE, echo=TRUE, engine='python')
+#knitr::knit_engines$set(python = reticulate::eng_python)
+```
+
+#### Background
+
+matplotlib is one of many Python libraries for plotting.  It's not neessarily my favorite but it is probably the most commonly used.
+
+There are a million ways to do things using matplotlib.  We'll use the pyplot interface; it's relatively easy to use and does everything we need it to.  I'll just show you one way to do make a couple of common plots.
+
+The examples in this document come from the matplotlib documentation.  When I want to figure out how to make a plot, I find the easiest thing to do is find an example like what I want to do at https://matplotlib.org/gallery/
+
+#### Import
+
+It's standard `import matplotlib.pyplot as plt`.  Then you will refer to functions provided by `pyplot` using the syntax `plt._____`, filling in the blank as necessary.
+
+```{python}
+import numpy as np
+np.random.seed(19680801)
+
+import matplotlib.pyplot as plt
+```
+
+#### Line Plots: `plt.plot()`
+
+Line segments connect a series of points
+
+ * First argument is a vector of numbers specifying horizontal axis coordinates of the points
+ * Second argument is a vector of numbers specifying vertical axis coordinates of the points
+ * Optional `color = ` specifies color
+ * Optional `linestyle = ` specifies linestyle: '-', '--', '-.', ':'
+ * Optional `linewidth = ` specifies width of line in pixels
+ * Optional `label = 'label'` says what label to use in a legend
+
+The easiest way to get a legend to be created is to plot things for separate groups in separate calls to `plot`.
+
+```{python, fig.height = 2}
+x = np.linspace(0, 1, 101)
+y1 = x
+y2 = x**2
+y3 = np.full_like(x, 0.5) # vector of same shape as x, filled with all 0.5
+
+plt.plot(x, y1, color = "blue", linestyle = "-", linewidth = 0.5, label = "y = x")
+plt.plot(x, y2, color = "orange", linestyle = "--", linewidth = 3, label = "y = x^2")
+plt.plot(x, y3, color = "purple", linestyle = "-.", linewidth = 5, label = "y = 0.5")
+plt.legend(loc = "upper left")
+plt.show()
+```
+
+#### Scatter Plots: `plt.scatter()`
+
+ * First argument is a vector of numbers specifying horizontal axis coordinates of the points
+ * Second argument is a vector of numbers specifying vertical axis coordinates of the points
+ * Optional `s = ` specifies point size
+ * Optional `color = ` specifies color
+ * Optional `marker = ` specifies shape used for point
+ * Optional `label = 'label'` says what label to use in a legend
+
+```{python, fig.height = 2}
+x = np.linspace(0, 1, 10)
+y1 = np.random.random(10)
+y2 = np.random.random(10)
+y3 = np.random.random(10)
+
+plt.scatter(x, y1, s = 1, color = "blue", marker = '.', label = "y1")
+plt.scatter(x, y2, s = 10, color = "orange", marker = '<', label = "y2")
+plt.scatter(x, y3, s = 20, color = "purple", marker = 'v', label = "y3")
+plt.legend(loc = "upper right")
+plt.show()
+```

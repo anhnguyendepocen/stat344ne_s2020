@@ -3,6 +3,8 @@ title: "Resources"
 ---
 
  * Python and general computing
+    * My notes on Numpy [GitHub/Jupyter notebook file](https://github.com/mhc-stat344ne-s2020/Python_NumPy_foundations/blob/master/Python.ipynb)
+    * My notes on plotting with matplotlib [pdf](resources/matplotlib.pdf)
     * [Quick reference/tutorial](https://cs231n.github.io/python-numpy-tutorial/) from CS 231n at Stanford
     * [What every computer scientist should know about floating-point arithmetic](https://docs.oracle.com/cd/E19957-01/806-3568/ncg_goldberg.html).  I'm not sure that every computer scientist really needs to know this, but a lot of people doing scientific computing do.  That said, I still haven't decided whether we'll read this.
  * Neural networks and deep learning
@@ -12,5 +14,6 @@ title: "Resources"
     * [Reinforcement Learning by Sutton and Barto](http://incompleteideas.net/book/RLbook2018.pdf).  I hope to spend some time on Reinforcement Learning later in the semester, and some of you may use it in your projects.  This book is kindof intense, but might be a helpful resource.
     * [Andrej Karpathy's Blog](http://karpathy.github.io/).  Lots of insights, less formal than the sources above.
  * Resources about Keras
+    * My notes on basic use of Keras [pdf](resources/keras.pdf)
     * [Documentation for Keras](https://keras.io/)
     * [YouTube videos about Keras](https://www.youtube.com/playlist?list=PLZbbT5o_s2xrwRnXk_yCPtnqqo4_u2YGL)

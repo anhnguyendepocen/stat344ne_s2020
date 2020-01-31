@@ -1,0 +1,249 @@
+\documentclass[]{extarticle}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=0.6in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={matplotlib},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{48,48,48}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.81,0.69}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.50,0.62,0.50}{\textbf{#1}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.80,0.80,0.80}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.86,0.64,0.64}{#1}}
+\newcommand{\BuiltInTok}[1]{\textcolor[rgb]{0.80,0.80,0.80}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.86,0.64,0.64}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.50,0.62,0.50}{#1}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.50,0.62,0.50}{\textbf{#1}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.86,0.64,0.64}{\textbf{#1}}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.94,0.87,0.69}{#1}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.87,0.87,0.75}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.86,0.86,0.80}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.50,0.62,0.50}{#1}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.76,0.75,0.62}{#1}}
+\newcommand{\ExtensionTok}[1]{\textcolor[rgb]{0.80,0.80,0.80}{#1}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.75,0.75,0.82}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.94,0.94,0.56}{#1}}
+\newcommand{\ImportTok}[1]{\textcolor[rgb]{0.80,0.80,0.80}{#1}}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.50,0.62,0.50}{\textbf{#1}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.94,0.87,0.69}{#1}}
+\newcommand{\NormalTok}[1]{\textcolor[rgb]{0.80,0.80,0.80}{#1}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.94,0.94,0.82}{#1}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.94,0.94,0.56}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{1.00,0.81,0.69}{\textbf{#1}}}
+\newcommand{\RegionMarkerTok}[1]{\textcolor[rgb]{0.80,0.80,0.80}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.86,0.64,0.64}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.80,0.58,0.58}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.80,0.58,0.58}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.80,0.80,0.80}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.80,0.58,0.58}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.50,0.62,0.50}{\textbf{#1}}}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\providecommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+
+  \title{matplotlib}
+    \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+    \author{}
+    \preauthor{}\postauthor{}
+    \date{}
+    \predate{}\postdate{}
+  
+\usepackage{soul}
+\usepackage{booktabs}
+
+\begin{document}
+\maketitle
+
+\hypertarget{background}{%
+\paragraph{Background}\label{background}}
+
+matplotlib is one of many Python libraries for plotting. It's not
+neessarily my favorite but it is probably the most commonly used.
+
+There are a million ways to do things using matplotlib. We'll use the
+pyplot interface; it's relatively easy to use and does everything we
+need it to. I'll just show you one way to do make a couple of common
+plots.
+
+The examples in this document come from the matplotlib documentation.
+When I want to figure out how to make a plot, I find the easiest thing
+to do is find an example like what I want to do at
+\url{https://matplotlib.org/gallery/}
+
+\hypertarget{import}{%
+\paragraph{Import}\label{import}}
+
+It's standard \texttt{import\ matplotlib.pyplot\ as\ plt}. Then you will
+refer to functions provided by \texttt{pyplot} using the syntax
+\texttt{plt.\_\_\_\_\_}, filling in the blank as necessary.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
+\NormalTok{np.random.seed(}\DecValTok{19680801}\NormalTok{)}
+
+\ImportTok{import}\NormalTok{ matplotlib.pyplot }\ImportTok{as}\NormalTok{ plt}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{line-plots-plt.plot}{%
+\paragraph{\texorpdfstring{Line Plots:
+\texttt{plt.plot()}}{Line Plots: plt.plot()}}\label{line-plots-plt.plot}}
+
+Line segments connect a series of points
+
+\begin{itemize}
+\tightlist
+\item
+  First argument is a vector of numbers specifying horizontal axis
+  coordinates of the points
+\item
+  Second argument is a vector of numbers specifying vertical axis
+  coordinates of the points
+\item
+  Optional \texttt{color\ =} specifies color
+\item
+  Optional \texttt{linestyle\ =} specifies linestyle: `-', `--', `-.',
+  `:'
+\item
+  Optional \texttt{linewidth\ =} specifies width of line in pixels
+\item
+  Optional \texttt{label\ =\ \textquotesingle{}label\textquotesingle{}}
+  says what label to use in a legend
+\end{itemize}
+
+The easiest way to get a legend to be created is to plot things for
+separate groups in separate calls to \texttt{plot}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\OperatorTok{=}\NormalTok{ np.linspace(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{101}\NormalTok{)}
+\NormalTok{y1 }\OperatorTok{=}\NormalTok{ x}
+\NormalTok{y2 }\OperatorTok{=}\NormalTok{ x}\OperatorTok{**}\DecValTok{2}
+\NormalTok{y3 }\OperatorTok{=}\NormalTok{ np.full_like(x, }\FloatTok{0.5}\NormalTok{) }\CommentTok{# vector of same shape as x, filled with all 0.5}
+
+\NormalTok{plt.plot(x, y1, color }\OperatorTok{=} \StringTok{"blue"}\NormalTok{, linestyle }\OperatorTok{=} \StringTok{"-"}\NormalTok{, linewidth }\OperatorTok{=} \FloatTok{0.5}\NormalTok{, label }\OperatorTok{=} \StringTok{"y = x"}\NormalTok{)}
+\NormalTok{plt.plot(x, y2, color }\OperatorTok{=} \StringTok{"orange"}\NormalTok{, linestyle }\OperatorTok{=} \StringTok{"--"}\NormalTok{, linewidth }\OperatorTok{=} \DecValTok{3}\NormalTok{, label }\OperatorTok{=} \StringTok{"y = x^2"}\NormalTok{)}
+\NormalTok{plt.plot(x, y3, color }\OperatorTok{=} \StringTok{"purple"}\NormalTok{, linestyle }\OperatorTok{=} \StringTok{"-."}\NormalTok{, linewidth }\OperatorTok{=} \DecValTok{5}\NormalTok{, label }\OperatorTok{=} \StringTok{"y = 0.5"}\NormalTok{)}
+\NormalTok{plt.legend(loc }\OperatorTok{=} \StringTok{"upper left"}\NormalTok{)}
+\NormalTok{plt.show()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{matplotlib_files/figure-latex/unnamed-chunk-2-1.pdf}
+
+\hypertarget{scatter-plots-plt.scatter}{%
+\paragraph{\texorpdfstring{Scatter Plots:
+\texttt{plt.scatter()}}{Scatter Plots: plt.scatter()}}\label{scatter-plots-plt.scatter}}
+
+\begin{itemize}
+\tightlist
+\item
+  First argument is a vector of numbers specifying horizontal axis
+  coordinates of the points
+\item
+  Second argument is a vector of numbers specifying vertical axis
+  coordinates of the points
+\item
+  Optional \texttt{s\ =} specifies point size
+\item
+  Optional \texttt{color\ =} specifies color
+\item
+  Optional \texttt{marker\ =} specifies shape used for point
+\item
+  Optional \texttt{label\ =\ \textquotesingle{}label\textquotesingle{}}
+  says what label to use in a legend
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\OperatorTok{=}\NormalTok{ np.linspace(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{10}\NormalTok{)}
+\NormalTok{y1 }\OperatorTok{=}\NormalTok{ np.random.random(}\DecValTok{10}\NormalTok{)}
+\NormalTok{y2 }\OperatorTok{=}\NormalTok{ np.random.random(}\DecValTok{10}\NormalTok{)}
+\NormalTok{y3 }\OperatorTok{=}\NormalTok{ np.random.random(}\DecValTok{10}\NormalTok{)}
+
+\NormalTok{plt.scatter(x, y1, s }\OperatorTok{=} \DecValTok{1}\NormalTok{, color }\OperatorTok{=} \StringTok{"blue"}\NormalTok{, marker }\OperatorTok{=} \StringTok{'.'}\NormalTok{, label }\OperatorTok{=} \StringTok{"y1"}\NormalTok{)}
+\NormalTok{plt.scatter(x, y2, s }\OperatorTok{=} \DecValTok{10}\NormalTok{, color }\OperatorTok{=} \StringTok{"orange"}\NormalTok{, marker }\OperatorTok{=} \StringTok{'<'}\NormalTok{, label }\OperatorTok{=} \StringTok{"y2"}\NormalTok{)}
+\NormalTok{plt.scatter(x, y3, s }\OperatorTok{=} \DecValTok{20}\NormalTok{, color }\OperatorTok{=} \StringTok{"purple"}\NormalTok{, marker }\OperatorTok{=} \StringTok{'v'}\NormalTok{, label }\OperatorTok{=} \StringTok{"y3"}\NormalTok{)}
+\NormalTok{plt.legend(loc }\OperatorTok{=} \StringTok{"upper right"}\NormalTok{)}
+\NormalTok{plt.show()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{matplotlib_files/figure-latex/unnamed-chunk-3-1.pdf}
+
+
+\end{document}
