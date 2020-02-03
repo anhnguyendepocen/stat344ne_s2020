@@ -92,7 +92,7 @@ make_week_box("week1", FALSE, "Week 1: Jan 20 -- Jan 24", "
 ```
 
 ```{r, echo = FALSE, results='asis'}
-make_week_box("week2", TRUE, "Week 2: Jan 27 -- Jan 31", "
+make_week_box("week2", FALSE, "Week 2: Jan 27 -- Jan 31", "
 #### Mon, Jan 27
  * **In class**, we will work on:
     * Maximum likelihood and output activations for regression.  Lecture notes: [pdf](materials/20200127_regression_set_up/lecture_notes.pdf)
@@ -156,7 +156,8 @@ z &= \\begin{bmatrix} z^{(1)} & \\cdots & z^{(m)} \\end{bmatrix} = \\begin{bmatr
 make_week_box("week3", TRUE, "Week 3: Feb 03 -- Feb 07", "
 #### Mon, Feb 03
  * **In class**, we will work on:
-    * Hidden layers and forward propagation
+    * Hidden layers and forward propagation.  Lecture notes: [pdf](materials/20200203_hidden_layers/lecture_notes.pdf).  Note there is an error on the bottom of page 1: for multinomial regression, you use a softmax activation, not a sigmoid activation.
+    * Lab 02
  * **After class**, please:
 
 
