@@ -163,13 +163,20 @@ make_week_box("week3", TRUE, "Week 3: Feb 03 -- Feb 07", "
 
 #### Wed, Feb 05
  * **In class**, we will work on:
-    * Gradient Descent, start on backpropagation
+    * Gradient Descent, start on backpropagation for logistic regression.  Lecture notes: [pdf](materials/20200205_grade_descent_logistic/lecture_notes.pdf)
  * **After class**, please:
+    * **Videos**
+       * Andrew Ng discusses [Gradient Descent](https://www.youtube.com/watch?v=uJryes5Vk1o&list=PLkDaE6sCZn6Ec-XTbcX1uRg2_u4xOEky0&index=10)
+       * Andrew Ng discusses [Derivatives in Computation Graphs](https://www.youtube.com/watch?v=nJyUyKN-XBQ&list=PLkDaE6sCZn6Ec-XTbcX1uRg2_u4xOEky0&index=14).  This video feels unnecessarily complicated to me, but you might find it helpful to see things worked out with actual numbers.
+       * Andrew Ng discusses [Gradient Descent for Logistic Regression with 1 observation](https://www.youtube.com/watch?v=z_xiwjEdAC4&list=PLkDaE6sCZn6Ec-XTbcX1uRg2_u4xOEky0&index=15)
+       * Andrew Ng discusses [Gradient Descent for Logistic Regression with m observatons](https://www.youtube.com/watch?v=KKfZLXcF-aE&list=PLkDaE6sCZn6Ec-XTbcX1uRg2_u4xOEky0&index=16).  But he uses a for loop that we really don't want.  He then gets rid of the for loop later, but I feel this is extra mental energy over what we did.
+       * Andrew Ng discusses [Vectorizing Gradient Descent for Logistic Regression with m observatons](https://www.youtube.com/watch?v=2BkqApHKwn0&list=PLkDaE6sCZn6Ec-XTbcX1uRg2_u4xOEky0&index=20).  This is the matrix formulation that we want.  Note that where we would write $\\frac{\\partial J(b, w)}{\\partial z}$$, Andrew writes `dz`
 
 
 #### Fri, Feb 07
  * **In class**, we will work on:
-    * Backpropagation
+    * Gradient checking
+    * Lab 03
  * **After class**, please:
 ")
 ```
@@ -178,6 +185,7 @@ make_week_box("week3", TRUE, "Week 3: Feb 03 -- Feb 07", "
 make_week_box("week4", TRUE, "Week 4: Feb 10 -- Feb 14", "
 #### Mon, Feb 10
  * **In class**, we will work on:
+    * Backpropagation with hidden layers
  * **After class**, please:
 
 

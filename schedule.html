@@ -278,6 +278,9 @@ $(document).ready(function () {
   <a href="schedule.html">Schedule</a>
 </li>
 <li>
+  <a href="labs.html">Labs</a>
+</li>
+<li>
   <a href="homework.html">Homework</a>
 </li>
 <li>
@@ -520,15 +523,26 @@ z &amp;= \begin{bmatrix} z^{(1)} &amp; \cdots &amp; z^{(m)} \end{bmatrix} = \beg
 <ul>
 <li><strong>In class</strong>, we will work on:
 <ul>
-<li>Gradient Descent, start on backpropagation</li>
+<li>Gradient Descent, start on backpropagation for logistic regression. Lecture notes: <a href="materials/20200205_grade_descent_logistic/lecture_notes.pdf">pdf</a></li>
 </ul></li>
-<li><strong>After class</strong>, please:</li>
+<li><strong>After class</strong>, please:
+<ul>
+<li><strong>Videos</strong>
+<ul>
+<li>Andrew Ng discusses <a href="https://www.youtube.com/watch?v=uJryes5Vk1o&amp;list=PLkDaE6sCZn6Ec-XTbcX1uRg2_u4xOEky0&amp;index=10">Gradient Descent</a></li>
+<li>Andrew Ng discusses <a href="https://www.youtube.com/watch?v=nJyUyKN-XBQ&amp;list=PLkDaE6sCZn6Ec-XTbcX1uRg2_u4xOEky0&amp;index=14">Derivatives in Computation Graphs</a>. This video feels unnecessarily complicated to me, but you might find it helpful to see things worked out with actual numbers.</li>
+<li>Andrew Ng discusses <a href="https://www.youtube.com/watch?v=z_xiwjEdAC4&amp;list=PLkDaE6sCZn6Ec-XTbcX1uRg2_u4xOEky0&amp;index=15">Gradient Descent for Logistic Regression with 1 observation</a></li>
+<li>Andrew Ng discusses <a href="https://www.youtube.com/watch?v=KKfZLXcF-aE&amp;list=PLkDaE6sCZn6Ec-XTbcX1uRg2_u4xOEky0&amp;index=16">Gradient Descent for Logistic Regression with m observatons</a>. But he uses a for loop that we really don’t want. He then gets rid of the for loop later, but I feel this is extra mental energy over what we did.</li>
+<li>Andrew Ng discusses <a href="https://www.youtube.com/watch?v=2BkqApHKwn0&amp;list=PLkDaE6sCZn6Ec-XTbcX1uRg2_u4xOEky0&amp;index=20">Vectorizing Gradient Descent for Logistic Regression with m observatons</a>. This is the matrix formulation that we want. Note that where we would write <span class="math inline">\(\frac{\partial J(b, w)}{\partial z}\)</span>$, Andrew writes <code>dz</code></li>
+</ul></li>
+</ul></li>
 </ul>
 <h4 id="fri-feb-07">Fri, Feb 07</h4>
 <ul>
 <li><strong>In class</strong>, we will work on:
 <ul>
-<li>Backpropagation</li>
+<li>Gradient checking</li>
+<li>Lab 03</li>
 </ul></li>
 <li><strong>After class</strong>, please:</li>
 </ul>
@@ -545,7 +559,10 @@ z &amp;= \begin{bmatrix} z^{(1)} &amp; \cdots &amp; z^{(m)} \end{bmatrix} = \beg
 <div class="panel-body">
 <h4 id="mon-feb-10">Mon, Feb 10</h4>
 <ul>
-<li><strong>In class</strong>, we will work on:</li>
+<li><strong>In class</strong>, we will work on:
+<ul>
+<li>Backpropagation with hidden layers</li>
+</ul></li>
 <li><strong>After class</strong>, please:</li>
 </ul>
 <h4 id="wed-feb-12">Wed, Feb 12</h4>
