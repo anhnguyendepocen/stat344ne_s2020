@@ -163,7 +163,7 @@ make_week_box("week3", TRUE, "Week 3: Feb 03 -- Feb 07", "
 
 #### Wed, Feb 05
  * **In class**, we will work on:
-    * Gradient Descent, start on backpropagation for logistic regression.  Lecture notes: [pdf](materials/20200205_grade_descent_logistic/lecture_notes.pdf)
+    * Gradient Descent, start on backpropagation for logistic regression.  Lecture notes: [pdf](materials/20200205_grade_descent_logistic/lecture_notes.pdf).  Note there is an error on page 6 that we did not make in class: $dJdz = a - y$, not $y - a$.
  * **After class**, please:
     * **Videos**
        * Andrew Ng discusses [Gradient Descent](https://www.youtube.com/watch?v=uJryes5Vk1o&list=PLkDaE6sCZn6Ec-XTbcX1uRg2_u4xOEky0&index=10)
@@ -175,7 +175,8 @@ make_week_box("week3", TRUE, "Week 3: Feb 03 -- Feb 07", "
 
 #### Fri, Feb 07
  * **In class**, we will work on:
-    * Gradient checking
+    * Loss functions, activation functions, and their derivatives.  [pdf](materials/20200207_loss_activation_derivs/202007_loss_activation_derivs.pdf)
+    * Gradient checking.  Lecture notes: [pdf](materials/20200207_loss_activation_derivs/lecture_notes.pdf)
     * Lab 03
  * **After class**, please:
 ")

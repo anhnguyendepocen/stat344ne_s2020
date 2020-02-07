@@ -1,0 +1,77 @@
+---
+title: "Loss and Activation Functions and Their Derivatives"
+subtitle: "Feb. 7, 2020"
+output:
+  pdf_document:
+    keep_tex: true
+    highlight: zenburn
+header-includes:
+   - \usepackage{soul}
+   - \usepackage{booktabs}
+documentclass: extarticle
+classoption: landscape
+geometry: margin=0.6in
+---
+
+```{r global_options, include=FALSE}
+library(knitr)
+library(reticulate)
+use_python("/Users/eray/anaconda3/bin/python")
+knitr::opts_chunk$set(eval = TRUE, echo=TRUE, engine='python')
+#knitr::knit_engines$set(python = reticulate::eng_python)
+```
+
+#### Loss and Activation Functions for Output Layer
+
+In the last layer of a neural network, for our three common settings (regression, binary classification, and multi-class classification):
+
+ * a specific loss function is always used
+ * a corresponding activation function is always used for the last layer ($L$)
+
+\begin{table}[!h]
+\centering
+\begin{tabular}{cccc}
+\toprule
+ &  &  & \textbf{Vectorized Derivative} \\
+\textbf{Setting} & \textbf{Loss} & \textbf{Activation} & \textbf{(up to constant of proportionality)} \\
+\midrule
+\textbf{Regression} & \textbf{Mean Squared Error} & \textbf{Linear} &  \\
+$y^{(i)}$ is a number & $J(b, w) = \frac{1}{m} \sum_{i = 1}^m \left( y^{(i)} - a^{(i)[L]}_1 \right)^2$ & $a^{(i)[L]}_1 = z^{(i)[L]}_1$ & $\frac{d J(b, w)}{d z^{[L]}} = \begin{bmatrix} (a^{(1)[L]}_1 - y^{(1)[L]}) & \cdots & (a^{(m)[L]}_1 - y^{(m)[L]}) \end{bmatrix}$ \\
+\midrule
+\textbf{Binary Classification} & \textbf{Binary Cross-Entropy} & \textbf{Sigmoid} &  \\
+$y^{(i)}$ is 0 or 1 & $\begin{matrix}J(b, w) = \sum_{i = 1}^m y^{(i)}\log\left(a^{(i)[L]}_1\right) \\ \qquad \qquad + (1 - y^{(i)})\log\left(1 - a_1^{(i)[L]}\right)\end{matrix}$ & $a^{(i)[L]}_1 = \frac{\exp(z^{(i)[L]}_1)}{1 + \exp(z^{(i)[L]}_1)}$ & $\frac{d J(b, w)}{d z^{[L]}} = \begin{bmatrix} (a^{(1)[L]}_1 - y^{(1)[L]}) & \cdots &  (a^{(m)[L]}_1 - y^{(m)[L]}) \end{bmatrix}$ \\
+\midrule
+\textbf{Multiclass Classification} & \textbf{Categorical Cross-Entropy} & \textbf{Softmax} &  \\
+\textbf{$y^{(i)} = 2$ or $y^{(i)} = \begin{bmatrix} 0 \\ 1 \\ \vdots \\ 0 \end{bmatrix}$} & $\begin{matrix}J(b, w) = \sum_{i = 1}^m \log\left(a^{(i)[L]}_{y^{(i)}}\right) \text{ or} \\ J(b, w) = \sum_{i=1}^m \sum_{j = 1}^K y^{(i)}_j \log\left( a^{(i)[L]}_j \right)\end{matrix}$ & $\begin{bmatrix}a^{(i)[L]}_1 \\ a^{(i)[L]}_2 \\ \vdots \\ a^{(i)[L]}_K \end{bmatrix} = \begin{bmatrix} \frac{\exp(z^{(i)[L]}_1)}{ \sum_{j=1}^K \exp(z^{(i)[L]}_j)} \\ \frac{\exp(z^{(i)[L]}_2)}{ \sum_{j=1}^K \exp(z^{(i)[L]}_j)} \\ \vdots \\ \frac{\exp(z^{(i)[L]}_K)}{ \sum_{j=1}^K \exp(z^{(i)[L]}_j)} \end{bmatrix}$ & $\frac{d J(b, w)}{d z^{[L]}} = \begin{bmatrix} (a^{(1)[L]}_1 - y^{(1)[L]}_1) & \cdots &  (a^{(m)[L]}_1 - y^{(m)[L]}_1) \\ (a^{(1)[L]}_2 - y^{(1)[L]}_2) & \cdots &  (a^{(m)[L]}_2 - y^{(m)[L]}_2) \\ \vdots & \ddots & \vdots \\ (a^{(1)[L]}_K - y^{(1)[L]}_K) & \cdots &  (a^{(m)[L]}_K - y^{(m)[L]}_K) \end{bmatrix}$ \\
+\end{tabular}
+\end{table}
+
+\newpage
+
+#### Activation Functions for Hidden Layers
+
+ * A rectified linear unit is the recommended default activation function for fully connected (dense) layers.
+ * $tanh$ is another option that was more common in the past.  It can work ok.
+ * Sigmoid was also used in the past but is definitely not recommended.
+ * Lots of research about other options.
+
+In the notation below:
+
+ * $n_l$ is the number of units in layer $l$
+ * $\mathbb{I}_{[0, \infty)}\left(z\right) = \begin{cases} 1 \text{ if $z \in [0. \infty]$} \\ 0 \text{ otherwise} \end{cases}$
+
+\begin{table}[!h]
+\centering
+\begin{tabular}{cc}
+\toprule
+ & \textbf{Vectorized Derivative} \\
+ \textbf{Activation} & \textbf{(up to constant of proportionality)} \\
+\midrule
+\textbf{Rectified Linear (ReLU)} & \\
+$\begin{bmatrix}a^{(i)[l]}_1 \\ a^{(i)[l]}_2 \\ \vdots \\ a^{(i)[l]}_{n_l} \end{bmatrix} = \begin{bmatrix} \max\left(0, z^{(i)[l]}_1\right) \\ \max\left(0, z^{(i)[l]}_2\right) \\ \vdots \\ \max\left(0, z^{(i)[l]}_{n_l}\right) \end{bmatrix}$ & $\frac{d a^{[l]}}{d z^{[l]}} = \begin{bmatrix} \mathbb{I}_{[0, \infty)}\left(z^{(1)[l]}_1\right) & \cdots & \mathbb{I}_{[0, \infty)}\left(z^{(m)[l]}_1\right) \\ \mathbb{I}_{[0, \infty)}\left(z^{(1)[l]}_2\right) & \cdots &  \mathbb{I}_{[0, \infty)}\left(z^{(m)[l]}_2\right) \\ \vdots & \ddots & \vdots \\ \mathbb{I}_{[0, \infty)}\left(z^{(1)[l]}_{n_l}\right) & \cdots &  \mathbb{I}_{[0, \infty)}\left(z^{(m)[l]}_{n_l}\right) \end{bmatrix}$ \\
+\midrule
+\textbf{tanh} & \\
+$\begin{bmatrix}a^{(i)[l]}_1 \\ a^{(i)[l]}_2 \\ \vdots \\ a^{(i)[l]}_{n_l} \end{bmatrix} = \begin{bmatrix} tanh\left(z^{(i)[l]}_1\right) \\ tanh\left(z^{(i)[l]}_2\right) \\ \vdots \\ tanh\left(z^{(i)[l]}_{n_l}\right) \end{bmatrix}$ & $\frac{d a^{[l]}}{d z^{[l]}} = \begin{bmatrix} 1 - \left(a^{(1)[l]}_1\right)^2 & \cdots & 1 - \left(a^{(m)[l]}_1\right)^2 \\ 1 - \left(a^{(1)[l]}_2\right)^2 & \cdots & 1 - \left(a^{(m)[l]}_2\right)^2 \\ \vdots & \ddots & \vdots \\ 1 - \left(a^{(1)[l]}_{n_l}\right)^2 & \cdots & 1 - \left(a^{(m)[l]}_{n_l}\right)^2 \end{bmatrix}$ \\
+\end{tabular}
+\end{table}
+
