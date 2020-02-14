@@ -1,0 +1,233 @@
+---
+title: "HW3 Written Part"
+subtitle: "Due 5pm Friday Feb 21, 2020"
+output:
+  pdf_document:
+    keep_tex: true
+    highlight: zenburn
+header-includes:
+   - \usepackage{soul}
+   - \usepackage{booktabs}
+documentclass: extarticle
+geometry: margin=0.6in
+---
+
+```{r global_options, include=FALSE}
+library(knitr)
+library(reticulate)
+use_python("/Users/eray/anaconda3/bin/python")
+knitr::opts_chunk$set(eval = TRUE, echo=FALSE, engine='python')
+#knitr::knit_engines$set(python = reticulate::eng_python)
+```
+
+## What is your name?
+
+## Problem 1
+
+Suppose I fit a neural network model with the following structure:
+
+ * Input layer has 2 features
+ * One hidden layer with 2 units and a linear activation function
+ * Output layer has 1 unit and a sigmoid activation function
+
+Show that this model is equivalent to a logistic regression model in the sense that the activation in the output layer could be written as
+
+$a^{(i)[2]}_1 = \frac{\exp(b^* + w_{11}^* x^{(i)}_1 + w_{12}^* x^{(i)}_2)}{1 + \exp(b^* + w_{11}^* x^{(i)}_1 + w_{12}^* x^{(i)}_2)}$
+
+for some parameters $b^*$, $w_{11}^*$, and $w_{12}^*$ that are combinations of the biases and weights in all units of the full neural network model.  Your answer should give exact formulas for how to calculate $b^*$, $w_{11}^*$, and $w_{12}^*$ in terms of the neural network parameters $b^{[1]}_1$, $w^{[1]}_{11}$, $w^{[1]}_{12}$, $b^{[1]}_2$, $w^{[1]}_{21}$, $w^{[1]}_{22}$, $b^{[2]}_1$, $w^{[2]}_{11}$, and $w^{[2]}_{12}$.  Comment briefly (1 sentence) on why it is necessary to use non-linear activation functions in neural network models.
+
+\newpage
+
+## Problem 2
+
+Suppose I am working on a classification problem where the response has three classes and I have two input features.  I will use a neural network model with the following structure:
+
+* Input layer has 2 features
+* One hidden layer has 2 units and a relu activation
+* Output layer has 3 units and a softmax activation
+
+My full data set has 100 observations in it.
+
+\textbf{(a)} Give the shapes of each of the following quantities.  Use the convention that each observation is in a column of X and each feature is in a row of X.  For example, if I am predicting whether an animal is a bird, a cat, or a dog using its weight and its height, the weights and height for the first animal in my data set would be in the first column of X.  Also, suppose we are using a one-hot encoding for the response, so if the first animal in my data set is a dog then I will have $y^{(1)} = \begin{bmatrix} 0 \\ 0 \\ 1 \end{bmatrix}$
+
+ * $X$
+
+\vspace{0.3cm}
+
+ * $y$
+
+\vspace{0.3cm}
+
+ * $z^{[1]}$
+
+\vspace{0.3cm}
+
+ * $a^{[1]}$
+
+\vspace{0.3cm}
+
+ * $b^{[1]}$
+
+\vspace{0.3cm}
+
+ * $w^{[1]}$
+
+\vspace{0.3cm}
+
+ * $z^{[2]}$
+
+\vspace{0.3cm}
+
+ * $a^{[2]}$
+
+\vspace{0.3cm}
+
+ * $b^{[2]}$
+
+\vspace{0.3cm}
+
+ * $w^{[2]}$
+
+\vspace{0.3cm}
+
+ * $\frac{\partial J(b, w)}{\partial a^{[2]}}$
+
+\vspace{0.3cm}
+
+ * $\frac{\partial J(b, w)}{\partial z^{[2]}}$
+
+\vspace{0.3cm}
+
+ * $\frac{\partial J(b, w)}{\partial b^{[2]}}$
+
+\vspace{0.3cm}
+
+ * $\frac{\partial J(b, w)}{\partial w^{[2]}}$
+
+\vspace{0.3cm}
+
+ * $\frac{\partial J(b, w)}{\partial a^{[1]}}$
+
+\vspace{0.3cm}
+
+ * $\frac{\partial J(b, w)}{\partial z^{[1]}}$
+
+\vspace{0.3cm}
+
+ * $\frac{\partial J(b, w)}{\partial b^{[1]}}$
+
+\vspace{0.3cm}
+
+ * $\frac{\partial J(b, w)}{\partial w^{[1]}}$
+
+\newpage
+
+\textbf{(b)} In the backpropagation algorithm, why do we calculate $\frac{\partial J(b,w)}{\partial{a^{[2]}}}$ before we calculate $\frac{\partial J(b,w)}{\partial{z^{[2]}}}$?  Your answer should involve a formula for how $a^{[2]}$ is calculated and an application of the chain rule.
+
+\vspace{10cm}
+
+\textbf{(c)} In the backpropagation algorithm, why do we calculate $\frac{\partial J(b,w)}{\partial{z^{[2]}}}$ before we calculate $\frac{\partial J(b,w)}{\partial{b^{[2]}}}$?  Your answer should involve a formula for how $z^{[2]}$ is calculated and an application of the chain rule.
+
+\newpage
+
+## Problem 3
+
+Suppose I am working on a classification problem where the response has two classes (say dog and cat) and I have one input feature.  In the model statements below, I'm suppressing as much notation as possible.
+
+Our first option for this task is a logistic regression model where $Y^{(i)}$ is encoded as 0 for a dog or 1 for a cat:
+
+\begin{align*}
+Y^{(i)} &\sim \text{Bernoulli}(a^{(i)}) \\
+a^{(i)}_1 &= \frac{\exp(b + w_1 x^{(i)})}{1 + \exp(b + w_1 x^{(i)})}
+\end{align*}
+
+However, a reasonable person might also formulate this as a multinomial regression problem using a one-hot encoding of $Y^{(i)} = \begin{bmatrix} 1 \\ 0 \end{bmatrix}$ for a dog or $Y^{(i)} = \begin{bmatrix} 0 \\ 1 \end{bmatrix}$ for a cat:
+
+\begin{align*}
+Y^{(i)} &\sim \text{Categorical}(a^{(i)}_1, a^{(i)}_2) \\
+a^{(i)}_1 &= \frac{\exp(b_1 + w_1 x^{(i)})}{\exp(b_1 + w_1 x^{(i)}) + \exp(b_2 + w_2 x^{(i)})} \\
+a^{(i)}_2 &= \frac{\exp(b_2 + w_2 x^{(i)})}{\exp(b_1 + w_1 x^{(i)}) + \exp(b_2 + w_2 x^{(i)})} \\
+\end{align*}
+
+Note that by convention the numbering of classes is 0 and 1 in the logistic regression model, but 1 and 2 in the multinomial regression model.  So class 1 in the logistic regression model refers to the same thing as class 2 in the multinomial regression model.  This is awkward but I think it'll be more confusing if we change the standard notation...
+
+Suppose these models will be estimated by gradient descent, and the parameter values for the two models are intialized so that for any value of $x$ the initial estimated probability of being a cat from the logistic model is equal to the initial estimated probability of being a cat from the multinomial regression model.
+
+\textbf{(a)} Write down the formulas for the updates to $b$ and $w$ for the logistic regression model in terms of $a^{(i)}$, $y^{(i)}$, and $x^{(i)}$, $i = 1, \ldots, m$.  Note that you don't need to calculate the value of $a^{(i)}$ explicitly in terms of $b$ and $w$.
+
+\newpage
+
+\textbf{(b)} Suppose we have two observations with feature, response, and output layer activation values for a logistic regression model as given in the table below.  The current parameter values are $b = 1$ and $w = -1$.  Find the updated parameter values after one step using a learning rate of $\alpha = 0.1$.
+
+```{r, echo = FALSE, eval = FALSE}
+b <- 1
+w <- -1
+x <- c(1, 2)
+
+exp(b + w * x) / (1 + exp(b + w * x))
+```
+
+\begin{table}[!h]
+\centering
+\begin{tabular}{ccc}
+\toprule
+$x^{(i)}$ & $y^{(i)}$ & $a_1^{(i)}$ \\
+\midrule
+1 & 1 & 0.5 \\
+2 & 0 & 0.269 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{i.} Find $\frac{\partial J(b, w)}{\partial z^{[1]}}$.  (First, think about what its shape should be.)
+
+\vspace{4cm}
+
+\textbf{ii.} Find $\frac{\partial J(b, w)}{\partial b}$.  (First, think about what its shape should be.)
+
+\vspace{4cm}
+
+\textbf{iii.} Find $\frac{\partial J(b, w)}{\partial w}$.  (First, think about what its shape should be.)
+
+\vspace{4cm}
+
+\textbf{iv.} Find the updated values of $b$ and $w$ from one gradient descent update step using a learning rate of $\alpha = 0.01$.
+
+\newpage
+
+\textbf{(c)} Write down the formulas for the updates to $b$ and $w$ for the multinomial regression model in terms of $a^{(i)}$, $y^{(i)}$, and $x^{(i)}$, $i = 1, \ldots, m$.  Note that you don't need to calculate the value of $a^{(i)}$ explicitly in terms of $b$ and $w$.
+
+\newpage
+
+\textbf{(d)} Suppose I have two observations with feature, response, and output layer activation values for a multinomial regression model as given in the table below.  My current parameter values are $b = \begin{bmatrix}0 \\ 1 \end{bmatrix}$ and $w = \begin{bmatrix}0 \\ -1 \end{bmatrix}$.  Find the updated parameter values after one step using a learning rate of $\alpha = 0.1$.
+
+\begin{table}[!h]
+\centering
+\begin{tabular}{cccc}
+\toprule
+$x^{(i)}$ & $y^{(i)}$ & $a_1^{(i)}$ & $a_2^{(i)}$ \\
+\midrule
+1 & 1 & 0.5 & 0.5 \\
+2 & 0 & 0.731 & 0.269 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{i.} Find $\frac{\partial J(b, w)}{\partial z^{[1]}}$.  (First, think about what its shape should be.)
+
+\vspace{4cm}
+
+\textbf{ii.} Find $\frac{\partial J(b, w)}{\partial b}$.  (First, think about what its shape should be.)
+
+\vspace{4cm}
+
+\textbf{iii.} Find $\frac{\partial J(b, w)}{\partial w}$.  (First, think about what its shape should be.)
+
+\vspace{4cm}
+
+\textbf{iv.} Find the updated values of $b$ and $w$ from one gradient descent update step using a learning rate of $\alpha = 0.01$.
+
+\newpage
+
+\textbf{(e)} Based on your answers to parts (a) and (c), argue that if the logistic model and multinomial model currently provide the same probability that each animal is a cat (so that $a^{(i)}_1$ in the logistic regression model is equal to $a^{(i)}_2$ in the multinomial regression model for all observations $i$), the updates to $b$ and $w$ in the logistic regression model will be the same as the updates to $b_2$ and $w_2$ in the multinomial regression model.
+
