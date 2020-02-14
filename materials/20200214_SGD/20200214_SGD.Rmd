@@ -1,0 +1,637 @@
+---
+title: "Gradient descent, learning rates, and stochastic gradient descent"
+subtitle: "Feb. 14, 2020"
+output:
+  pdf_document:
+    keep_tex: true
+    highlight: zenburn
+header-includes:
+   - \usepackage{soul}
+   - \usepackage{booktabs}
+documentclass: extarticle
+geometry: margin=0.6in
+---
+
+```{r global_options, include=FALSE}
+library(knitr)
+library(reticulate)
+use_python("/Users/eray/anaconda3/bin/python")
+knitr::opts_chunk$set(eval = TRUE, echo=TRUE, cache=FALSE, engine='python')
+#knitr::knit_engines$set(python = reticulate::eng_python)
+```
+
+## Example: Birthweight and bronchopulmonary dysplasia
+
+Can we estimate probability of bronchopulmonary dysplasia (BPD, a lung disease that affects newborns) as a function of the baby's birth weight?
+
+Data from Pagano, M. and Gauvreau, K. (1993). *Principles of Biostatistics*. Duxbury Press.
+
+\begin{align*}
+Y_i &= \begin{cases} 1 & \text{ if baby number $i$ has BPD} \\ 0 & \text{ otherwise} \end{cases} \\
+X_i &= \text{ birth weight for baby number $i$}
+\end{align*}
+
+#### Import libraries
+
+```{python}
+import pandas as pd
+import numpy as np
+import math
+import matplotlib.pyplot as plt
+from scipy.special import expit as sigmoid
+```
+
+#### Read in data
+
+```{python, echo = TRUE}
+bpd_data = pd.read_table("http://www.stat.cmu.edu/~larry/all-of-nonpar/=data/bpd.dat", delim_whitespace=True)
+```
+
+```{python}
+bpd_data.head()
+```
+
+```{python}
+x = bpd_data[['birthweight']].to_numpy().T
+y = bpd_data[['BPD']].to_numpy().T
+print(x.shape)
+print(y.shape)
+```
+
+```{python}
+plt.scatter(x[0, :], y[0, :])
+```
+
+We need to center and scale the x variables (we will see why later in this handout).
+
+```{python}
+x_standardized = (x - np.mean(x)) / np.std(x)
+```
+
+```{python}
+plt.scatter(x_standardized[0, :], y[0, :])
+```
+
+#### Our usual function for estimation by gradient descent
+
+Only change is that I'm saving the history of parameter estimates so we can plot them.
+
+```{python, echo = FALSE}
+def initialize_params(num_features, seed = 9433):
+  '''
+  Initialize parameter values for a network with 3 layers:
+  layer 1 has 64 units, layer 2 has 64 units, and layer 3 has 46 units
+
+  Arguments:
+    - num_features: number of input features
+    - seed: seed to use for random number generation
+  
+  Return:
+    - Dictionary with initial values for b1, w1
+  '''
+  # set seed
+  np.random.seed(seed)
+
+  # layer 1 parameters
+  b1 = np.random.standard_normal((1, 1)) * 0.1 
+  w1 = np.random.standard_normal((1, 1)) * 0.1
+  
+  return({
+      'b1': b1,
+      'w1': w1
+  })
+
+def forward_prop(params, x):
+  '''
+  Forward propagation calculations
+
+  Arguments:
+    - params: dictionary with values for b1, w1
+    - x: matrix of features, shape (p, m)
+  
+  Return:
+    - Dictionary with z and a values for each layer
+  '''
+  # Pull out parameters from params dictionary
+  b1 = params['b1']
+  w1 = params['w1']
+  
+  # Calculate forward propagation
+  z1 = b1 + np.dot(w1.T, x)
+  a1 = sigmoid(z1)
+  
+  # Return dictionary of results from forward propagation
+  return({
+    'z1': z1,
+    'a1': a1
+  })
+
+def backward_prop(params, x, y, forward_cache):
+  '''
+  Backward propagation calculations
+
+  Arguments:
+    - params: dictionary with values for b1, w1, b2, w2, b3, w3
+    - x: array of features, shape (p, m)
+    - y: array of responses, shape (1, m)
+    - forward_cache: Dictionary with z and a values for each layer
+      (return value from forward_prop)
+  
+  Return:
+    - Dictionary of derivatives of cost function J with respect to
+      b1, w1, b2, w2, b3, w3
+  '''
+  # Extract quantities needed for backward propagation calculations
+  m = x.shape[1]
+
+  a1 = forward_cache['a1']
+
+  w1 = params['w1']
+
+  # Backward propagation calculations
+  dJdz1 = a1 - y
+  dJdb1 = np.mean(dJdz1, axis = 1, keepdims=True)
+  dJdw1 = (1/m) * np.dot(x, dJdz1.T)
+  
+  return({
+    'dJdb1': dJdb1,
+    'dJdw1': dJdw1
+  })
+```
+
+```{python}
+def fit_model_grad_descent(
+    x_train,
+    y_train,
+    num_epochs,
+    learning_rate,
+    initial_params):
+  '''
+  Fit our model by gradient descent.
+
+  Arguments:
+    - x_train: array of input features of shape (p, m)
+    - y_train: array of responses of shape (1, m)
+    - num_epochs: number of iterations of gradient descent to run
+    - learning_rate: learning rate for gradient descent
+    - initial_params: dictionary of starting parameter values
+  
+  Return:
+    - Dictionary of parameter estimates b1, w1 and gradients dJdb1, dJdw1 at each step of gradient descent
+  '''
+  # Get initial parameter values
+  params = initial_params
+
+  # For loop should iterate over the number of epochs
+  b_history = np.zeros((num_epochs + 1,))
+  w_history = np.zeros((num_epochs + 1,))
+  b_history[0] = params['b1'].copy()
+  w_history[0] = params['w1'].copy()
+  
+  for i in range(num_epochs):
+    # Do forward propagation
+    forward_cache = forward_prop(params, x_train)
+
+    # Do backward propagation
+    calc_grad = backward_prop(params, x_train, y_train, forward_cache)
+
+    # Do parameter updates
+    params['b1'] = params['b1'] - learning_rate * calc_grad['dJdb1']
+    params['w1'] = params['w1'] - learning_rate * calc_grad['dJdw1']
+    
+    # Save history of parameter estimates
+    b_history[i+1] = params['b1']
+    w_history[i+1] = params['w1']
+  
+  # Return
+  return({
+    'b_history': b_history,
+    'w_history': w_history
+  })
+```
+
+
+```{python, echo = FALSE}
+def binary_crossentropy_loss(a, y):
+  '''
+  Calculate the binary crossentropy loss
+
+  Arguments:
+    - a: predicted probability of class 1
+    - y: observed responses
+  
+  Return:
+    - binary cross entropy
+  '''
+  m = y.shape[1]
+  inds_0 = np.where(y == 0)
+  inds_1 = np.where(y == 1)
+
+  return(-1 * (np.sum(np.log(a[inds_1])) + np.sum(np.log(1 - a[inds_0]))) / m)
+```
+
+#### Path taken by gradient descent
+
+```{python, echo = FALSE}
+def make_history_plot(param_estimates, x, blim, wlim, grid_size = 101, contour_levels = 10):
+  db = (blim[1] - blim[0]) / grid_size
+  dw = (wlim[1] - wlim[0]) / grid_size
+  
+  w = np.linspace(-2, 0, grid_size).reshape((1, grid_size))
+  
+  background_b, background_w = np.mgrid[slice(blim[0], blim[1] + db, db), slice(wlim[0], wlim[1] + dw, dw)]
+  background_b_long = background_b[0:grid_size,0:grid_size].reshape((grid_size**2, 1))
+  background_w_long = background_w[0:grid_size,0:grid_size].reshape((grid_size**2, 1))
+  background_bw = np.concatenate((background_b_long, background_w_long), axis = 1)
+  
+  cost_long = np.zeros((grid_size**2, 1))
+  for i in range(grid_size**2):
+    params = {
+      'b1': background_b_long[i, 0],
+      'w1': background_w_long[i, 0]
+    }
+    a = forward_prop(params, x)['a1']
+    cost_long[i, 0] = binary_crossentropy_loss(a, y)
+  
+  background_b_grid = background_b_long.reshape((grid_size, grid_size))
+  background_w_grid = background_w_long.reshape((grid_size, grid_size))
+  cost = cost_long.reshape((grid_size, grid_size))
+  
+  col_offset = (np.max(cost) - np.min(cost)) * 0.2
+  normalize_min = np.min(cost) - col_offset
+  normalize_max = np.max(cost) + col_offset
+  
+  plt.pcolormesh(background_b[0:grid_size,0:grid_size], background_w[0:grid_size,0:grid_size], cost, norm = plt.Normalize(normalize_min, normalize_max), cmap = plt.get_cmap('plasma'), alpha = 1, edgecolors = 'none', antialiased = True)
+  plt.plot(param_estimates['b_history'], param_estimates['w_history'], color = "white")
+  plt.scatter(param_estimates['b_history'], param_estimates['w_history'], color = "white")
+  plt.show()
+```
+
+```{python, echo = TRUE}
+initial_params = initialize_params(num_features = 1)
+
+param_estimates = fit_model_grad_descent(
+    x_train = x_standardized,
+    y_train = y,
+    num_epochs = 30,
+    learning_rate = 1,
+    initial_params = initial_params)
+
+make_history_plot(param_estimates, x_standardized, blim = (-3, 1), wlim = (-4, 1), contour_levels = 30)
+```
+
+Observations:
+
+ * This is working exactly like we'd hope it would!
+
+\newpage
+
+
+
+#### Path taken by gradient descent -- X not centered
+
+```{python}
+x_plus_3_5 = x_standardized + 3.5
+
+initial_params = initialize_params(num_features = 1)
+param_estimates = fit_model_grad_descent(
+    x_train = x_plus_3_5,
+    y_train = y,
+    num_epochs = 30,
+    learning_rate = 1,
+    initial_params = initial_params)
+
+make_history_plot(param_estimates, x_plus_3_5, blim = (-2, 3), wlim = (-4, 2), grid_size = 101)
+```
+
+Observations:
+
+ * One effect of centering the x variable is that it can make the log-likelihood surface look more like a bowl than a valley (no guarantee centering will totally help, but it will somewhat help).
+ * If you have a valley, the gradient mostly points straight up the side.  You can end up going back and forth on the valley walls and not progressing along the bottom very much.
+ * Algorithms like RMSProp and Adam address this by using a weighted average of values of the gradient over the last several steps, or adding "momentum" to our particle.  This cancels out oscillations pointing in opposite directions and builds up momentum along the bottom.
+
+\newpage
+
+#### Path taken by gradient descent -- X not centered, learning rate 0.5
+
+```{python}
+initial_params = initialize_params(num_features = 1)
+param_estimates = fit_model_grad_descent(
+    x_train = x_plus_3_5,
+    y_train = y,
+    num_epochs = 30,
+    learning_rate = 0.5,
+    initial_params = initial_params)
+
+make_history_plot(param_estimates, x_plus_3_5, blim = (-2, 3), wlim = (-4, 2), grid_size = 101)
+```
+
+Observations:
+
+ * A smaller learning rate can reduce oscillations, but also...  slows down the learning rate.
+
+\newpage
+
+#### Path taken by gradient descent -- X not centered, learning rate 0.1
+
+```{python}
+initial_params = initialize_params(num_features = 1)
+param_estimates = fit_model_grad_descent(
+    x_train = x_plus_3_5,
+    y_train = y,
+    num_epochs = 30,
+    learning_rate = 0.1,
+    initial_params = initial_params)
+
+make_history_plot(param_estimates, x_plus_3_5, blim = (-2, 3), wlim = (-4, 2), grid_size = 101)
+```
+
+Observations:
+
+ * A really small learning rate is very not good.
+
+\newpage
+
+#### Path taken by gradient descent -- X not centered, learning rate 5
+
+```{python}
+initial_params = initialize_params(num_features = 1)
+param_estimates = fit_model_grad_descent(
+    x_train = x_plus_3_5,
+    y_train = y,
+    num_epochs = 30,
+    learning_rate = 5,
+    initial_params = initial_params)
+
+make_history_plot(param_estimates, x_plus_3_5, blim = (-3, 8), wlim = (-14, 4), grid_size = 101)
+```
+
+Observations:
+
+ * A really big learning rate is even worse.
+ * In this example it's sortof OK because the model gets back to the right area.
+ * In more complicated models you might have shot off very far away from the region of low cost.
+
+\newpage
+
+#### Original data
+
+Our original data are very far from centered and scaled:
+
+```{python}
+bpd_data.head()
+```
+
+```{python}
+initial_params = initialize_params(num_features = 1)
+param_estimates = fit_model_grad_descent(
+    x_train = x,
+    y_train = y,
+    num_epochs = 30,
+    learning_rate = 0.1,
+    initial_params = initial_params)
+
+make_history_plot(param_estimates, x_plus_3_5, blim = (-0.5, 0.5), wlim = (-100, 20), grid_size = 201)
+```
+
+Observations:
+
+ * Nothing even works.
+
+\newpage
+
+## Stochastic Gradient Descent
+
+**Problem:**
+
+If we have a large data set, then:
+
+ * The forward and backward propagations can take a long time
+ * The full data set may not fit in your computer's memory
+
+**Solution:**
+
+Process your data in "minibatches" of a smaller number of observations at a time.
+
+ * Often, batch size is a relatively small power of 2: 32, 64, 128, 256, 512
+ * Guideline: pick batch size to be largest amount your computer can easily handle.
+ * If your full data set is not that large, this will not offer any advantages.
+
+**Terminology:**
+
+ * One **batch** is a subset of your training data used to calculate one gradient descent step
+ * One **epoch** is a complete pass through the full data set (many batches)
+ * The method is called **stochastic gradient descent** because you are processing a random subset of your data in each gradient descent step
+
+**Batch Sizes in Our Example:**
+
+```{python}
+print(x_plus_3_5.shape)
+223 / 64
+223 // 64
+
+223 - 64*3
+```
+
+Suppose I use a batch size of 64.  There will be 4 batches per epoch:
+
+ * Batch 1 has 64 observations (indices 0 to 63)
+ * Batch 2 has 64 observations (indices 64 to 127)
+ * Batch 3 has 64 observations (indices 128 to 191)
+ * Batch 4 has 31 observations (indices 192 to 222)
+
+\newpage
+
+**Note about for loops:**
+
+For loops repeat a block of code many times:
+
+```{python}
+for i in range(5):
+  print(str(i**2))
+```
+
+You can nest multiple loops:
+
+```{python}
+for i in range(4):
+  for j in range(3):
+    print("i = " + str(i) + ", j = " + str(j))
+```
+
+#### Outline of code for stochastic gradient descent
+
+1. Figure out how many batches you will need for the specified batch size
+2. For each epoch `i = 0, ..., (number of epochs - 1)`
+    1. For each batch `j = 0, ..., (number of batches - 1)`
+        1. Subset data to the observations in batch `j`
+        2. Do forward propagation based on observations in batch `j`
+        3. Do backward propagation based on observations in batch `j`
+        4. Do parameter updates based on gradients from observations in batch `j`
+
+\newpage
+
+#### Example code for stochastic gradient descent
+
+```{python}
+def fit_model_stochastic_grad_descent(
+    x_train,
+    y_train,
+    num_epochs,
+    batch_size,
+    learning_rate,
+    initial_params):
+  '''
+  Fit our model by stochastic gradient descent.
+
+  Arguments:
+    - x_train: array of input features of shape (p, m)
+    - y_train: array of responses of shape (1, m)
+    - num_epochs: number of iterations of gradient descent to run
+    - batch_size: number of observations to include in each batch
+    - learning_rate: learning rate for gradient descent
+    - initial_params: dictionary of starting parameter values
+  
+  Return:
+    - Dictionary of parameter estimates b1, w1 and gradients dJdb1, dJdw1 at each step of gradient descent
+  '''
+  params = initial_params
+  
+  # Figure out how many batches to use
+  m = x_train.shape[1]
+  num_batches = math.ceil(m / batch_size)
+  
+  # Outer for loop iterates from 0 to number of epochs - 1
+  for i in range(num_epochs):
+    # Inner loop iterates from 0 to number of batches - 1
+    for j in range(num_batches):
+      # Set up data for current batch
+      end_ind = (j+1)*batch_size
+      if j == num_batches:
+        # last batch includes up to the last observation
+        end_ind = m
+      
+      x_current_batch = x_train[:, (j*batch_size):end_ind]
+      y_current_batch = y_train[:, (j*batch_size):end_ind]
+
+      # Do forward propagation
+      forward_cache = forward_prop(params, x_current_batch)
+  
+      # Do backward propagation
+      calc_grad = backward_prop(params, x_current_batch, y_current_batch, forward_cache)
+  
+      # Do parameter updates
+      params['b1'] = params['b1'] - learning_rate * calc_grad['dJdb1']
+      params['w1'] = params['w1'] - learning_rate * calc_grad['dJdw1']
+    
+  # Return
+  return(params)
+```
+
+
+
+```{python, echo = FALSE}
+def fit_model_stochastic_grad_descent(
+    x_train,
+    y_train,
+    num_epochs,
+    batch_size,
+    learning_rate,
+    initial_params):
+  '''
+  Fit our model by stochastic gradient descent.
+
+  Arguments:
+    - x_train: array of input features of shape (p, m)
+    - y_train: array of responses of shape (1, m)
+    - num_epochs: number of iterations of gradient descent to run
+    - batch_size: number of observations to include in each batch
+    - learning_rate: learning rate for gradient descent
+    - initial_params: dictionary of starting parameter values
+  
+  Return:
+    - Dictionary of parameter estimates b1, w1 and gradients dJdb1, dJdw1 at each step of gradient descent
+  '''
+  # Get initial parameter values
+  params = initial_params
+  
+  # Figure out how many batches to use
+  m = x_train.shape[1]
+  num_batches = m // batch_size
+  if num_batches != m * batch_size:
+    # we need one more batch for the leftovers
+    num_batches = num_batches + 1
+
+  epoch_history = np.zeros((num_epochs * num_batches + 1,))
+  b_history = np.zeros((num_epochs * num_batches + 1,))
+  w_history = np.zeros((num_epochs * num_batches + 1,))
+  b_history[0] = params['b1'].copy()
+  w_history[0] = params['w1'].copy()
+  
+  # Outer for loop iterates from 0 to number of epochs - 1
+  for i in range(num_epochs):
+    # Inner loop iterates from 0 to number of batches - 1
+    for j in range(num_batches):
+      # Set up slice defining current batch
+      if j == num_batches:
+        # last batch includes up to the last observation
+        batch_slice = slice(j*batch_size, m)
+      else:
+        batch_slice = slice(j*batch_size, (j+1)*batch_size)
+      
+      # Do forward propagation
+      forward_cache = forward_prop(params, x_train)
+  
+      # Do backward propagation
+      calc_grad = backward_prop(params, x_train, y_train, forward_cache)
+  
+      # Do parameter updates
+      params['b1'] = params['b1'] - learning_rate * calc_grad['dJdb1']
+      params['w1'] = params['w1'] - learning_rate * calc_grad['dJdw1']
+
+      # Save history of parameter estimates
+      b_history[i*num_batches + j + 1] = params['b1']
+      w_history[i*num_batches + j + 1] = params['w1']
+      epoch_history[i*num_batches + j + 1] = i
+    
+  # Return
+  return({
+    'b_history': b_history,
+    'w_history': w_history,
+    'epoch_history': epoch_history
+  })
+```
+
+\newpage
+
+```{python, fig.height = 2}
+initial_params = initialize_params(num_features = 1)
+param_estimates = fit_model_stochastic_grad_descent(
+    x_train = x_plus_3_5,
+    y_train = y,
+    num_epochs = 30,
+    batch_size = 64,
+    learning_rate = 0.5,
+    initial_params = initial_params)
+
+make_history_plot(param_estimates, x_plus_3_5, blim = (-2, 3), wlim = (-4, 2), grid_size = 101)
+```
+
+Compare to previous equivalent version with gradient descent
+
+```{python, fig.height = 2}
+initial_params = initialize_params(num_features = 1)
+param_estimates = fit_model_grad_descent(
+    x_train = x_plus_3_5,
+    y_train = y,
+    num_epochs = 30,
+    learning_rate = 0.5,
+    initial_params = initial_params)
+
+make_history_plot(param_estimates, x_plus_3_5, blim = (-2, 3), wlim = (-4, 2), grid_size = 101)
+```
+
+
+ * We are able to make substantially more progress in the same number of passes through our data set.
+ * Basically, we made 4 times as many gradient update steps with the same amount of computation.
+ * In practice, it takes time for the computer to get data from your drive to your processor.  If your full data set is not that large and can can be processed all at once by your CPU or GPU then stochastic gradient descent may not make a practical difference in compute time.
