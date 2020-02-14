@@ -153,7 +153,7 @@ z &= \\begin{bmatrix} z^{(1)} & \\cdots & z^{(m)} \\end{bmatrix} = \\begin{bmatr
 ```
 
 ```{r, echo = FALSE, results='asis'}
-make_week_box("week3", TRUE, "Week 3: Feb 03 -- Feb 07", "
+make_week_box("week3", FALSE, "Week 3: Feb 03 -- Feb 07", "
 #### Mon, Feb 03
  * **In class**, we will work on:
     * Hidden layers and forward propagation.  Lecture notes: [pdf](materials/20200203_hidden_layers/lecture_notes.pdf).  Note there is an error on the bottom of page 1: for multinomial regression, you use a softmax activation, not a sigmoid activation.
@@ -186,7 +186,9 @@ make_week_box("week3", TRUE, "Week 3: Feb 03 -- Feb 07", "
 make_week_box("week4", TRUE, "Week 4: Feb 10 -- Feb 14", "
 #### Mon, Feb 10
  * **In class**, we will work on:
-    * Backpropagation with hidden layers
+    * **Quiz**
+    * Start on backpropagation with hidden layers
+        * Warm
  * **After class**, please:
     * **Videos**
         * Andrew Ng discusses [Gradient descent for neural networks](https://www.youtube.com/watch?v=7bLEWDZng_M&list=PLkDaE6sCZn6Ec-XTbcX1uRg2_u4xOEky0&index=33), but he is inconsistent in his use of transposes for $W$.
@@ -195,6 +197,7 @@ make_week_box("week4", TRUE, "Week 4: Feb 10 -- Feb 14", "
 
 #### Wed, Feb 12
  * **In class**, we will work on:
+    * Continue on backpropagation with hidden layers
     * Lab on backpropagation
  * **After class**, please:
 
@@ -202,8 +205,7 @@ make_week_box("week4", TRUE, "Week 4: Feb 10 -- Feb 14", "
 #### Fri, Feb 14
  * **In class**, we will work on:
     * A few miscellaneous points about gradient descent:
-        * stochastic gradient descent
-        * vanishing and exploding gradients
+        * Issues with gradient descent, step sizes, and stochastic gradient descent: [pdf](materials/20200214_SGD/20200214_SGD.pdf)
  * **After class**, please:
 ")
 ```
