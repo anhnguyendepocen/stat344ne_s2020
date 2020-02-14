@@ -188,7 +188,8 @@ make_week_box("week4", TRUE, "Week 4: Feb 10 -- Feb 14", "
  * **In class**, we will work on:
     * **Quiz**
     * Start on backpropagation with hidden layers
-        * Warm
+        * Warm up: [pdf](materials/20200210_backprop/20200210_backprop.pdf)
+        * Lecture notes (continued on Wednesday): [pdf](materials/20200210_backprop/lecture_notes.pdf)
  * **After class**, please:
     * **Videos**
         * Andrew Ng discusses [Gradient descent for neural networks](https://www.youtube.com/watch?v=7bLEWDZng_M&list=PLkDaE6sCZn6Ec-XTbcX1uRg2_u4xOEky0&index=33), but he is inconsistent in his use of transposes for $W$.
@@ -197,15 +198,15 @@ make_week_box("week4", TRUE, "Week 4: Feb 10 -- Feb 14", "
 
 #### Wed, Feb 12
  * **In class**, we will work on:
-    * Continue on backpropagation with hidden layers
-    * Lab on backpropagation
+    * Continue on backpropagation with hidden layers -- notes posted Monday
+    * Start lab on backpropagation
  * **After class**, please:
 
 
 #### Fri, Feb 14
  * **In class**, we will work on:
-    * A few miscellaneous points about gradient descent:
-        * Issues with gradient descent, step sizes, and stochastic gradient descent: [pdf](materials/20200214_SGD/20200214_SGD.pdf)
+    * Issues with gradient descent, step sizes, and stochastic gradient descent: [pdf](materials/20200214_SGD/20200214_SGD.pdf)
+    * More time for lab
  * **After class**, please:
 ")
 ```
