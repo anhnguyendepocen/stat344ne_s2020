@@ -220,9 +220,9 @@ make_week_box("week5", TRUE, "Week 5: Feb 17 -- Feb 21", "
 #### Mon, Feb 17
  * **In class**, we will work on:
     * Bias/variance and regularization.
+        * Lecture notes: [pdf](materials/20200217_regularization/lecture_notes.pdf)
         * Python notebook: [GitHub](https://github.com/mhc-stat344ne-s2020/20200217_examples/blob/master/20200217_examples.ipynb)
         * (Slightly) abbreviated pdf version: [pdf](materials/20200217_regularization/20200217_examples/20200217_examples.pdf)
-    * If extra time, revisit lab 4.  Working just with Keras, see if you can get improved performance for the IMDB ratings example by changing the size of each layer and adding regularization.
  * **After class**, please:
     * **Homework 3** due 5pm Fri, Feb. 21
     * Videos:
