@@ -205,9 +205,13 @@ make_week_box("week4", TRUE, "Week 4: Feb 10 -- Feb 14", "
 
 #### Fri, Feb 14
  * **In class**, we will work on:
-    * Issues with gradient descent, step sizes, and stochastic gradient descent: [pdf](materials/20200214_SGD/20200214_SGD.pdf)
+    * Issues with gradient descent, learning rates, and stochastic gradient descent: [pdf](materials/20200214_SGD/20200214_SGD.pdf)
     * More time for lab
  * **After class**, please:
+    * **Videos:**
+        * Andrew Ng discusses [feature normalization](https://www.youtube.com/watch?v=FDCfw-YqWTE&list=PLkDaE6sCZn6Hn0vK8co82zjQtt3T2Nkqc&index=9)
+        * Andrew Ng discusses [stochastic gradient descent](https://www.youtube.com/watch?v=4qJaSmvhxi8&list=PLkDaE6sCZn6Hn0vK8co82zjQtt3T2Nkqc&index=15) (which he calls mini-batch gradient descent)
+        * Andrew Ng discusses [more about stochastic gradient descent](https://www.youtube.com/watch?v=-_4Zi8fCZO4&list=PLkDaE6sCZn6Hn0vK8co82zjQtt3T2Nkqc&index=16)
 ")
 ```
 
@@ -215,18 +219,39 @@ make_week_box("week4", TRUE, "Week 4: Feb 10 -- Feb 14", "
 make_week_box("week5", TRUE, "Week 5: Feb 17 -- Feb 21", "
 #### Mon, Feb 17
  * **In class**, we will work on:
-    * Bias/variance and regularization
+    * Bias/variance and regularization.
+        * Python notebook: [GitHub](https://github.com/mhc-stat344ne-s2020/20200217_examples/blob/master/20200217_examples.ipynb)
+        * (Slightly) abbreviated pdf version: [pdf](materials/20200217_regularization/20200217_examples/20200217_examples.pdf)
+    * If extra time, revisit lab 4.  Working just with Keras, see if you can get improved performance for the IMDB ratings example by changing the size of each layer and adding regularization.
  * **After class**, please:
+    * **Homework 3** due 5pm Fri, Feb. 21
+    * Videos:
+        * Andrew Ng discusses [Regularization](https://www.youtube.com/watch?v=6g0t3Phly2M&list=PLkDaE6sCZn6Hn0vK8co82zjQtt3T2Nkqc&index=4)
+        * Andrew Ng discusses [intuition for why regularization works](https://www.youtube.com/watch?v=NyG-7nRpsW8&list=PLkDaE6sCZn6Hn0vK8co82zjQtt3T2Nkqc&index=5) using ideas that are fairly different from my motivation.
+    * Reading:
+        * Chapter 4 of Chollet
+        * Section 7.1.1 of Goodfellow et al up through Equation 7.5.
 
 
 #### Wed, Feb 19
  * **In class**, we will work on:
+    * Dropout regularization
+    * Vanishing/exploding gradients
+    * Strategies for weight initialization
  * **After class**, please:
+    * **Homework 3** due 5pm Fri, Feb. 21
+    * **Videos:**
+        * Andrew Ng discusses [dropout regularization](https://www.youtube.com/watch?v=D8PJAL-MZv8&list=PLkDaE6sCZn6Hn0vK8co82zjQtt3T2Nkqc&index=6)
+        * Andrew Ng discusses [more about dropout](https://www.youtube.com/watch?v=ARq74QuavAo&list=PLkDaE6sCZn6Hn0vK8co82zjQtt3T2Nkqc&index=7)
+        * Andrew Ng discusses [vanishing and exploding gradients](https://www.youtube.com/watch?v=qhXZsFVxGKo&list=PLkDaE6sCZn6Hn0vK8co82zjQtt3T2Nkqc&index=10)
+        * Andrew Ng discusses [weight initialization](https://www.youtube.com/watch?v=s2coXdufOzE&list=PLkDaE6sCZn6Hn0vK8co82zjQtt3T2Nkqc&index=11)
 
 
 #### Fri, Feb 21
  * **In class**, we will work on:
+    * Start on convolutional neural networks
  * **After class**, please:
+    * **Homework 3** due 5pm **today** Fri, Feb. 21
 ")
 ```
 
