@@ -1,0 +1,108 @@
+---
+title: "HW4 Written Part"
+subtitle: "Due 5pm Friday Feb 28, 2020"
+output:
+  pdf_document:
+    keep_tex: true
+    highlight: zenburn
+header-includes:
+   - \usepackage{soul}
+   - \usepackage{booktabs}
+documentclass: extarticle
+geometry: margin=0.6in
+---
+
+```{r global_options, include=FALSE}
+library(knitr)
+library(reticulate)
+use_python("/Users/eray/anaconda3/bin/python")
+knitr::opts_chunk$set(eval = TRUE, echo=FALSE, engine='python')
+#knitr::knit_engines$set(python = reticulate::eng_python)
+```
+
+## What is your name?
+
+## Problem 1
+
+Suppose that you have a classification model that provides about 80% classification accuracy on the training set and on out-of-sample test data.  If you ask a human to do this task, they will generally be able to achieve classification accuracy of close to 100%.
+
+### (a) For each of the following possible next steps in your analysis, choose one option that you might consider next, and write 1 sentence explaining your reasoning.
+
+ * Change $L_2$ penalty by:
+
+Increasing $\lambda$ \hspace{3cm} Decreasing $\lambda$
+
+Why?
+
+\vspace{4cm}
+
+ * Change the dropout rate by:
+ 
+Increasing dropout rate \hspace{3cm} Decreasing dropout rate
+
+Why?
+
+\vspace{4cm}
+
+ * Change training time by:
+ 
+Increasing the number of epochs \hspace{3cm} Decreasing the number of epochs
+
+Why?
+
+\newpage
+
+ * Change model structure by:
+
+Adding more hidden layers \hspace{3cm} Reducing the number of hidden layers
+
+Why?
+
+\vspace{4cm}
+
+ * Change model structure by:
+
+Adding more units to hidden layers \hspace{3cm} Reducing the number of units in hidden layers
+
+Why?
+
+\vspace{4cm}
+
+### (b) Collecting more data is always good.  In this case, would you say that collecting more data is a higher priority than trying some of the ideas in part (a), or a lower priority?  Why?
+
+\newpage
+
+## Problem 2
+
+### (a) I divided my labeled classification data into a training set used for model construction and another portion for validation.  I then evaluated 1000 neural architectures by estimating parameters with gradient descent on the training set and computing classification accuracy on the validation set.  Discuss why the resulting model is likely to yield poorer accuracy on out-of-sample test data as compared to the validation data, even though the validaton data was not directly used for estimating the bias and weight parameters.  This could be answered in 1-3 sentences.
+
+\vspace{6cm}
+
+### (b) Suppose I now look at performance on my test set and find that indeed, classification accuracy is lower on the test set than it was on the training and validation sets.  I now continue to refine my model based on combined validation and test set performance, fitting another 200 variations on neural network models.  Is my test set performance a reliable measure of the quality of my final model?  This could be answered in 1 sentence.
+
+\newpage
+
+## Problem 3
+
+### (a) What problem(s) result from having a learning rate that is too high?  How would you detect such problems in a plot of training set loss as a function of training epoch?  You can answer in 1-2 sentences.
+
+\vspace{8cm}
+
+### (a) What problem(s) result from having a learning rate that is too small?  How would you detect such problems in a plot of training set loss as a function of training epoch?  You can answer in 1-2 sentences.
+
+\newpage
+
+## Problem 4
+
+I'm fitting a neural network using $L_1$ regularization.  Suppose that in the current iteration of gradient descent, my weight parameter $w^{[1]}_{11}$ is positive.  (The point of this is that although the derivative of the absolute value is not defined everywhere, it is defined if the argument to the absolute value is not 0.)
+
+### (a) Find an expression for $\frac{\partial J(b,w)}{\partial w^{[1]}_{11}}$.  Your answer can involve a term like $-\frac{1}{m} \frac{\partial \ell(b, w)}{\partial w^{[1]}_{11}}$, where $\ell(b, w)$ is the log-likelihood for your model.  (You should not be doing any involved chain rule calculations.)
+
+\vspace{6cm}
+
+### (b) Suppose the current value of $w^{[1]}_{11}$ is small (positive, but close to 0).  Is the effect of the penalty on a gradient descent update step for $w^{[1]}_{11}$ larger for $L_1$ regularization or $L_2$ regularization?
+
+\vspace{6cm}
+
+### (c) In general, would you expect the final estimate of $w^{[1]}_{11}$ to be closer to 0 if you use $L_1$ regularization or $L_2$ regularization?  You can answer in 1 sentence, but you should justify your answer based on your result from part (b).
+
