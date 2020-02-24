@@ -1,0 +1,1200 @@
+\documentclass[11pt]{article}
+
+    \usepackage[breakable]{tcolorbox}
+    \usepackage{parskip} % Stop auto-indenting (to mimic markdown behaviour)
+    
+    \usepackage{iftex}
+    \ifPDFTeX
+    	\usepackage[T1]{fontenc}
+    	\usepackage{mathpazo}
+    \else
+    	\usepackage{fontspec}
+    \fi
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % Maintain compatibility with old templates. Remove in nbconvert 6.0
+    \let\Oldincludegraphics\includegraphics
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionFormat{nocaption}{}
+    \captionsetup{format=nocaption,aboveskip=0pt,belowskip=0pt}
+
+    \usepackage[Export]{adjustbox} % Used to constrain images to a maximum size
+    \adjustboxset{max size={0.9\linewidth}{0.9\paperheight}}
+    \usepackage{float}
+    \floatplacement{figure}{H} % forces figures to be placed at the correct location
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range
+    \makeatletter % fix for grffile with XeLaTeX
+    \def\Gread@@xetex#1{%
+      \IfFileExists{"\Gin@base".bb}%
+      {\Gread@eps{\Gin@base.bb}}%
+      {\Gread@@xetex@aux#1}%
+    }
+    \makeatother
+
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    % The default LaTeX title has an obnoxious amount of whitespace. By default,
+    % titling removes some of it. It also provides customization options.
+    \usepackage{titling}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    \usepackage{mathrsfs}
+    
+
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+    \definecolor{ansi-default-inverse-fg}{HTML}{FFFFFF}
+    \definecolor{ansi-default-inverse-bg}{HTML}{000000}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatibility definitions
+    \def\gt{>}
+    \def\lt{<}
+    \let\Oldtex\TeX
+    \let\Oldlatex\LaTeX
+    \renewcommand{\TeX}{\textrm{\Oldtex}}
+    \renewcommand{\LaTeX}{\textrm{\Oldlatex}}
+    % Document parameters
+    % Document title
+    \title{20200219\_examples}
+    
+    
+    
+    
+    
+% Pygments definitions
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % For linebreaks inside Verbatim environment from package fancyvrb. 
+    \makeatletter
+        \newbox\Wrappedcontinuationbox 
+        \newbox\Wrappedvisiblespacebox 
+        \newcommand*\Wrappedvisiblespace {\textcolor{red}{\textvisiblespace}} 
+        \newcommand*\Wrappedcontinuationsymbol {\textcolor{red}{\llap{\tiny$\m@th\hookrightarrow$}}} 
+        \newcommand*\Wrappedcontinuationindent {3ex } 
+        \newcommand*\Wrappedafterbreak {\kern\Wrappedcontinuationindent\copy\Wrappedcontinuationbox} 
+        % Take advantage of the already applied Pygments mark-up to insert 
+        % potential linebreaks for TeX processing. 
+        %        {, <, #, %, $, ' and ": go to next line. 
+        %        _, }, ^, &, >, - and ~: stay at end of broken line. 
+        % Use of \textquotesingle for straight quote. 
+        \newcommand*\Wrappedbreaksatspecials {% 
+            \def\PYGZus{\discretionary{\char`\_}{\Wrappedafterbreak}{\char`\_}}% 
+            \def\PYGZob{\discretionary{}{\Wrappedafterbreak\char`\{}{\char`\{}}% 
+            \def\PYGZcb{\discretionary{\char`\}}{\Wrappedafterbreak}{\char`\}}}% 
+            \def\PYGZca{\discretionary{\char`\^}{\Wrappedafterbreak}{\char`\^}}% 
+            \def\PYGZam{\discretionary{\char`\&}{\Wrappedafterbreak}{\char`\&}}% 
+            \def\PYGZlt{\discretionary{}{\Wrappedafterbreak\char`\<}{\char`\<}}% 
+            \def\PYGZgt{\discretionary{\char`\>}{\Wrappedafterbreak}{\char`\>}}% 
+            \def\PYGZsh{\discretionary{}{\Wrappedafterbreak\char`\#}{\char`\#}}% 
+            \def\PYGZpc{\discretionary{}{\Wrappedafterbreak\char`\%}{\char`\%}}% 
+            \def\PYGZdl{\discretionary{}{\Wrappedafterbreak\char`\$}{\char`\$}}% 
+            \def\PYGZhy{\discretionary{\char`\-}{\Wrappedafterbreak}{\char`\-}}% 
+            \def\PYGZsq{\discretionary{}{\Wrappedafterbreak\textquotesingle}{\textquotesingle}}% 
+            \def\PYGZdq{\discretionary{}{\Wrappedafterbreak\char`\"}{\char`\"}}% 
+            \def\PYGZti{\discretionary{\char`\~}{\Wrappedafterbreak}{\char`\~}}% 
+        } 
+        % Some characters . , ; ? ! / are not pygmentized. 
+        % This macro makes them "active" and they will insert potential linebreaks 
+        \newcommand*\Wrappedbreaksatpunct {% 
+            \lccode`\~`\.\lowercase{\def~}{\discretionary{\hbox{\char`\.}}{\Wrappedafterbreak}{\hbox{\char`\.}}}% 
+            \lccode`\~`\,\lowercase{\def~}{\discretionary{\hbox{\char`\,}}{\Wrappedafterbreak}{\hbox{\char`\,}}}% 
+            \lccode`\~`\;\lowercase{\def~}{\discretionary{\hbox{\char`\;}}{\Wrappedafterbreak}{\hbox{\char`\;}}}% 
+            \lccode`\~`\:\lowercase{\def~}{\discretionary{\hbox{\char`\:}}{\Wrappedafterbreak}{\hbox{\char`\:}}}% 
+            \lccode`\~`\?\lowercase{\def~}{\discretionary{\hbox{\char`\?}}{\Wrappedafterbreak}{\hbox{\char`\?}}}% 
+            \lccode`\~`\!\lowercase{\def~}{\discretionary{\hbox{\char`\!}}{\Wrappedafterbreak}{\hbox{\char`\!}}}% 
+            \lccode`\~`\/\lowercase{\def~}{\discretionary{\hbox{\char`\/}}{\Wrappedafterbreak}{\hbox{\char`\/}}}% 
+            \catcode`\.\active
+            \catcode`\,\active 
+            \catcode`\;\active
+            \catcode`\:\active
+            \catcode`\?\active
+            \catcode`\!\active
+            \catcode`\/\active 
+            \lccode`\~`\~ 	
+        }
+    \makeatother
+
+    \let\OriginalVerbatim=\Verbatim
+    \makeatletter
+    \renewcommand{\Verbatim}[1][1]{%
+        %\parskip\z@skip
+        \sbox\Wrappedcontinuationbox {\Wrappedcontinuationsymbol}%
+        \sbox\Wrappedvisiblespacebox {\FV@SetupFont\Wrappedvisiblespace}%
+        \def\FancyVerbFormatLine ##1{\hsize\linewidth
+            \vtop{\raggedright\hyphenpenalty\z@\exhyphenpenalty\z@
+                \doublehyphendemerits\z@\finalhyphendemerits\z@
+                \strut ##1\strut}%
+        }%
+        % If the linebreak is at a space, the latter will be displayed as visible
+        % space at end of first line, and a continuation symbol starts next line.
+        % Stretch/shrink are however usually zero for typewriter font.
+        \def\FV@Space {%
+            \nobreak\hskip\z@ plus\fontdimen3\font minus\fontdimen4\font
+            \discretionary{\copy\Wrappedvisiblespacebox}{\Wrappedafterbreak}
+            {\kern\fontdimen2\font}%
+        }%
+        
+        % Allow breaks at special characters using \PYG... macros.
+        \Wrappedbreaksatspecials
+        % Breaks at punctuation characters . , ; ? ! and / need catcode=\active 	
+        \OriginalVerbatim[#1,codes*=\Wrappedbreaksatpunct]%
+    }
+    \makeatother
+
+    % Exact colors from NB
+    \definecolor{incolor}{HTML}{303F9F}
+    \definecolor{outcolor}{HTML}{D84315}
+    \definecolor{cellborder}{HTML}{CFCFCF}
+    \definecolor{cellbackground}{HTML}{F7F7F7}
+    
+    % prompt
+    \makeatletter
+    \newcommand{\boxspacing}{\kern\kvtcb@left@rule\kern\kvtcb@boxsep}
+    \makeatother
+    \newcommand{\prompt}[4]{
+        \ttfamily\llap{{\color{#2}[#3]:\hspace{3pt}#4}}\vspace{-\baselineskip}
+    }
+    
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+\begin{document}
+    
+    \maketitle
+
+    \hypertarget{data-generation}{%
+\subsection{Data generation}\label{data-generation}}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_3_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \hypertarget{model-with-so-many-hidden-layers-and-units}{%
+\subsection{Model with so many hidden layers (5) and
+units (512 per layer)}\label{model-with-so-many-hidden-layers-and-units}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{11}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{hidden\PYZus{}units} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{512}\PY{p}{,} \PY{l+m+mi}{512}\PY{p}{,} \PY{l+m+mi}{512}\PY{p}{,} \PY{l+m+mi}{512}\PY{p}{,} \PY{l+m+mi}{512}\PY{p}{]}
+\PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{seed}\PY{p}{(}\PY{l+m+mi}{65392}\PY{p}{)}
+\PY{n}{b\PYZus{}init\PYZus{}seeds} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{randint}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mf}{1e6}\PY{p}{,} \PY{n}{size} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{hidden\PYZus{}units}\PY{p}{)}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}
+\PY{n}{w\PYZus{}init\PYZus{}seeds} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{randint}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mf}{1e6}\PY{p}{,} \PY{n}{size} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{hidden\PYZus{}units}\PY{p}{)}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}
+\PY{n}{model\PYZus{}somany} \PY{o}{=} \PY{n}{fit\PYZus{}model\PYZus{}ex1}\PY{p}{(}\PY{n}{hidden\PYZus{}units}\PY{p}{,} \PY{n}{b\PYZus{}init\PYZus{}seeds}\PY{p}{,} \PY{n}{w\PYZus{}init\PYZus{}seeds}\PY{p}{,} \PY{n}{return\PYZus{}history} \PY{o}{=} \PY{k+kc}{False}\PY{p}{)}
+\PY{n}{plot\PYZus{}layers}\PY{p}{(}\PY{n}{model\PYZus{}somany}\PY{p}{,} \PY{n}{hidden\PYZus{}legend}\PY{o}{=}\PY{k+kc}{False}\PY{p}{,} \PY{n}{include\PYZus{}hidden} \PY{o}{=} \PY{k+kc}{False}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_7_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \newpage
+    
+    \hypertarget{three-ideas-to-fix}{%
+\subsection{Three ideas to fix:}\label{three-ideas-to-fix}}
+
+\hypertarget{idea-1-smaller-models-lets-try-fewer-units-per-layer}{%
+\subsubsection{Idea 1: smaller models -- let's try fewer units per
+layer}\label{idea-1-smaller-models-lets-try-fewer-units-per-layer}}
+
+Why? The bigger your model, the more flexibility/capacity to overfit.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{10}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{hidden\PYZus{}units} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{256}\PY{p}{,} \PY{l+m+mi}{256}\PY{p}{,} \PY{l+m+mi}{256}\PY{p}{,} \PY{l+m+mi}{256}\PY{p}{,} \PY{l+m+mi}{256}\PY{p}{]}
+\PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{seed}\PY{p}{(}\PY{l+m+mi}{65392}\PY{p}{)}
+\PY{n}{b\PYZus{}init\PYZus{}seeds} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{randint}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mf}{1e6}\PY{p}{,} \PY{n}{size} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{hidden\PYZus{}units}\PY{p}{)}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}
+\PY{n}{w\PYZus{}init\PYZus{}seeds} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{randint}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mf}{1e6}\PY{p}{,} \PY{n}{size} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{hidden\PYZus{}units}\PY{p}{)}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}
+\PY{p}{(}\PY{n}{model\PYZus{}256}\PY{p}{,} \PY{n}{history\PYZus{}256}\PY{p}{)} \PY{o}{=} \PY{n}{fit\PYZus{}model\PYZus{}ex1}\PY{p}{(}\PY{n}{hidden\PYZus{}units}\PY{p}{,} \PY{n}{b\PYZus{}init\PYZus{}seeds}\PY{p}{,} \PY{n}{w\PYZus{}init\PYZus{}seeds}\PY{p}{,} \PY{n}{num\PYZus{}epochs} \PY{o}{=} \PY{l+m+mi}{1000}\PY{p}{,} \PY{n}{return\PYZus{}history} \PY{o}{=} \PY{k+kc}{True}\PY{p}{)}
+\PY{n}{plot\PYZus{}layers}\PY{p}{(}\PY{n}{model\PYZus{}256}\PY{p}{,} \PY{n}{hidden\PYZus{}legend}\PY{o}{=}\PY{k+kc}{False}\PY{p}{,} \PY{n}{include\PYZus{}hidden} \PY{o}{=} \PY{k+kc}{False}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_9_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \newpage
+    
+    \hypertarget{idea-2-dont-train-as-long-early-stopping}{%
+\subsubsection{Idea 2: Don't train as long (early
+stopping)}\label{idea-2-dont-train-as-long-early-stopping}}
+
+Why? The longer you train your model, the more tuned you are to your
+specific training set. At some point, validation set performance may
+start dropping off.
+
+To figure out when we might reasonably stop, look at the plot of
+training and validation set performance:
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{13}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{history\PYZus{}dict} \PY{o}{=} \PY{n}{history\PYZus{}256}\PY{o}{.}\PY{n}{history}
+\PY{n}{history\PYZus{}dict}\PY{o}{.}\PY{n}{keys}\PY{p}{(}\PY{p}{)}
+\PY{n}{loss\PYZus{}values} \PY{o}{=} \PY{n}{history\PYZus{}dict}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{loss}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+\PY{n}{val\PYZus{}loss\PYZus{}values} \PY{o}{=} \PY{n}{history\PYZus{}dict}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{val\PYZus{}loss}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+
+\PY{n}{epochs} \PY{o}{=} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{n+nb}{len}\PY{p}{(}\PY{n}{loss\PYZus{}values}\PY{p}{)} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{)}
+
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{epochs}\PY{p}{,} \PY{n}{loss\PYZus{}values}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Training loss}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{epochs}\PY{p}{,} \PY{n}{val\PYZus{}loss\PYZus{}values}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Validation loss}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Training and validation loss}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Epochs}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Loss}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{)}
+
+\PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_11_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{14}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{hidden\PYZus{}units} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{256}\PY{p}{,} \PY{l+m+mi}{256}\PY{p}{,} \PY{l+m+mi}{256}\PY{p}{,} \PY{l+m+mi}{256}\PY{p}{,} \PY{l+m+mi}{256}\PY{p}{]}
+\PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{seed}\PY{p}{(}\PY{l+m+mi}{65392}\PY{p}{)}
+\PY{n}{b\PYZus{}init\PYZus{}seeds} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{randint}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mf}{1e6}\PY{p}{,} \PY{n}{size} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{hidden\PYZus{}units}\PY{p}{)}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}
+\PY{n}{w\PYZus{}init\PYZus{}seeds} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{randint}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mf}{1e6}\PY{p}{,} \PY{n}{size} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{hidden\PYZus{}units}\PY{p}{)}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}
+\PY{n}{model\PYZus{}256\PYZus{}less\PYZus{}train} \PY{o}{=} \PY{n}{fit\PYZus{}model\PYZus{}ex1}\PY{p}{(}\PY{n}{hidden\PYZus{}units}\PY{p}{,} \PY{n}{b\PYZus{}init\PYZus{}seeds}\PY{p}{,} \PY{n}{w\PYZus{}init\PYZus{}seeds}\PY{p}{,} \PY{n}{num\PYZus{}epochs} \PY{o}{=} \PY{l+m+mi}{100}\PY{p}{)}
+\PY{n}{plot\PYZus{}layers}\PY{p}{(}\PY{n}{model\PYZus{}256\PYZus{}less\PYZus{}train}\PY{p}{,} \PY{n}{hidden\PYZus{}legend}\PY{o}{=}\PY{k+kc}{False}\PY{p}{,} \PY{n}{include\PYZus{}hidden} \PY{o}{=} \PY{k+kc}{False}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_12_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    This works, but note that:
+    
+\begin{itemize}
+	\item early stopping is almost equivalent to
+\(L_2\) regularization (not obvious - proved using multivariate Taylor
+series, maybe we'll do this later)
+    \item early stopping can be a little
+risky; the right stopping point might be quite different with different
+initial parameter values. This affects \(L_2\) regularization less.
+\end{itemize}
+
+For these reasons, in general I recommend training until convergence and
+using another idea for regularization -- but this is good to know about
+and is also a partial motivation for dropout below.
+
+\newpage
+
+    \hypertarget{idea-3-combine-predictions-from-multiple-models-build-an-ensemble}{%
+\subsubsection{Idea 3: Combine predictions from multiple models (build
+an
+ensemble)}\label{idea-3-combine-predictions-from-multiple-models-build-an-ensemble}}
+
+Fitting a bunch of models and averaging their predictions is
+\textbf{always} a good idea:
+
+\begin{itemize}
+\tightlist
+\item
+  This can reduce some of the variability from random initializations.
+\item
+  If you use different model structures, can get some of the benefits
+  from each model structure.
+\item
+  Essentially always yields a fairly small improvement in overall
+  performance. Ensembles win competitions where a small gain in
+  performance matters, but is not always done in production models in
+  companies.
+\end{itemize}
+
+See Stat 340 and/or machine learning in CS for more theoretical
+discussion in terms of variance reduction.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{0}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{hidden\PYZus{}units} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{256}\PY{p}{,} \PY{l+m+mi}{256}\PY{p}{,} \PY{l+m+mi}{256}\PY{p}{,} \PY{l+m+mi}{256}\PY{p}{,} \PY{l+m+mi}{256}\PY{p}{]}
+\PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{seed}\PY{p}{(}\PY{l+m+mi}{65392}\PY{p}{)}
+
+\PY{n}{model\PYZus{}fits} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+
+\PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{)}\PY{p}{:}
+  \PY{n}{b\PYZus{}init\PYZus{}seeds} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{randint}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mf}{1e6}\PY{p}{,} \PY{n}{size} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{hidden\PYZus{}units}\PY{p}{)}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}
+  \PY{n}{w\PYZus{}init\PYZus{}seeds} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{randint}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mf}{1e6}\PY{p}{,} \PY{n}{size} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{hidden\PYZus{}units}\PY{p}{)}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}
+  \PY{n}{model\PYZus{}fits}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{fit\PYZus{}model\PYZus{}ex1}\PY{p}{(}\PY{n}{hidden\PYZus{}units}\PY{p}{,} \PY{n}{b\PYZus{}init\PYZus{}seeds}\PY{p}{,} \PY{n}{w\PYZus{}init\PYZus{}seeds}\PY{p}{,} \PY{n}{num\PYZus{}epochs} \PY{o}{=} \PY{l+m+mi}{100}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{19}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{fig}\PY{p}{,} \PY{n}{ax} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{16}\PY{p}{,} \PY{l+m+mi}{12}\PY{p}{)}\PY{p}{)}
+
+\PY{n}{plot\PYZus{}x\PYZus{}grid} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{linspace}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{401}\PY{p}{)}
+
+\PY{n}{preds} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{,} \PY{l+m+mi}{401}\PY{p}{)}\PY{p}{)}
+\PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{)}\PY{p}{:}
+  \PY{n}{preds}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{p}{:}\PY{p}{]} \PY{o}{=} \PY{n}{model\PYZus{}fits}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{plot\PYZus{}x\PYZus{}grid}\PY{o}{.}\PY{n}{T}\PY{p}{)}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}
+  \PY{n}{ax}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{plot\PYZus{}x\PYZus{}grid}\PY{p}{,} \PY{n}{preds}\PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{p}{:}\PY{p}{]}\PY{p}{,} \PY{n}{c}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{gray}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{alpha} \PY{o}{=} \PY{l+m+mf}{0.6}\PY{p}{,} \PY{n}{label} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{individual model}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+
+\PY{n}{ax}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{plot\PYZus{}x\PYZus{}grid}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{n}{preds}\PY{p}{,} \PY{n}{axis} \PY{o}{=} \PY{l+m+mi}{0}\PY{p}{)}\PY{p}{,} \PY{n}{linewidth} \PY{o}{=} \PY{l+m+mi}{3}\PY{p}{,} \PY{n}{label} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ensemble (average)}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{ax}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{x\PYZus{}grid}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,} \PY{p}{:}\PY{p}{]}\PY{p}{,} \PY{n}{true\PYZus{}f}\PY{p}{,} \PY{n}{label} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{true function}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{ax}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{train\PYZus{}x}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{train\PYZus{}y}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{label} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{training set}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{19}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+<matplotlib.legend.Legend at 0x7f05936fdf28>
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_16_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \hypertarget{train-and-validation-set-performance-of-all-four-approaches}{%
+\subsubsection{Train and validation set performance of all four
+approaches}\label{train-and-validation-set-performance-of-all-four-approaches}}
+
+Here for the score labelled `model\_256\_less\_train' I have taken the
+average MSE across all the models we fit above with 256 units per layer
+and 500 epochs of training.
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{20}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+                       train\_mse    val\_mse
+model\_somany          0.00626838  0.0313612
+model\_256             0.00697594  0.0302323
+model\_256\_less\_train   0.0113222  0.0279638
+ensemble               0.0105538  0.0270576
+\end{Verbatim}
+\end{tcolorbox}
+        
+\newpage
+
+    \hypertarget{dropout}{%
+\subsection{Dropout}\label{dropout}}
+
+Dropout can be viewed as combining the above ideas. Here's how it works:
+
+\begin{itemize}
+\tightlist
+\item
+  Specify your big model:
+\end{itemize}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_20_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{itemize}
+\tightlist
+\item
+  On each step of gradient descent, \textbf{randomly} select a subset of
+  units in each hidden or input layer to ``drop out'' of the network.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Effectively, the activations for these units are set to 0.
+  \item
+    These units make no contribution to the prediction or to the
+    gradients for this step of gradient descent.
+  \item
+    This means we are effectively fitting a smaller neural network for
+    this iteration.
+  \end{itemize}
+\item
+  The \textbf{dropout rate} (between 0 and 1) is the probability that
+  each unit is dropped out.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    On average, this proportion of units will be dropped out in each
+    layer -- could be more or less on any given sample.
+  \end{itemize}
+\end{itemize}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{95}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{dropout\PYZus{}rate} \PY{o}{=} \PY{l+m+mf}{0.5}
+\PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{seed}\PY{p}{(}\PY{l+m+mi}{964}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{sample 1: }\PY{l+s+s2}{\PYZdq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{binomial}\PY{p}{(}\PY{n}{n} \PY{o}{=} \PY{l+m+mi}{1}\PY{p}{,} \PY{n}{p} \PY{o}{=} \PY{n}{dropout\PYZus{}rate}\PY{p}{,} \PY{n}{size} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{4}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{sample 2: }\PY{l+s+s2}{\PYZdq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{binomial}\PY{p}{(}\PY{n}{n} \PY{o}{=} \PY{l+m+mi}{1}\PY{p}{,} \PY{n}{p} \PY{o}{=} \PY{n}{dropout\PYZus{}rate}\PY{p}{,} \PY{n}{size} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{4}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{sample 3: }\PY{l+s+s2}{\PYZdq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{binomial}\PY{p}{(}\PY{n}{n} \PY{o}{=} \PY{l+m+mi}{1}\PY{p}{,} \PY{n}{p} \PY{o}{=} \PY{n}{dropout\PYZus{}rate}\PY{p}{,} \PY{n}{size} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{4}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+sample 1: [[1]
+ [0]
+ [1]
+ [0]]
+sample 2: [[0]
+ [1]
+ [0]
+ [0]]
+sample 3: [[1]
+ [0]
+ [0]
+ [1]]
+    \end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_23_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \newpage
+    
+    \begin{itemize}
+\tightlist
+\item
+  On successive steps of gradient descent, we choose a different random
+  subset of units to drop out.
+\end{itemize}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_25_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{itemize}
+\tightlist
+\item
+  When making predictions for a validation or test set, scale down the
+  activations from each unit by \textbf{multiplying by the dropout rate
+  when making test set predictions}.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Suppose dropout rate is 0.5.
+  \item
+    On average, each unit is present only half the time during training.
+  \item
+    On average, its contribution during forward propagation is 0.5 times
+    its activation output.
+  \end{itemize}
+\item
+  Equivalently, make no adjustment during test phase and scale up
+  activations by \textbf{dividing by the dropout rate during training}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    With no adjustment, each unit would contribute only 0.5 times its
+    activation output on average.
+  \item
+    If we multiply by 2 (divide by 0.5) each unit contributes its
+    activation output on average.
+  \end{itemize}
+\end{itemize}
+
+\newpage
+
+\textbf{Why does dropout work?}
+
+\begin{itemize}
+ \item This is similar to building an
+\textbf{ensemble} because it's like we're fitting a bunch of different
+models (each gradient descent step is effectively working with a
+different model) and then combining them.
+\item This is similar to using a
+\textbf{reduced model size} because each gradient descent step only
+looks at/is able to use a subset of units. As far as optimization is
+concerned, on any given step there is less model flexibility available
+\item This is similar to using \textbf{early stopping} because no one of the
+smaller networks is trained fully to convergence. Each smaller model is
+only trained for one step of gradient descent, not 1000.
+\end{itemize}
+
+    \hypertarget{dropout-in-keras}{%
+\subsubsection{Dropout in Keras}\label{dropout-in-keras}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{105}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{dropout\PYZus{}rate} \PY{o}{=} \PY{l+m+mf}{0.2}
+
+\PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{seed}\PY{p}{(}\PY{l+m+mi}{8746}\PY{p}{)}
+\PY{n}{b\PYZus{}init\PYZus{}seeds} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{randint}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mf}{1e6}\PY{p}{,} \PY{n}{size} \PY{o}{=} \PY{l+m+mi}{6}\PY{p}{)}
+\PY{n}{w\PYZus{}init\PYZus{}seeds} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{randint}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mf}{1e6}\PY{p}{,} \PY{n}{size} \PY{o}{=} \PY{l+m+mi}{6}\PY{p}{)}
+
+\PY{n}{dropout\PYZus{}model} \PY{o}{=} \PY{n}{models}\PY{o}{.}\PY{n}{Sequential}\PY{p}{(}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} you could add dropout on inputs but that doesn\PYZsq{}t make sense with only 1 x}
+\PY{c+c1}{\PYZsh{}dropout\PYZus{}model.add(layers.Dropout(rate = dropout\PYZus{}rate))}
+
+\PY{c+c1}{\PYZsh{} add hidden layers}
+\PY{n}{b\PYZus{}initializer} \PY{o}{=} \PY{n}{initializers}\PY{o}{.}\PY{n}{RandomNormal}\PY{p}{(}\PY{n}{seed}\PY{o}{=}\PY{n}{b\PYZus{}init\PYZus{}seeds}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
+\PY{n}{w\PYZus{}initializer} \PY{o}{=} \PY{n}{initializers}\PY{o}{.}\PY{n}{RandomNormal}\PY{p}{(}\PY{n}{seed}\PY{o}{=}\PY{n}{w\PYZus{}init\PYZus{}seeds}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
+\PY{n}{dropout\PYZus{}model}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{layers}\PY{o}{.}\PY{n}{Dense}\PY{p}{(}\PY{l+m+mi}{1024}\PY{p}{,}
+    \PY{n}{activation} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{relu}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+    \PY{n}{input\PYZus{}shape} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{p}{)}\PY{p}{,}
+    \PY{n}{bias\PYZus{}initializer} \PY{o}{=} \PY{n}{b\PYZus{}initializer}\PY{p}{,}
+    \PY{n}{kernel\PYZus{}initializer} \PY{o}{=} \PY{n}{w\PYZus{}initializer}\PY{p}{)}\PY{p}{)}
+
+\PY{n}{dropout\PYZus{}model}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{layers}\PY{o}{.}\PY{n}{Dropout}\PY{p}{(}\PY{n}{rate} \PY{o}{=} \PY{n}{dropout\PYZus{}rate}\PY{p}{)}\PY{p}{)}
+
+\PY{n}{b\PYZus{}initializer} \PY{o}{=} \PY{n}{initializers}\PY{o}{.}\PY{n}{RandomNormal}\PY{p}{(}\PY{n}{seed}\PY{o}{=}\PY{n}{b\PYZus{}init\PYZus{}seeds}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+\PY{n}{w\PYZus{}initializer} \PY{o}{=} \PY{n}{initializers}\PY{o}{.}\PY{n}{RandomNormal}\PY{p}{(}\PY{n}{seed}\PY{o}{=}\PY{n}{w\PYZus{}init\PYZus{}seeds}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+\PY{n}{dropout\PYZus{}model}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{layers}\PY{o}{.}\PY{n}{Dense}\PY{p}{(}\PY{l+m+mi}{1024}\PY{p}{,}
+    \PY{n}{activation} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{relu}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+    \PY{n}{bias\PYZus{}initializer} \PY{o}{=} \PY{n}{b\PYZus{}initializer}\PY{p}{,}
+    \PY{n}{kernel\PYZus{}initializer} \PY{o}{=} \PY{n}{w\PYZus{}initializer}\PY{p}{)}\PY{p}{)}
+
+\PY{n}{dropout\PYZus{}model}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{layers}\PY{o}{.}\PY{n}{Dropout}\PY{p}{(}\PY{n}{rate} \PY{o}{=} \PY{n}{dropout\PYZus{}rate}\PY{p}{)}\PY{p}{)}
+
+\PY{n}{b\PYZus{}initializer} \PY{o}{=} \PY{n}{initializers}\PY{o}{.}\PY{n}{RandomNormal}\PY{p}{(}\PY{n}{seed}\PY{o}{=}\PY{n}{b\PYZus{}init\PYZus{}seeds}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{)}
+\PY{n}{w\PYZus{}initializer} \PY{o}{=} \PY{n}{initializers}\PY{o}{.}\PY{n}{RandomNormal}\PY{p}{(}\PY{n}{seed}\PY{o}{=}\PY{n}{w\PYZus{}init\PYZus{}seeds}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{)}
+\PY{n}{dropout\PYZus{}model}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{layers}\PY{o}{.}\PY{n}{Dense}\PY{p}{(}\PY{l+m+mi}{1024}\PY{p}{,}
+    \PY{n}{activation} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{relu}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+    \PY{n}{bias\PYZus{}initializer} \PY{o}{=} \PY{n}{b\PYZus{}initializer}\PY{p}{,}
+    \PY{n}{kernel\PYZus{}initializer} \PY{o}{=} \PY{n}{w\PYZus{}initializer}\PY{p}{)}\PY{p}{)}
+
+\PY{n}{dropout\PYZus{}model}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{layers}\PY{o}{.}\PY{n}{Dropout}\PY{p}{(}\PY{n}{rate} \PY{o}{=} \PY{n}{dropout\PYZus{}rate}\PY{p}{)}\PY{p}{)}
+
+\PY{n}{b\PYZus{}initializer} \PY{o}{=} \PY{n}{initializers}\PY{o}{.}\PY{n}{RandomNormal}\PY{p}{(}\PY{n}{seed}\PY{o}{=}\PY{n}{b\PYZus{}init\PYZus{}seeds}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]}\PY{p}{)}
+\PY{n}{w\PYZus{}initializer} \PY{o}{=} \PY{n}{initializers}\PY{o}{.}\PY{n}{RandomNormal}\PY{p}{(}\PY{n}{seed}\PY{o}{=}\PY{n}{w\PYZus{}init\PYZus{}seeds}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]}\PY{p}{)}
+\PY{n}{dropout\PYZus{}model}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{layers}\PY{o}{.}\PY{n}{Dense}\PY{p}{(}\PY{l+m+mi}{1024}\PY{p}{,}
+    \PY{n}{activation} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{relu}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+    \PY{n}{bias\PYZus{}initializer} \PY{o}{=} \PY{n}{b\PYZus{}initializer}\PY{p}{,}
+    \PY{n}{kernel\PYZus{}initializer} \PY{o}{=} \PY{n}{w\PYZus{}initializer}\PY{p}{)}\PY{p}{)}
+
+\PY{n}{dropout\PYZus{}model}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{layers}\PY{o}{.}\PY{n}{Dropout}\PY{p}{(}\PY{n}{rate} \PY{o}{=} \PY{n}{dropout\PYZus{}rate}\PY{p}{)}\PY{p}{)}
+
+\PY{n}{b\PYZus{}initializer} \PY{o}{=} \PY{n}{initializers}\PY{o}{.}\PY{n}{RandomNormal}\PY{p}{(}\PY{n}{seed}\PY{o}{=}\PY{n}{b\PYZus{}init\PYZus{}seeds}\PY{p}{[}\PY{l+m+mi}{4}\PY{p}{]}\PY{p}{)}
+\PY{n}{w\PYZus{}initializer} \PY{o}{=} \PY{n}{initializers}\PY{o}{.}\PY{n}{RandomNormal}\PY{p}{(}\PY{n}{seed}\PY{o}{=}\PY{n}{w\PYZus{}init\PYZus{}seeds}\PY{p}{[}\PY{l+m+mi}{4}\PY{p}{]}\PY{p}{)}
+\PY{n}{dropout\PYZus{}model}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{layers}\PY{o}{.}\PY{n}{Dense}\PY{p}{(}\PY{l+m+mi}{1024}\PY{p}{,}
+    \PY{n}{activation} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{relu}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+    \PY{n}{bias\PYZus{}initializer} \PY{o}{=} \PY{n}{b\PYZus{}initializer}\PY{p}{,}
+    \PY{n}{kernel\PYZus{}initializer} \PY{o}{=} \PY{n}{w\PYZus{}initializer}\PY{p}{)}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} add output layer}
+\PY{n}{b\PYZus{}initializer} \PY{o}{=} \PY{n}{initializers}\PY{o}{.}\PY{n}{RandomNormal}\PY{p}{(}\PY{n}{seed}\PY{o}{=}\PY{n}{b\PYZus{}init\PYZus{}seeds}\PY{p}{[}\PY{l+m+mi}{5}\PY{p}{]}\PY{p}{)}
+\PY{n}{w\PYZus{}initializer} \PY{o}{=} \PY{n}{initializers}\PY{o}{.}\PY{n}{RandomNormal}\PY{p}{(}\PY{n}{seed}\PY{o}{=}\PY{n}{w\PYZus{}init\PYZus{}seeds}\PY{p}{[}\PY{l+m+mi}{5}\PY{p}{]}\PY{p}{)}
+\PY{n}{dropout\PYZus{}model}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{layers}\PY{o}{.}\PY{n}{Dense}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}
+    \PY{n}{activation} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{linear}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+    \PY{n}{bias\PYZus{}initializer} \PY{o}{=} \PY{n}{b\PYZus{}initializer}\PY{p}{,}
+    \PY{n}{kernel\PYZus{}initializer} \PY{o}{=} \PY{n}{w\PYZus{}initializer}\PY{p}{)}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} compile and fit model}
+\PY{n}{dropout\PYZus{}model}\PY{o}{.}\PY{n}{compile}\PY{p}{(}\PY{n}{optimizer} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{adam}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{loss} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{mean\PYZus{}squared\PYZus{}error}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{metrics} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{mean\PYZus{}squared\PYZus{}error}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+
+\PY{n}{dropout\PYZus{}model}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{train\PYZus{}x}\PY{p}{,} \PY{n}{train\PYZus{}y}\PY{p}{,}
+  \PY{n}{epochs} \PY{o}{=} \PY{l+m+mi}{1000}\PY{p}{,}
+  \PY{n}{batch\PYZus{}size} \PY{o}{=} \PY{n}{train\PYZus{}x}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,}
+  \PY{n}{verbose} \PY{o}{=} \PY{l+m+mi}{0}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{105}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+<keras.callbacks.History at 0x7f05928a8e10>
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{106}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{plot\PYZus{}layers}\PY{p}{(}\PY{n}{dropout\PYZus{}model}\PY{p}{,} \PY{n}{hidden\PYZus{}legend}\PY{o}{=}\PY{k+kc}{False}\PY{p}{,} \PY{n}{include\PYZus{}hidden} \PY{o}{=} \PY{k+kc}{False}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{dropout\PYZus{}model}\PY{o}{.}\PY{n}{evaluate}\PY{p}{(}\PY{n}{train\PYZus{}x}\PY{p}{,} \PY{n}{train\PYZus{}y}\PY{p}{)}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{dropout\PYZus{}model}\PY{o}{.}\PY{n}{evaluate}\PY{p}{(}\PY{n}{val\PYZus{}x}\PY{p}{,} \PY{n}{val\PYZus{}y}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_29_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+50/50 [==============================] - 1s 15ms/step
+[0.010358586870133878, 0.010358586870133878]
+10000/10000 [==============================] - 1s 55us/step
+[0.03549703559279442, 0.03549703559279442]
+    \end{Verbatim}
+
+    This looks ok but doesn't have the best training or validation set
+performance. The estimate is above the data in a few places; I suspect that this is
+because of the scaling adjustment.
+
+\newpage
+
+Same model as above, but with dropout rate 0.05:
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_32_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+50/50 [==============================] - 1s 17ms/step
+[0.008277178294956684, 0.008277178294956684]
+10000/10000 [==============================] - 1s 54us/step
+[0.032732396107912065, 0.032732396107912065]
+    \end{Verbatim}
+
+\newpage
+
+    \hypertarget{exploding-and-vanishing-gradients}{%
+\section{Exploding and Vanishing
+Gradients}\label{exploding-and-vanishing-gradients}}
+
+\hypertarget{observation-neural-network-performance-can-go-down-as-you-add-more-layers-for-reasons-other-than-overfitting}{%
+\subsection{Observation: neural network performance can go down as you
+add more layers (for reasons other than
+overfitting)}\label{observation-neural-network-performance-can-go-down-as-you-add-more-layers-for-reasons-other-than-overfitting}}
+
+\hypertarget{layers-of-32-units-each}{%
+\subsubsection{13 layers of 32 units
+each}\label{layers-of-32-units-each}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{24}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{hidden\PYZus{}units} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{32}\PY{p}{,} \PY{l+m+mi}{32}\PY{p}{,} \PY{l+m+mi}{32}\PY{p}{,} \PY{l+m+mi}{32}\PY{p}{,} \PY{l+m+mi}{32}\PY{p}{,} \PY{l+m+mi}{32}\PY{p}{,} \PY{l+m+mi}{32}\PY{p}{,} \PY{l+m+mi}{32}\PY{p}{,} \PY{l+m+mi}{32}\PY{p}{,} \PY{l+m+mi}{32}\PY{p}{,} \PY{l+m+mi}{32}\PY{p}{,} \PY{l+m+mi}{32}\PY{p}{,} \PY{l+m+mi}{32}\PY{p}{]}
+\PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{seed}\PY{p}{(}\PY{l+m+mi}{3575}\PY{p}{)}
+\PY{n}{b\PYZus{}init\PYZus{}seeds} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{randint}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mf}{1e6}\PY{p}{,} \PY{n}{size} \PY{o}{=} \PY{n+nb}{sum}\PY{p}{(}\PY{n}{hidden\PYZus{}units}\PY{p}{)}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}
+\PY{n}{w\PYZus{}init\PYZus{}seeds} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{randint}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mf}{1e6}\PY{p}{,} \PY{n}{size} \PY{o}{=} \PY{n+nb}{sum}\PY{p}{(}\PY{n}{hidden\PYZus{}units}\PY{p}{)}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}
+\PY{n}{model\PYZus{}13layers} \PY{o}{=} \PY{n}{fit\PYZus{}model\PYZus{}ex1}\PY{p}{(}\PY{n}{hidden\PYZus{}units}\PY{p}{,} \PY{n}{b\PYZus{}init\PYZus{}seeds}\PY{p}{,} \PY{n}{w\PYZus{}init\PYZus{}seeds}\PY{p}{)}
+\PY{n}{plot\PYZus{}layers}\PY{p}{(}\PY{n}{model\PYZus{}13layers}\PY{p}{,} \PY{n}{hidden\PYZus{}legend}\PY{o}{=}\PY{k+kc}{False}\PY{p}{,} \PY{n}{include\PYZus{}hidden} \PY{o}{=} \PY{k+kc}{False}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_34_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    This model has slightly overfit the training data, but it's not too bad.
+
+\hypertarget{layers-of-32-units-each}{%
+\subsubsection{14 layers of 32 units
+each}\label{layers-of-32-units-each}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{22}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{hidden\PYZus{}units} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{32}\PY{p}{,} \PY{l+m+mi}{32}\PY{p}{,} \PY{l+m+mi}{32}\PY{p}{,} \PY{l+m+mi}{32}\PY{p}{,} \PY{l+m+mi}{32}\PY{p}{,} \PY{l+m+mi}{32}\PY{p}{,} \PY{l+m+mi}{32}\PY{p}{,} \PY{l+m+mi}{32}\PY{p}{,} \PY{l+m+mi}{32}\PY{p}{,} \PY{l+m+mi}{32}\PY{p}{,} \PY{l+m+mi}{32}\PY{p}{,} \PY{l+m+mi}{32}\PY{p}{,} \PY{l+m+mi}{32}\PY{p}{,} \PY{l+m+mi}{32}\PY{p}{]}
+\PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{seed}\PY{p}{(}\PY{l+m+mi}{3575}\PY{p}{)}
+\PY{n}{b\PYZus{}init\PYZus{}seeds} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{randint}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mf}{1e6}\PY{p}{,} \PY{n}{size} \PY{o}{=} \PY{n+nb}{sum}\PY{p}{(}\PY{n}{hidden\PYZus{}units}\PY{p}{)}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}
+\PY{n}{w\PYZus{}init\PYZus{}seeds} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{randint}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mf}{1e6}\PY{p}{,} \PY{n}{size} \PY{o}{=} \PY{n+nb}{sum}\PY{p}{(}\PY{n}{hidden\PYZus{}units}\PY{p}{)}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}
+\PY{n}{model\PYZus{}14layers} \PY{o}{=} \PY{n}{fit\PYZus{}model\PYZus{}ex1}\PY{p}{(}\PY{n}{hidden\PYZus{}units}\PY{p}{,} \PY{n}{b\PYZus{}init\PYZus{}seeds}\PY{p}{,} \PY{n}{w\PYZus{}init\PYZus{}seeds}\PY{p}{)}
+\PY{n}{plot\PYZus{}layers}\PY{p}{(}\PY{n}{model\PYZus{}14layers}\PY{p}{,} \PY{n}{hidden\PYZus{}legend}\PY{o}{=}\PY{k+kc}{False}\PY{p}{,} \PY{n}{include\PYZus{}hidden} \PY{o}{=} \PY{k+kc}{False}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_36_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    This model definitely looks worse than the model with 13 layers.
+
+Note that the model does not look worse because it has overfit the data:
+
+\begin{itemize}
+\tightlist
+\item
+  There are spikes, but they don't correspond to training set data.
+\item
+  Near 0 the estimated function is below the training data. This is not
+  what we'd see if we were overfitting.
+\end{itemize}
+
+\hypertarget{layers-of-32-units-each}{%
+\subsubsection{15 layers of 32 units
+each}\label{layers-of-32-units-each}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{23}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{hidden\PYZus{}units} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{32}\PY{p}{,} \PY{l+m+mi}{32}\PY{p}{,} \PY{l+m+mi}{32}\PY{p}{,} \PY{l+m+mi}{32}\PY{p}{,} \PY{l+m+mi}{32}\PY{p}{,} \PY{l+m+mi}{32}\PY{p}{,} \PY{l+m+mi}{32}\PY{p}{,} \PY{l+m+mi}{32}\PY{p}{,} \PY{l+m+mi}{32}\PY{p}{,} \PY{l+m+mi}{32}\PY{p}{,} \PY{l+m+mi}{32}\PY{p}{,} \PY{l+m+mi}{32}\PY{p}{,} \PY{l+m+mi}{32}\PY{p}{,} \PY{l+m+mi}{32}\PY{p}{,} \PY{l+m+mi}{32}\PY{p}{]}
+\PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{seed}\PY{p}{(}\PY{l+m+mi}{3575}\PY{p}{)}
+\PY{n}{b\PYZus{}init\PYZus{}seeds} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{randint}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mf}{1e6}\PY{p}{,} \PY{n}{size} \PY{o}{=} \PY{n+nb}{sum}\PY{p}{(}\PY{n}{hidden\PYZus{}units}\PY{p}{)}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}
+\PY{n}{w\PYZus{}init\PYZus{}seeds} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{randint}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mf}{1e6}\PY{p}{,} \PY{n}{size} \PY{o}{=} \PY{n+nb}{sum}\PY{p}{(}\PY{n}{hidden\PYZus{}units}\PY{p}{)}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}
+\PY{n}{model\PYZus{}15layers} \PY{o}{=} \PY{n}{fit\PYZus{}model\PYZus{}ex1}\PY{p}{(}\PY{n}{hidden\PYZus{}units}\PY{p}{,} \PY{n}{b\PYZus{}init\PYZus{}seeds}\PY{p}{,} \PY{n}{w\PYZus{}init\PYZus{}seeds}\PY{p}{)}
+\PY{n}{plot\PYZus{}layers}\PY{p}{(}\PY{n}{model\PYZus{}15layers}\PY{p}{,} \PY{n}{hidden\PYZus{}legend}\PY{o}{=}\PY{k+kc}{False}\PY{p}{,} \PY{n}{include\PYZus{}hidden} \PY{o}{=} \PY{k+kc}{False}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_38_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    Estimation has totally failed. Why?
+
+Let's inspect the gradients for the weight parameters.
+
+\newpage
+
+Here's a summary of our model:
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{36}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{model\PYZus{}15layers}\PY{o}{.}\PY{n}{summary}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Model: "sequential\_13"
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+Layer (type)                 Output Shape              Param \#
+=================================================================
+dense\_164 (Dense)            (None, 32)                64
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+dense\_165 (Dense)            (None, 32)                1056
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+dense\_166 (Dense)            (None, 32)                1056
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+dense\_167 (Dense)            (None, 32)                1056
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+dense\_168 (Dense)            (None, 32)                1056
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+dense\_169 (Dense)            (None, 32)                1056
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+dense\_170 (Dense)            (None, 32)                1056
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+dense\_171 (Dense)            (None, 32)                1056
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+dense\_172 (Dense)            (None, 32)                1056
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+dense\_173 (Dense)            (None, 32)                1056
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+dense\_174 (Dense)            (None, 32)                1056
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+dense\_175 (Dense)            (None, 32)                1056
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+dense\_176 (Dense)            (None, 32)                1056
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+dense\_177 (Dense)            (None, 32)                1056
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+dense\_178 (Dense)            (None, 32)                1056
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+dense\_179 (Dense)            (None, 1)                 33
+=================================================================
+Total params: 14,881
+Trainable params: 14,881
+Non-trainable params: 0
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+    \end{Verbatim}
+
+\newpage
+
+Each of those layers has an associated array (tensor) of weight parameters:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+weight\_tensors:
+[<tf.Variable 'dense\_164/kernel:0' shape=(1, 32) dtype=float32\_ref>,
+<tf.Variable 'dense\_165/kernel:0' shape=(32, 32) dtype=float32\_ref>,
+<tf.Variable 'dense\_166/kernel:0' shape=(32, 32) dtype=float32\_ref>,
+<tf.Variable 'dense\_167/kernel:0' shape=(32, 32) dtype=float32\_ref>,
+<tf.Variable 'dense\_168/kernel:0' shape=(32, 32) dtype=float32\_ref>,
+<tf.Variable 'dense\_169/kernel:0' shape=(32, 32) dtype=float32\_ref>,
+<tf.Variable 'dense\_170/kernel:0' shape=(32, 32) dtype=float32\_ref>,
+<tf.Variable 'dense\_171/kernel:0' shape=(32, 32) dtype=float32\_ref>,
+<tf.Variable 'dense\_172/kernel:0' shape=(32, 32) dtype=float32\_ref>,
+<tf.Variable 'dense\_173/kernel:0' shape=(32, 32) dtype=float32\_ref>,
+<tf.Variable 'dense\_174/kernel:0' shape=(32, 32) dtype=float32\_ref>,
+<tf.Variable 'dense\_175/kernel:0' shape=(32, 32) dtype=float32\_ref>,
+<tf.Variable 'dense\_176/kernel:0' shape=(32, 32) dtype=float32\_ref>,
+<tf.Variable 'dense\_177/kernel:0' shape=(32, 32) dtype=float32\_ref>,
+<tf.Variable 'dense\_178/kernel:0' shape=(32, 32) dtype=float32\_ref>,
+<tf.Variable 'dense\_179/kernel:0' shape=(32, 1) dtype=float32\_ref>]
+    \end{Verbatim}
+
+Here's a print out of the gradients $\frac{\partial}{\partial w^{[l]}} J(b, w)$ for each layer (I cut out some of the middle ones):
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{45}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{w\PYZus{}gradients\PYZus{}by\PYZus{}layer}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{45}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+[array([[-5.1128570e-11,  1.4558806e-11,  8.8109138e-12,  1.0374611e-11,
+          0.0000000e+00, -4.1665487e-11,  2.3008637e-11,  1.4040640e-11,
+          0.0000000e+00,  2.9587180e-11,  1.2040632e-11,  3.5399409e-11,
+          8.6199811e-11,  6.9892765e-11,  3.9537221e-11, -3.5880274e-11,
+          1.7834813e-11,  2.4683039e-11,  3.5862643e-11, -2.6082041e-11,
+          0.0000000e+00,  0.0000000e+00,  1.9786824e-12, -3.0482141e-11,
+          0.0000000e+00,  2.4237433e-11,  4.3163390e-11,  0.0000000e+00,
+         -1.2263329e-11,  0.0000000e+00, -4.7673445e-12, -5.4395251e-12]],
+       dtype=float32),
+ array([[ 1.8212415e-13,  4.1658879e-14, -1.1628683e-12, {\ldots},
+          2.0910598e-13,  0.0000000e+00,  0.0000000e+00],
+        [ 8.2808630e-12,  0.0000000e+00, -6.6680841e-11, {\ldots},
+          0.0000000e+00,  8.6835504e-16,  0.0000000e+00],
+        [ 3.0822716e-13,  0.0000000e+00, -2.7909812e-12, {\ldots},
+          0.0000000e+00,  1.5795109e-16,  0.0000000e+00],
+        {\ldots},
+        [ 0.0000000e+00,  0.0000000e+00,  0.0000000e+00, {\ldots},
+          0.0000000e+00,  0.0000000e+00,  0.0000000e+00],
+        [ 1.9591384e-11,  1.9041973e-12, -1.3143256e-10, {\ldots},
+          9.5580835e-12,  3.6077512e-17,  0.0000000e+00],
+        [ 2.9374606e-12,  0.0000000e+00, -2.5802249e-11, {\ldots},
+          0.0000000e+00,  6.4894921e-16,  0.0000000e+00]], dtype=float32),
+ array([[ 2.0683519e-11,  1.9981850e-11, -3.2242306e-11, {\ldots},
+         -3.2364400e-10, -1.3208110e-10, -5.5204102e-11],
+        [ 8.0050983e-14,  7.7335328e-14, -1.2478671e-13, {\ldots},
+         -1.2525924e-12, -5.1119059e-13, -2.1365525e-13],
+        [ 1.4835239e-11,  1.4331966e-11, -2.3125772e-11, {\ldots},
+         -2.3213342e-10, -9.4735060e-11, -3.9595098e-11],
+        {\ldots},
+        [ 2.7588951e-14,  2.6653018e-14, -4.3006770e-14, {\ldots},
+         -4.3169629e-13, -1.7617788e-13, -7.3634621e-14],
+        [ 1.4896431e-13,  1.4391082e-13, -2.3221158e-13, {\ldots},
+         -2.3309093e-12, -9.5125828e-13, -3.9758420e-13],
+        [ 0.0000000e+00,  0.0000000e+00,  0.0000000e+00, {\ldots},
+          0.0000000e+00,  0.0000000e+00,  0.0000000e+00]], dtype=float32),
+ array([[ 1.10491796e-10,  0.00000000e+00,  0.00000000e+00, {\ldots},
+          0.00000000e+00,  4.33943881e-10, -2.73915390e-10],
+        [ 2.77639300e-10,  0.00000000e+00,  0.00000000e+00, {\ldots},
+          0.00000000e+00,  1.09039644e-09, -6.88283430e-10],
+        [ 1.24112609e-10,  0.00000000e+00,  0.00000000e+00, {\ldots},
+          0.00000000e+00,  4.87437979e-10, -3.07682102e-10],
+        {\ldots},
+        [ 6.68120073e-11,  0.00000000e+00,  0.00000000e+00, {\ldots},
+          0.00000000e+00,  2.62396466e-10, -1.65630717e-10],
+        [ 1.23228650e-10,  0.00000000e+00,  0.00000000e+00, {\ldots},
+          0.00000000e+00,  4.83966311e-10, -3.05490744e-10],
+        [ 1.21087126e-10,  0.00000000e+00,  0.00000000e+00, {\ldots},
+          0.00000000e+00,  4.75555817e-10, -3.00181796e-10]], dtype=float32),
+
+
+(...insert 3 more pages of gradients here...)
+
+ array([[ 0.        ,  0.        ,  0.        , {\ldots},  0.        ,
+          0.        ,  0.        ],
+        [ 0.        ,  0.        ,  0.00825372, {\ldots},  0.00460549,
+         -0.00259274,  0.        ],
+        [ 0.        ,  0.        ,  0.05294726, {\ldots},  0.029544  ,
+         -0.01663234,  0.        ],
+        {\ldots},
+        [ 0.        ,  0.        ,  0.        , {\ldots},  0.        ,
+          0.        ,  0.        ],
+        [ 0.        ,  0.        ,  0.        , {\ldots},  0.        ,
+          0.        ,  0.        ],
+        [ 0.        ,  0.        ,  0.08230466, {\ldots},  0.0459251 ,
+         -0.02585438,  0.        ]], dtype=float32),
+ array([[0.0000000e+00, 0.0000000e+00, 0.0000000e+00, {\ldots}, 0.0000000e+00,
+         0.0000000e+00, 0.0000000e+00],
+        [0.0000000e+00, 0.0000000e+00, 0.0000000e+00, {\ldots}, 0.0000000e+00,
+         0.0000000e+00, 0.0000000e+00],
+        [8.6449215e-04, 2.0252685e-03, 5.4745768e-05, {\ldots}, 0.0000000e+00,
+         0.0000000e+00, 3.2767624e-05],
+        {\ldots},
+        [2.9915057e-02, 7.0082784e-02, 1.8944332e-03, {\ldots}, 0.0000000e+00,
+         0.0000000e+00, 1.1338973e-03],
+        [5.5880792e-02, 1.3091339e-01, 3.5387671e-03, {\ldots}, 0.0000000e+00,
+         0.0000000e+00, 2.1180999e-03],
+        [0.0000000e+00, 0.0000000e+00, 0.0000000e+00, {\ldots}, 0.0000000e+00,
+         0.0000000e+00, 0.0000000e+00]], dtype=float32),
+ array([[0.93200916],
+        [2.6990824 ],
+        [3.7008305 ],
+        [0.        ],
+        [1.04841   ],
+        [3.610091  ],
+        [0.9690882 ],
+        [0.        ],
+        [3.0167778 ],
+        [0.03568995],
+        [1.3375859 ],
+        [0.18449391],
+        [0.        ],
+        [0.2546359 ],
+        [0.6377057 ],
+        [1.9631177 ],
+        [3.1632779 ],
+        [2.7090552 ],
+        [0.        ],
+        [0.3374935 ],
+        [3.2116172 ],
+        [0.9469584 ],
+        [3.6856844 ],
+        [0.        ],
+        [0.        ],
+        [0.        ],
+        [0.        ],
+        [5.0867157 ],
+        [0.        ],
+        [0.        ],
+        [0.        ],
+        [1.8000932 ]], dtype=float32)]
+\end{Verbatim}
+\end{tcolorbox}
+        
+        
+        \newpage
+        
+        That was a lot to take in.  Let's summarize by looking at the \textbf{largest} gradient value in each layer.
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{46}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{p}{[}\PY{n}{np}\PY{o}{.}\PY{n}{max}\PY{p}{(}\PY{n}{w\PYZus{}grad\PYZus{}one\PYZus{}layer}\PY{p}{)} \PY{k}{for} \PY{n}{w\PYZus{}grad\PYZus{}one\PYZus{}layer} \PY{o+ow}{in} \PY{n}{w\PYZus{}gradients\PYZus{}by\PYZus{}layer}\PY{p}{]}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{46}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+[8.619981e-11,
+ 7.4668494e-11,
+ 5.555045e-10,
+ 1.1582649e-09,
+ 1.0108434e-08,
+ 7.581418e-08,
+ 3.8226204e-07,
+ 3.2883786e-06,
+ 2.7240822e-05,
+ 0.00021533686,
+ 0.0004904665,
+ 0.004181428,
+ 0.02815935,
+ 0.1306683,
+ 0.8350754,
+ 5.0867157]
+\end{Verbatim}
+\end{tcolorbox}
+        
+    By the time we get to the first layer, the gradients are essentially 0
+and provide no information about how to update the weights to achieve a
+better model fit.
+
+\textbf{Why?}
+    % Add a bibliography block to the postdoc
+    
+    
+    
+\end{document}

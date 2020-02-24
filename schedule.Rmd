@@ -175,7 +175,7 @@ make_week_box("week3", FALSE, "Week 3: Feb 03 -- Feb 07", "
 
 #### Fri, Feb 07
  * **In class**, we will work on:
-    * Loss functions, activation functions, and their derivatives.  [pdf](materials/20200207_loss_activation_derivs/202007_loss_activation_derivs.pdf)
+    * Loss functions, activation functions, and their derivatives.  [pdf](materials/20200207_loss_activation_derivs/2020207_loss_activation_derivs.pdf)
     * Gradient checking.  Lecture notes: [pdf](materials/20200207_loss_activation_derivs/lecture_notes.pdf)
     * Lab 03
  * **After class**, please:
@@ -183,7 +183,7 @@ make_week_box("week3", FALSE, "Week 3: Feb 03 -- Feb 07", "
 ```
 
 ```{r, echo = FALSE, results='asis'}
-make_week_box("week4", TRUE, "Week 4: Feb 10 -- Feb 14", "
+make_week_box("week4", FALSE, "Week 4: Feb 10 -- Feb 14", "
 #### Mon, Feb 10
  * **In class**, we will work on:
     * **Quiz**
@@ -216,10 +216,10 @@ make_week_box("week4", TRUE, "Week 4: Feb 10 -- Feb 14", "
 ```
 
 ```{r, echo = FALSE, results='asis'}
-make_week_box("week5", TRUE, "Week 5: Feb 17 -- Feb 21", "
+make_week_box("week5", FALSE, "Week 5: Feb 17 -- Feb 21", "
 #### Mon, Feb 17
  * **In class**, we will work on:
-    * Bias/variance and regularization.
+    * Overfitting and regularization.
         * Lecture notes: [pdf](materials/20200217_regularization/lecture_notes.pdf)
         * Python notebook: [GitHub](https://github.com/mhc-stat344ne-s2020/20200217_examples/blob/master/20200217_examples.ipynb)
         * (Slightly) abbreviated pdf version: [pdf](materials/20200217_regularization/20200217_examples/20200217_examples.pdf)
@@ -235,9 +235,11 @@ make_week_box("week5", TRUE, "Week 5: Feb 17 -- Feb 21", "
 
 #### Wed, Feb 19
  * **In class**, we will work on:
-    * Dropout regularization
-    * Vanishing/exploding gradients
+    * Dropout regularization, vanishing/exploding gradients
+        * Python notebook: [GitHub](https://github.com/mhc-stat344ne-s2020/20200219_examples/blob/master/20200219_examples.ipynb)
+        * (Slightly) abbreviated pdf version: [pdf](materials/20200219_dropout/20200219_examples/20200219_examples.pdf)
     * Strategies for weight initialization
+    * Model development and hyperparameter search strategy if time
  * **After class**, please:
     * **Homework 3** due 5pm Fri, Feb. 21
     * **Videos:**
@@ -249,7 +251,7 @@ make_week_box("week5", TRUE, "Week 5: Feb 17 -- Feb 21", "
 
 #### Fri, Feb 21
  * **In class**, we will work on:
-    * Start on convolutional neural networks
+    * Start on convolutional neural networks: [pdf](materials/20200221_convolutions/Feb_21.pdf)
  * **After class**, please:
     * **Homework 3** due 5pm **today** Fri, Feb. 21
 ")
@@ -259,17 +261,24 @@ make_week_box("week5", TRUE, "Week 5: Feb 17 -- Feb 21", "
 make_week_box("week6", TRUE, "Week 6: Feb 24 -- Feb 28", "
 #### Mon, Feb 24
  * **In class**, we will work on:
+    * Point of problem 1 on last HW -- linear activations in hidden layers don't achieve anything: [pdf](materials/20200223_cnn/Linear_activations/Linear_activations.pdf)
+    * Miscellaneous stuff about CNNs: [pdf](materials/20200223_cnn/20200223_cnns.pdf)
+    * First example of a full CNN: [pdf](materials/20200223_cnn/Examples_20200224/Examples_20200224.pdf)
  * **After class**, please:
-
+    * **Homework 4** due 5pm Fri, Feb. 28
 
 #### Wed, Feb 26
  * **In class**, we will work on:
+    * Lab on CNNs
  * **After class**, please:
+    * **Homework 4** due 5pm Fri, Feb. 28
 
 
 #### Fri, Feb 28
  * **In class**, we will work on:
+    * Overview of common architectures, transfer learning
  * **After class**, please:
+    * **Homework 4** due 5pm Fri, Feb. 28
 ")
 ```
 
@@ -282,11 +291,13 @@ make_week_box("week7", TRUE, "Week 7: Mar 02 -- Mar 06", "
 
 #### Wed, Mar 04
  * **In class**, we will work on:
+    * Maybe we'll do **Midterm 1** covers material up through Wed, Feb 19
  * **After class**, please:
 
 
 #### Fri, Mar 06
  * **In class**, we will work on:
+    * Or else possibly we'll do **Midterm 1** covers material up through Wed, Feb 19
  * **After class**, please:
 ")
 ```

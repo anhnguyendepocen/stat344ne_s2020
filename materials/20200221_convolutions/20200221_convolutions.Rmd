@@ -1,0 +1,91 @@
+---
+title: "Forward and Backward Propagation Example"
+subtitle: "Feb. 10, 2020"
+output:
+  pdf_document:
+    keep_tex: true
+    highlight: zenburn
+header-includes:
+   - \usepackage{soul}
+   - \usepackage{booktabs}
+documentclass: extarticle
+geometry: margin=0.6in
+---
+
+```{r global_options, include=FALSE}
+library(knitr)
+library(reticulate)
+use_python("/Users/eray/anaconda3/bin/python")
+knitr::opts_chunk$set(eval = TRUE, echo=TRUE, engine='python')
+#knitr::knit_engines$set(python = reticulate::eng_python)
+```
+
+Suppose we are doing a regression problem (so our loss function is mean squared error) using a network with the structure:
+
+ * Input layer has one feature, $X_1$
+ * First hidden layer has two units and a relu activation
+ * Second hidden layer has two units and a relu activation
+ * Output layer has one unit and a linear activation
+
+For simplicity, suppose I have just one observation with $X^{(1)}_1 = 2$ and $y^{(1)} = 1$.
+
+Also suppose my current estimates of the model parameters are as follows:
+
+ * Layer 1:
+    * $b^{[1]}_1 = 0$, $\left(w^{[1]}_1\right)^T = \begin{bmatrix}1\end{bmatrix}$
+    * $b^{[1]}_2 = 1$, $\left(w^{[1]}_2\right)^T = \begin{bmatrix}-2\end{bmatrix}$
+ * Layer 2:
+    * $b^{[2]}_1 = 0$, $\left(w^{[2]}_1\right)^T = \begin{bmatrix}0.5 & 10 \end{bmatrix}$
+    * $b^{[2]}_2 = 1$, $\left(w^{[2]}_2\right)^T = \begin{bmatrix}1 & 1 \end{bmatrix}$
+ * Layer 3:
+    * $b^{[3]}_1 = 0$, $\left(w^{[3]}_1\right)^T = \begin{bmatrix}1 & 1 \end{bmatrix}$
+
+#### 1. Draw a diagram of this neural network model
+
+\vspace{3cm}
+
+#### 2. Forward propagation
+
+Find $a^{(1)[1]}_1$
+
+\vspace{0.75cm}
+
+Find $a^{(1)[1]}_2$
+
+\vspace{0.75cm}
+
+Find $a^{(1)[2]}_1$
+
+\vspace{0.75cm}
+
+Find $a^{(1)[2]}_2$
+
+\vspace{0.75cm}
+
+Find $a^{(1)[3]}_1$
+
+\vspace{0.75cm}
+
+Find the contribution to the MSE from this observation.
+
+\newpage
+
+If I make a small change to the weight vector for the first unit in layer 2 from $\left(w^{[2]}_1\right)^T = \begin{bmatrix}0.5 & 10 \end{bmatrix}$ to $\left(w^{[2]}_1\right)^T = \begin{bmatrix}0.5 & 10.1 \end{bmatrix}$, does this affect the model's final prediction for this observation?  What can you say about $\frac{\partial J^{(1)}(b, w)}{\partial w^{[2]}_{12}}$?
+
+\vspace{3cm}
+
+If I make a small change to the weight vector for the second unit in layer 1 from $\left(w^{[1]}_2\right)^T = \begin{bmatrix}-2\end{bmatrix}$ to $\left(w^{[1]}_2\right)^T = \begin{bmatrix}-2.1\end{bmatrix}$, does this affect the model's final prediction for this observation?  What can you say about $\frac{\partial J^{(1)}(b, w)}{\partial w^{[1]}_{21}}$?
+
+\vspace{3cm}
+
+If I make a small change to the weight vector for the first unit in layer 2 from $\left(w^{[2]}_1\right)^T = \begin{bmatrix}0.5 & 10 \end{bmatrix}$ to $\left(w^{[2]}_1\right)^T = \begin{bmatrix}0.6 & 10 \end{bmatrix}$, does this affect the model's final prediction for this observation?  What can you say about $\frac{\partial J^{(1)}(b, w)}{\partial w^{[2]}_{11}}$?
+
+\vspace{3cm}
+
+If I make a small change to the weight vector for the second unit in layer 2 from $\left(w^{[2]}_2\right)^T = \begin{bmatrix}1 & 1 \end{bmatrix}$ to $\left(w^{[2]}_2\right)^T = \begin{bmatrix}1.1 & 1\end{bmatrix}$, does this affect the model's final prediction for this observation?  What can you say about $\frac{\partial J^{(1)}(b, w)}{\partial w^{[2]}_{21}}$?
+
+\vspace{3cm}
+
+If I make a small change to the weight vector for the first unit in layer 1 from $\left(w^{[1]}_1\right)^T = \begin{bmatrix}1\end{bmatrix}$ to $\left(w^{[1]}_1\right)^T = \begin{bmatrix}1.1\end{bmatrix}$, does this affect the model's final prediction for this observation?  What can you say about $\frac{\partial J^{(1)}(b, w)}{\partial w^{[1]}_{11}}$?
+
+
