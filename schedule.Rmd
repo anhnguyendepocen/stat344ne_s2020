@@ -269,6 +269,7 @@ make_week_box("week6", TRUE, "Week 6: Feb 24 -- Feb 28", "
 
 #### Wed, Feb 26
  * **In class**, we will work on:
+    * Generators in Python, Data Augmentation for image data: [pdf](materials/20200226_generators_data_augmentation/20200225_stuff/20200225_stuff.pdf)
     * Lab on CNNs
  * **After class**, please:
     * **Homework 4** due 5pm Fri, Feb. 28
