@@ -306,7 +306,112 @@ $(document).ready(function () {
 </div>
 
 
-<p>We will have a somewhat large project.</p>
+<p>For the project you will implement and write up a neural network model for a problem and data set of your choice. Deliverables for the project include:</p>
+<ol style="list-style-type: decimal">
+<li>Your primary analysis write-up. This can be written in LaTeX or a word/google docs document.</li>
+<li>All Python code that went into your analysis on GitHub.</li>
+<li>A poster to be presented towards the end of the semester (exact date to be determined – likely a lunch time slot on a MWF during the last week).</li>
+</ol>
+<div id="overview-of-processdeadlines" class="section level3">
+<h3>Overview of Process/Deadlines</h3>
+<ol style="list-style-type: decimal">
+<li>Find some friends to work with. (<strong>5:00 PM Fri Feb. 28</strong>)
+<ul>
+<li>Fill out <a href="https://docs.google.com/forms/d/e/1FAIpQLSdm7HjG6rlBBsGfWq-mcXy4b2RPiZxsKGgdwZQOyPSP5Ig9Yw/viewform?usp=sf_link">this google form</a> with your preference for group members. Groups should have 2 or 3 members. Only one person per proposed group needs to do this. If you need help finding group members fill out the form saying that. If you have a strong preference to work alone we can discuss, but I may force you to work with people anyways. I also reserve the right to rearrange your groups; <strong>there is no guarantee you will get your requested group,</strong> and I may add someone to your group.</li>
+</ul></li>
+<li>Pick an application or kind of model you think is really interesting! (<strong>5:00 PM Fri Mar. 6</strong>)
+<ul>
+<li>Write up something brief to tell me what you’re thinking about working on. This can be 1 or 2 short paragraphs; it does not need to be formal or complete sentences or your final topic (you can still change your mind for another week). You should include:
+<ul>
+<li>A brief statement of the general type of application and model you’re interested in</li>
+<li>A start at ideas for data, including specific links to actual data sets (or share a google drive or Box folder of your data with me).</li>
+<li>At least one reference for a relevant article, book, etc. with a related neural network model.</li>
+</ul></li>
+</ul></li>
+<li>Finalize your data set choice and start reading and summarizing related articles. (<strong>5:00 PM Fri Mar. 13</strong>)
+<ul>
+<li>You should now have a definite data set that you will work with. Share a google drive or Box folder of your data with me. Write a description of your data set (How big? How are you processing it? Put a figurer or two illustrating the data in your report.)</li>
+<li>You should also have identified at least 2-3 relevant articles doing similar things. Put the citation information for the articles in a LaTeX document or word/google doc. Also put the pdfs of the articles in a google drive folder that is shared with me. Read at least two of these articles moderately thoroughly (you don’t have to completely understand them yet), and write a 1-2 paragraph summary of what they did. What was their application/data set? How was their model set up? Were there any limitations to their analysis? Do you have ideas for changes (hopefully, improvements) that could be made to their analysis/model? I emphasize that at this point it’s ok to still have questions about these articles.</li>
+</ul></li>
+<li>Continue reading and summarizing articles. Implement a baseline model. (<strong>5:00 PM Fri Mar 27</strong>)
+<ul>
+<li>You should now have written up reasonably good summaries of at least 3-4 relevant articles.</li>
+<li>If you’re doing a supervised learning task, do a train/validation/test split of your data. Hide your test data away and pretend it doesn’t exist.</li>
+<li>Identify and start implementing a baseline model. It’s OK if it’s not completely functional yet.</li>
+</ul></li>
+<li>Continue reading and summarizing articles. Finish baseline model. (<strong>5:00 PM Fri Apr 3</strong>)
+<ul>
+<li>Target at least 5 relevant articles read and summarized.</li>
+<li>Finish baseline model.</li>
+<li>Work on your ideas for modifications to the model.</li>
+</ul></li>
+<li>Implement your ideas for changes to the model. They probably won’t work at first. That’s OK, keep trying things.
+<ul>
+<li>At least one attempted thing by <strong>5:00 PM Fri Apr 10</strong></li>
+<li>As necessary, at least a couple more attempted things by <strong>5:00 PM Fri Apr 17</strong></li>
+<li><strong>Important:</strong> Don’t obsess about beating the state of the art. That would of course be great, but your success in this project is not dependent on that.</li>
+</ul></li>
+<li>Tell the people about what you’ve done. <strong>Poster session some time the week of Apr 20-24</strong></li>
+<li>Write it all up! <strong>Final write up due by end of finals period</strong></li>
+<li>Go do good work in the world and/or get paid the big bucks.</li>
+</ol>
+</div>
+<div id="possible-topics-and-data-sets" class="section level3">
+<h3>Possible Topics and Data Sets</h3>
+<ul>
+<li>Lists
+<ul>
+<li><a href="https://github.com/kjw0612/awesome-deep-vision" class="uri">https://github.com/kjw0612/awesome-deep-vision</a></li>
+<li><a href="http://cs231n.stanford.edu/project.html" class="uri">http://cs231n.stanford.edu/project.html</a></li>
+<li><a href="https://www.kaggle.com" class="uri">https://www.kaggle.com</a>
+<ul>
+<li><a href="https://www.kaggle.com/c/yelp-restaurant-photo-classification" class="uri">https://www.kaggle.com/c/yelp-restaurant-photo-classification</a></li>
+<li><a href="https://www.kaggle.com/c/humpback-whale-identification" class="uri">https://www.kaggle.com/c/humpback-whale-identification</a></li>
+</ul></li>
+</ul></li>
+<li>Miscellaneous other topics:
+<ul>
+<li>I have available some accelerometer data (think a fitbit recording acceleration 80 times per second) along with labels indicating the type of activity the subject was doing.</li>
+<li>Last year one of my independent study students made a recommendation system based on this paper: <a href="https://www.comp.nus.edu.sg/~xiangnan/papers/ncf.pdf" class="uri">https://www.comp.nus.edu.sg/~xiangnan/papers/ncf.pdf</a></li>
+<li><a href="https://gym.openai.com/" class="uri">https://gym.openai.com/</a> (Reinforcement learning is neat, but unfortunately I don’t know of any really accessible sources for learning it – this might be challenging, but you should do it if you’re excited about it.)</li>
+</ul></li>
+</ul>
+<p>If you have a specific idea you’re excited about that doesn’t fit into the kinds of topics on this list, get in touch and we can discuss.</p>
+</div>
+<div id="guidelines-for-the-primary-analysis-write-up" class="section level3">
+<h3>Guidelines for the primary analysis write-up</h3>
+<p>The project write-up should be written in clear, concise prose. No code should be shown unless it is explicitly needed to make a point.</p>
+<p>Please follow the structure below:</p>
+<ol style="list-style-type: decimal">
+<li>Title</li>
+<li>Abstract: a brief introduction to the problem you are addressing, brief description of the methods you consider, and summary of the results. Aim for 1 paragraph.</li>
+<li>Introduction: a little more detail about your problem set up and review of relevant literature.</li>
+<li>Data: a brief summary of key features of the dataset. Aim for about 2 pages.<br />
+</li>
+<li>Methods: This should include a clear statement of any models fit and/or description of procedures used to fit the models. Also describe your use of train/test splits and validation to evaluate model performance, and your procedures for selecting hyperparameters. Aim for about 2 pages.</li>
+<li>Results: a presentation of your results, including at a minimum a comparison of the relative performance of the different models you considered. For some projects, other results may need to be presented as well.</li>
+<li>Discussion: summarize your work, its limitations, and possible future steps/improvements.</li>
+<li>References: cite all sources in a standard format. This includes related work in the introduction, your data source, any models used for transfer learning, and any software packages used (e.g. Keras).</li>
+</ol>
+<p>Items one through 6 above should total 10 pages at most, including figures and tables. Fewer pages is also fine, but if your report is looking like it will be less than 5 pages please check with me to make sure you’re describing your work in enough detail. You should use 11 or 12 point font and no less than 1 inch margins all around.</p>
+</div>
+<div id="proper-citations" class="section level3">
+<h3>Proper Citations</h3>
+<p>Any direct quotes from other sources should be minimal (a sentence or two, not multiple paragraphs!), should be between quotation marks, and should be cited <strong>at the point of quotation</strong>. It’s ok to include a figure from another source, but this should be cited in the figure caption.</p>
+<p>I will deduct a very large amount of points if you take text from another source without citing it properly. If you have any questions on how to cite appropriately, ask!</p>
+</div>
+<div id="grading-and-assessment-criteria" class="section level3">
+<h3>Grading and Assessment Criteria</h3>
+<p>Your project grade makes up 25% of your final grade for the class. We’re doing this instead of a final. The project will be evaluated on the following points:</p>
+<ul>
+<li><p>Novelty (15 points): I’m not looking for you to have a publishable article come out of this, but if I could do your project by copying and pasting stuff from a tutorial online, you get 0 points for novelty. If you essentially replicate a published paper, you’ll be fine if you tweak the model a little, apply it in a new setting, or do some exploration to determine why it works (or doesn’t work).</p></li>
+<li><p>Understanding of methods (25 points): You should demonstrate that you understand the methods you are using. You should be able to explain everything that your model does, why it does that, and how it does that. You should understand all of your code.</p></li>
+<li><p>Technical implementation (20 points): Your code should work.</p></li>
+<li><p>Written Report (20 points): How effectively does the written report communicate the goals, procedures, and results of the study? Are the claims adequately supported? How well is the report structured and organized? Are all of the figures and tables numbered, captioned and appropriately referenced? Does the writing style enhance what the group is trying to communicate? How well is the report edited?</p></li>
+<li><p>Poster (10 points): How effectively does the poster communicate what you did?</p></li>
+<li><p>Checkpoint deadlines (10 points): To enforce consistent progress, I’m assigning points to doing the intermediate steps within a couple of days of the posted deadlines.</p></li>
+</ul>
+</div>
 
 
 
