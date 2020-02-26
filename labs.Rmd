@@ -13,7 +13,7 @@ title: "Labs"
 +------------+-----------------------------------------------+----------------------------------------------------------------------------------------------+
 |    4       |Backward propagation models with hidden layers.| [GitHub](https://github.com/mhc-stat344ne-s2020/lab04-solutions/blob/master/lab04.ipynb)     |
 +------------+-----------------------------------------------+----------------------------------------------------------------------------------------------+
-|    5       |Edge detection with convolutional filters      |                     Not added yet.                                                           |
+|    5       |Edge detection with convolutional filters      | [GitHub](https://github.com/mhc-stat344ne-s2020/lab05-solutions/blob/master/Lab_5.ipynb)     |
 +------------+-----------------------------------------------+----------------------------------------------------------------------------------------------+
 |    6       |Convolutional Neural Networks                  | [GitHub](https://github.com/mhc-stat344ne-s2020/lab06-solutions/blob/master/lab06.ipynb)     |
 +------------+-----------------------------------------------+----------------------------------------------------------------------------------------------+
