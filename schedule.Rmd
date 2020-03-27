@@ -277,7 +277,13 @@ make_week_box("week6", TRUE, "Week 6: Feb 24 -- Feb 28", "
 
 #### Fri, Feb 28
  * **In class**, we will work on:
-    * Overview of common architectures, transfer learning
+    * Overview of common architectures
+        * Notes on papers: [pdf](materials/20200228_AlexNet_VGG_transfer/20200228_notes_on_AlexNet_VGG16.pdf)
+        * AlexNet: [pdf](materials/20200228_AlexNet_VGG_transfer/AlexNet.pdf)
+        * VGG: [pdf](materials/20200228_AlexNet_VGG_transfer/VGG.pdf)
+        * Visualizing CNN: [pdf](materials/20200228_AlexNet_VGG_transfer/Visualizing_CNN.pdf)
+    * Transfer learning:
+        * [pdf](materials/20200228_AlexNet_VGG_transfer/20200228_notes/20200228_notes.pdf)
  * **After class**, please:
     * **Homework 4** due 5pm Fri, Feb. 28
 ")
