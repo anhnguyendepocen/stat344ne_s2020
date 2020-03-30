@@ -293,19 +293,18 @@ make_week_box("week6", FALSE, "Week 6: Feb 24 -- Feb 28", "
 make_week_box("week7", FALSE, "Week 7: Mar 02 -- Mar 06", "
 #### Mon, Mar 02
  * **In class**, we will work on:
- * **After class**, please:
+     * Start on Recurrent Neural Networks.  Notes: [pdf](materials/20200302_RNN/lecture_notes.pdf)
 
 
 #### Wed, Mar 04
  * **In class**, we will work on:
-    * Maybe we'll do **Midterm 1** covers material up through Wed, Feb 19
- * **After class**, please:
+    * Clear up some remaining things about RNNs: [pdf](materials/20200304_RNN_cleanup/20200304_RNN_cleanup.pdf)
+    * Review for midterm
 
 
 #### Fri, Mar 06
  * **In class**, we will work on:
-    * Or else possibly we'll do **Midterm 1** covers material up through Wed, Feb 19
- * **After class**, please:
+    * **Midterm 1** covers material up through Wed, Feb 19
 ")
 ```
 
@@ -313,17 +312,15 @@ make_week_box("week7", FALSE, "Week 7: Mar 02 -- Mar 06", "
 make_week_box("week8", FALSE, "Week 8: Mar 09 -- Mar 13", "
 #### Mon, Mar 09
  * **In class**, we will work on:
- * **After class**, please:
-
+    * Lab 7 on RNN (Dinosaur names)
 
 #### Wed, Mar 11
  * **In class**, we will work on:
- * **After class**, please:
-
+    * Gated Recurrence Units (GRU) and Long Short-Term Memory Units (LSTM).  Lecture notes: [pdf](materials/20200311_GRU_LSTM/lecture_notes.pdf)
 
 #### Fri, Mar 13
  * **In class**, we will work on:
- * **After class**, please:
+    * Lab 8 on GRU and LSTM
 ")
 ```
 
@@ -370,7 +367,7 @@ make_week_box("week11", TRUE, "Week 11: Mar 30 -- Apr 03", '
         * The discussion of transfer learning I mentioned was on Friday Feb 28.
         * In the video, I said we\'d have a lab applying word embeddings to a classification problem, but I decided to make this lab shorter and more focused on just working with the actual word embedding vectors.  We\'ll do the application to classification next.
  * **After class**, please:
-     * Work on lab 9.  I\'ll post solutions soon.
+     * Work on lab 9.  Solutions are posted on the labs page.
 
 
 #### Wed, Apr 01

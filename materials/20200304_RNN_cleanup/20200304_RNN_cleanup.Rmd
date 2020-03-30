@@ -1,0 +1,56 @@
+---
+title: "Misc. Details about RNNs"
+subtitle: "Mar. 4, 2020"
+output:
+  pdf_document:
+    keep_tex: true
+    highlight: zenburn
+header-includes:
+   - \usepackage{soul}
+   - \usepackage{booktabs}
+documentclass: extarticle
+geometry: margin=0.6in
+---
+
+```{r global_options, include=FALSE}
+library(knitr)
+library(reticulate)
+use_python("/Users/eray/anaconda3/bin/python")
+knitr::opts_chunk$set(eval = TRUE, echo=TRUE, cache=FALSE, engine='python')
+#knitr::knit_engines$set(python = reticulate::eng_python)
+```
+
+## Backpropagation
+
+ * In this figure, connections between layers should be illustrated as densely connected but the figure was too busy.
+
+\includegraphics{rnn_backprop.pdf}
+
+ * Note that vanishing/exploding gradients are going to be a problem:
+    * We get a term in our gradient computation for every time point (e.g., for every word in our sentence).
+
+\newpage
+
+## Dependence formulation
+
+ * At time $t$, predictions are from $P(Y^{(i)<t>} = y^{(i)<t>} | x^{(i)<1>}, \ldots, x^{(i)<t>})$
+ * Depends on observed inputs up through current time.
+ * We calculate the joint distribution for responses across all times as follows:
+
+\begin{align*}
+&P(Y^{(i)<1>} = y^{(i)<1>}, \ldots, Y^{(i)<T_y^{(i)}>} = y^{(i)<T_y^{(i)}>} | x^{(i)<1>}, \ldots, x^{(i)<T_x^{(i)}>}) \\
+&\qquad = P(Y^{(i)<1>} = y^{(i)<1>} | x^{(i)<1>}) \times P(Y^{(i)<2>} = y^{(i)<2>} | x^{(i)<1>}, x^{(i)<2>}) \\
+&\qquad \qquad \times \cdots \times P(Y^{(i)<T_y^{(i)}>} = y^{(i)<T_y^{(i)}>} | x^{(i)<1>}, \ldots, x^{(i)<T_y^{(i)}>})
+\end{align*}
+
+ * This decomposition requires an assumption that $Y^{(i)<t>}$ is **conditionally independent of** $Y^{(i)<1>}, \ldots, Y^{(i)<t-1>}$ **given** $x^{(i)<1>}, \ldots, x^{(i)<T_y^{(i)}>}$.
+    * Knowing the values of $Y^{(i)<1>}, \ldots, Y^{(i)<t-1>}$ wouldn't add any more information about $Y^{(i)<t>}$ than is already contained in $x^{(i)<1>}, \ldots, x^{(i)<T_y^{(i)}>}$.
+ * This seems restrictive, but isn't that bad.
+    * We can always expand $x^{(i)<t>}$ to include the observed response at the previous time, $y^{(i)<t-1>}$, as a feature.
+
+## Multiple RNN Layers
+
+ * You can stack multiple RNN layers on top of each other.
+ * They could have different numbers of layers.
+
+\includegraphics{rnn_multilayer.pdf}
