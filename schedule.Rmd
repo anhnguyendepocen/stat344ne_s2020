@@ -258,7 +258,7 @@ make_week_box("week5", FALSE, "Week 5: Feb 17 -- Feb 21", "
 ```
 
 ```{r, echo = FALSE, results='asis'}
-make_week_box("week6", TRUE, "Week 6: Feb 24 -- Feb 28", "
+make_week_box("week6", FALSE, "Week 6: Feb 24 -- Feb 28", "
 #### Mon, Feb 24
  * **In class**, we will work on:
     * Point of problem 1 on last HW -- linear activations in hidden layers don't achieve anything: [pdf](materials/20200223_cnn/Linear_activations/Linear_activations.pdf)
@@ -290,7 +290,7 @@ make_week_box("week6", TRUE, "Week 6: Feb 24 -- Feb 28", "
 ```
 
 ```{r, echo = FALSE, results='asis'}
-make_week_box("week7", TRUE, "Week 7: Mar 02 -- Mar 06", "
+make_week_box("week7", FALSE, "Week 7: Mar 02 -- Mar 06", "
 #### Mon, Mar 02
  * **In class**, we will work on:
  * **After class**, please:
@@ -310,7 +310,7 @@ make_week_box("week7", TRUE, "Week 7: Mar 02 -- Mar 06", "
 ```
 
 ```{r, echo = FALSE, results='asis'}
-make_week_box("week8", TRUE, "Week 8: Mar 09 -- Mar 13", "
+make_week_box("week8", FALSE, "Week 8: Mar 09 -- Mar 13", "
 #### Mon, Mar 09
  * **In class**, we will work on:
  * **After class**, please:
@@ -328,7 +328,7 @@ make_week_box("week8", TRUE, "Week 8: Mar 09 -- Mar 13", "
 ```
 
 ```{r, echo = FALSE, results='asis'}
-make_week_box("week9", TRUE, "Week 9: Mar 16 -- Mar 20", "
+make_week_box("week9", FALSE, "Week 9: Mar 16 -- Mar 20", "
 #### Mon, Mar 16
  * **No Class**: Midsemester Break.  Safe travels!
 
@@ -343,28 +343,34 @@ make_week_box("week9", TRUE, "Week 9: Mar 16 -- Mar 20", "
 ```
 
 ```{r, echo = FALSE, results='asis'}
-make_week_box("week10", TRUE, "Week 10: Mar 23 -- Mar 27", "
+make_week_box("week10", FALSE, "Week 10: Mar 23 -- Mar 27", "
 #### Mon, Mar 23
- * **In class**, we will work on:
- * **After class**, please:
+ * **No Class**: Midsemester Break.  Safe travels!
 
 
 #### Wed, Mar 25
- * **In class**, we will work on:
- * **After class**, please:
+ * **No Class**: Midsemester Break.  Safe travels!
 
 
 #### Fri, Mar 27
- * **In class**, we will work on:
- * **After class**, please:
+ * **No Class**: Midsemester Break.  Safe travels!
 ")
 ```
 
 ```{r, echo = FALSE, results='asis'}
-make_week_box("week11", TRUE, "Week 11: Mar 30 -- Apr 03", "
+make_week_box("week11", TRUE, "Week 11: Mar 30 -- Apr 03", '
 #### Mon, Mar 30
  * **In class**, we will work on:
+    * Interpretation of inner product as a measure of similarity between vectors
+        * <iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/WMVX5VWiLS4\" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        * Notes: [pdf](materials/20200330_word_embeddings/Dot_product_similarity.pdf)
+    * First high level, overview of word embeddings.  Reminder of transfer learning, statement of limitations of one-hot encodings that are addressed by word embeddings.  The goal for today is to get general ideas.  We\'ll develop more detailed understanding over the next few days.
+        * <iframe width=\"560\" height=\"315\" src="https://www.youtube.com/embed/gNj1XnhhJT0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        * Notes: [pdf](materials/20200330_word_embeddings/First_look_word_embeddings.pdf)
+        * The discussion of transfer learning I mentioned was on Friday Feb 28.
+        * In the video, I said we\'d have a lab applying word embeddings to a classification problem, but I decided to make this lab shorter and more focused on just working with the actual word embedding vectors.  We\'ll do the application to classification next.
  * **After class**, please:
+     * Work on lab 9.  I\'ll post solutions soon.
 
 
 #### Wed, Apr 01
@@ -375,7 +381,7 @@ make_week_box("week11", TRUE, "Week 11: Mar 30 -- Apr 03", "
 #### Fri, Apr 03
  * **In class**, we will work on:
  * **After class**, please:
-")
+')
 ```
 
 ```{r, echo = FALSE, results='asis'}
