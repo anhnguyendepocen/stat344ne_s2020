@@ -372,6 +372,11 @@ make_week_box("week11", TRUE, "Week 11: Mar 30 -- Apr 03", '
 
 #### Wed, Apr 01
  * **In class**, we will work on:
+    * Embedding matrices
+        * <iframe width="560" height="315" src="https://www.youtube.com/embed/ROiBAxdAiA8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        * Notes: [pdf](materials/20200401_embedding_matrices/Embedding_matrices.pdf)
+        * One more thing I wanted to say but forgot to say in the video: Although we think of the embedding matrix in terms of a dot product with a one-hot encoding vector, in practice one-hot encodings are very memory intensive so we don\'t actually do that when we set it up in Keras.  Instead, we use a sparse encoding.  For example, if "movie" is word 17 in our vocabulary, then we just represent that word with the number 17 rather than a vector of length 10000 with a 1 in the 17th entry.  This is much faster.
+    * Lab 10.
  * **After class**, please:
 
 
