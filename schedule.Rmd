@@ -382,7 +382,15 @@ make_week_box("week11", TRUE, "Week 11: Mar 30 -- Apr 03", '
 
 #### Fri, Apr 03
  * **In class**, we will work on:
- * **After class**, please:
+    * Review of topics from linear algebra: vector addition, subtraction, and orthogonal prrojections.
+        * **You only need to watch the first few minutes of this video; the rest is optional**
+        * <iframe width="560" height="315" src="https://www.youtube.com/embed/uM7tDVYfP9k" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        * Notes: [pdf](materials/20200403_bias_word_embeddings/Linear_algebra_background.pdf)
+    * Reducing bias in word embeddings.
+        * <iframe width="560" height="315" src="https://www.youtube.com/embed/dOHsOPAQKJ8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        * Notes: [pdf](materials/20200403_bias_word_embeddings/Reducing_bias_in_word_embeddings.pdf)
+        * Article: [pdf](materials/20200403_bias_word_embeddings/6228-man-is-to-computer-programmer-as-woman-is-to-homemaker-debiasing-word-embeddings.pdf)
+    * That was a lot of making videos and now I\'m tired. Let\'s do the lab on Monday.
 ')
 ```
 
