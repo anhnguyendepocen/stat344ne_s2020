@@ -398,7 +398,8 @@ make_week_box("week11", TRUE, "Week 11: Mar 30 -- Apr 03", '
 make_week_box("week12", TRUE, "Week 12: Apr 06 -- Apr 10", "
 #### Mon, Apr 06
  * **In class**, we will work on:
- * **After class**, please:
+    * No new lecture material today.
+    * Work on lab 11.  Solutions are posted on the labs page.
 
 
 #### Wed, Apr 08
