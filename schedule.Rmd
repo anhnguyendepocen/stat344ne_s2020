@@ -395,7 +395,7 @@ make_week_box("week11", FALSE, "Week 11: Mar 30 -- Apr 03", '
 ```
 
 ```{r, echo = FALSE, results='asis'}
-make_week_box("week12", TRUE, "Week 12: Apr 06 -- Apr 10", '
+make_week_box("week12", FALSE, "Week 12: Apr 06 -- Apr 10", '
 #### Mon, Apr 06
  * **In class**, we will work on:
     * No new lecture material today.
@@ -430,9 +430,16 @@ make_week_box("week12", TRUE, "Week 12: Apr 06 -- Apr 10", '
 ```
 
 ```{r, echo = FALSE, results='asis'}
-make_week_box("week13", TRUE, "Week 13: Apr 13 -- Apr 17", "
+make_week_box("week13", TRUE, "Week 13: Apr 13 -- Apr 17", '
 #### Mon, Apr 13
  * **In class**, we will work on:
+    * More on object detection with YOLO.  I recommend you watch both the video I made and the videos from Andrew Ng linked to below.  There is a lot of common material, but there are also things I covered that Andrew didn\'t, and things he covered that I didn\'t.  I think it\'s always nice to have two perspectives.
+    * <iframe width="560" height="315" src="https://www.youtube.com/embed/pZn3_dpWO_8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        * Slides: [pdf](materials/20200413_localization/localization_slides.pdf)
+    * <iframe width="560" height="315" src="https://www.youtube.com/embed/ANIzQ5G-XPE?list=PLkDaE6sCZn6Gl29AoE31iwdVwSG-KnDzF" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    * <iframe width="560" height="315" src="https://www.youtube.com/embed/VAo84c1hQX8?list=PLkDaE6sCZn6Gl29AoE31iwdVwSG-KnDzF" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    * <iframe width="560" height="315" src="https://www.youtube.com/embed/RTlwl2bv0Tg?list=PLkDaE6sCZn6Gl29AoE31iwdVwSG-KnDzF" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    * <iframe width="560" height="315" src="https://www.youtube.com/embed/9s_FpMpdYW8?list=PLkDaE6sCZn6Gl29AoE31iwdVwSG-KnDzF" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
  * **After class**, please:
 
 
@@ -444,7 +451,7 @@ make_week_box("week13", TRUE, "Week 13: Apr 13 -- Apr 17", "
 #### Fri, Apr 17
  * **In class**, we will work on:
  * **After class**, please:
-")
+')
 ```
 
 ```{r, echo = FALSE, results='asis'}
