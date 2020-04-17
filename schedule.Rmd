@@ -468,7 +468,7 @@ make_week_box("week13", TRUE, "Week 13: Apr 13 -- Apr 17", '
 
 #### Fri, Apr 17
  * **In class**, we will work on:
-    * I promise, lab on YOLO and no new long videos
+    * Lab 13 on YOLO
  * **After class**, please:
 ')
 ```
