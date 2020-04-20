@@ -430,7 +430,7 @@ make_week_box("week12", FALSE, "Week 12: Apr 06 -- Apr 10", '
 ```
 
 ```{r, echo = FALSE, results='asis'}
-make_week_box("week13", TRUE, "Week 13: Apr 13 -- Apr 17", '
+make_week_box("week13", FALSE, "Week 13: Apr 13 -- Apr 17", '
 #### Mon, Apr 13
  * **In class**, we will work on:
     * More on object detection with YOLO.  I recommend you watch both the video I made and the videos from Andrew Ng linked to below.  There is a lot of common material, but there are also things I covered that Andrew didn\'t, and things he covered that I didn\'t.  I think it\'s always nice to have two perspectives.
@@ -474,21 +474,29 @@ make_week_box("week13", TRUE, "Week 13: Apr 13 -- Apr 17", '
 ```
 
 ```{r, echo = FALSE, results='asis'}
-make_week_box("week14", TRUE, "Week 14: Apr 20 -- Apr 24", "
+make_week_box("week14", TRUE, "Week 14: Apr 20 -- Apr 24", '
 #### Mon, Apr 20
  * **In class**, we will work on:
- * **After class**, please:
-
+    * Start on Neural Style Transfer:
+        * <iframe width="560" height="375" src="https://www.youtube.com/embed/aema6caJc_U" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        * Slides: [pdf](materials/20200420_style_transfer/intro_style_transfer.pdf)
+    * Measuring Style:
+        * <iframe width="560" height="375" src="https://www.youtube.com/embed/KdwKKZ7EFig" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        * Notes: [pdf](materials/20200420_style_transfer/neural_style.pdf)
+    * Loss function for neural style transfer:
+        * <iframe width="560" height="375" src="https://www.youtube.com/embed/fKWeaTkbwe0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        * Notes: [pdf](materials/20200420_style_transfer/style_transfer_loss.pdf)
 
 #### Wed, Apr 22
  * **In class**, we will work on:
+    * Lab on neural style transfer
  * **After class**, please:
 
 
 #### Fri, Apr 24
  * **In class**, we will work on:
  * **After class**, please:
-")
+')
 ```
 
 ```{r, echo = FALSE, results='asis'}
