@@ -498,6 +498,12 @@ make_week_box("week14", TRUE, "Week 14: Apr 20 -- Apr 24", '
 
 #### Fri, Apr 24
  * **In class**, we will work on:
+    * Deconvolution (also known as Transposed Convolution) Layers
+        * <iframe width="560" height="315" src="https://www.youtube.com/embed/GueMfbtYeAs" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        * Notes: [pdf](materials/20200424_vae/deconv_annotated.pdf)
+    * Variational Autoencoders (VAE)
+        * <iframe width="560" height="315" src="https://www.youtube.com/embed/eFaWsulv5Zw" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        * Notes: [pdf](materials/20200424_vae/vae_annotated.pdf)
  * **After class**, please:
 ')
 ```
